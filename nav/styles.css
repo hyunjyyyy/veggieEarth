@@ -21,11 +21,11 @@ ul {
     z-index: 1000;
 
     width: 100%;
-    padding: 60px 51px 20px 51px;
+    padding: 30px 51px 20px 51px;       /* 위쪽 패딩 줄임 */
     box-sizing: border-box;
 }
 
-.navbar_container{
+.navbar_container {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -40,17 +40,26 @@ ul {
 }
 
 .navbar_logo img {
+    margin-top: -12px;      /* 로고 조금 더 위쪽으로 이동 */
     height: 55px;
     width: auto;
     display: block;
 }
 
-.navbar_menu{
+
+.navbar_menu {
     display: flex;
-    gap: 90px;
+    gap: 0;     /* li 사이 간격 0 */
+    flex: 0 0 1000px;       /* 컨테이너 폭 1000px */
+    margin: 0 0 0 100px;        /* 메뉴 오른쪽으로 이동 */
 }
 
-.nav_item{
+/* 메뉴 칸 5분할 */
+.navbar_menu li {
+    flex: 1;
+}
+
+.nav_item {
     color: #83C4C7;
     font-size: 20px;
     font-weight: 900;
@@ -58,21 +67,24 @@ ul {
     display: flex;
     flex-shrink: 0;
     align-items: center;
+    justify-content: center;        /* 칸 중앙 정렬 */
 
     transition: color 0.3s;
 }
 
-.nav_item:hover{
+.nav_item:hover {
     color: #c1c1c1;
 }
 
 
-.navbar_icons{
+.navbar_icons {
     display: flex;
-    gap: 25px;
+    gap: 20px;      /* 갭 줄임 */
+    margin-left: 150px;     /* 아이콘 오른쪽으로 이동 */
 }
 
-.navbar_icons img{
+.navbar_icons img {
+    width: 25px;      /* 크기 줄임 */
     transition: filter 0.3s ease;
 }
 
