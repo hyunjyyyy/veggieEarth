@@ -21,7 +21,7 @@ ul {
     z-index: 1000;
 
     width: 100%;
-    padding: 30px 51px 20px 51px;       /* 위쪽 패딩 줄임 */
+    padding: 30px 30px 20px 30px;       /* 패딩 줄임 */
     box-sizing: border-box;
 }
 
@@ -51,7 +51,6 @@ ul {
     display: flex;
     gap: 0;     /* li 사이 간격 0 */
     flex: 0 0 1000px;       /* 컨테이너 폭 1000px */
-    margin: 0 0 0 100px;        /* 메뉴 오른쪽으로 이동 */
 }
 
 /* 메뉴 칸 5분할 */
@@ -80,7 +79,6 @@ ul {
 .navbar_icons {
     display: flex;
     gap: 20px;      /* 갭 줄임 */
-    margin-left: 150px;     /* 아이콘 오른쪽으로 이동 */
 }
 
 .navbar_icons img {
