@@ -41,6 +41,7 @@ ul {
 
 .navbar_logo {
     flex-shrink: 0;
+    margin-left: 20px;
 }
 
 .navbar_logo img {
