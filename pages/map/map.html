@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="map_styles.css">
+</head>
+<body>
+    <!-- 네비게이션 바 -->
+    <nav class="navbar">
+        <div class="navbar_container">
+            <a href="#" class="navbar_logo">
+                <img src = "logo.png" alt = "베지너스">
+            </a>
+            <ul class="navbar_menu">
+                <li><a href="#" class="nav_item">HOME</a></li>
+                <li><a href="#" class="nav_item">RECIPE</a></li>
+                <li><a href="#" class="nav_item">MAP</a></li>
+                <li><a href="#" class="nav_item">COMMUNITY</a></li>
+                <li><a href="#" class="nav_item">MYPAGE</a></li>
+            </ul>
+            <div class="navbar_icons">
+                <a href="#"><img src="login_out.png" alt="login/out"></a>
+                <a href="#"><img src="Settings.png" alt="Settings"></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 본문 박스 -->
+    <div class="content_box">
+
+        <!-- 검색 -->
+        <div class="map_search_section">
+            
+            <!-- 검색창 -->
+            <form class="map_search_bar" action="#" method="get">
+                <input type="text" name="search" placeholder="식당 검색">
+                <button type="submit">
+                    <img src="map_search_icon.png" alt="검색 아이콘">
+                </button>
+            </form>
+
+            <!-- 검색 필터 -->
+            <div class="map_search_filter">
+                <span>지역</span>
+                <select>
+                    <option>서울</option>
+                    <option>경기도</option>
+                    <option>강원도</option>
+                    <option>충청북도</option>
+                    <option>충청남도</option>
+                    <option>전라북도</option>
+                    <option>전라남도</option>
+                    <option>경상북도</option>
+                    <option>경상남도</option>
+                    <option>제주도</option>
+                </select>
+
+                <!-- 카테고리 체크 -->
+                <div class="map_category_check">
+                    <label><input type="checkbox" checked> 과일</label>
+                    <label><input type="checkbox"> 채소</label>
+                    <label><input type="checkbox"> 우유</label>
+                    <label><input type="checkbox"> 달걀</label>
+                    <label><input type="checkbox"> 생선</label>
+                    <label><input type="checkbox"> 육류</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 식당 정보, 지도 -->
+        <div class="map_and_card_section">
+            <div class="map_card_outer_container">
+
+                <!-- 식당 정보 카드 -->
+                <div class="map_card">
+                    <img src="map_restaurant.png" alt="식당 이미지">
+
+                    <!-- 식당 이름, 리뷰 링크, 저장/공유 버튼 -->
+                    <div class="map_card_info">
+                        <h3>OO비건식당</h3>
+                        <a href="#review_link" class="review_link">리뷰 73</a>
+                        <div class="map_card_action">
+                            <div class="map_card_action_button">
+                                <img src="map_favorite.png" alt="저장">
+                                <span>저장</span>
+                                <div class="divider"></div>
+                            </div>
+                            <div class="map_card_action_button">
+                                <img src="map_share.png" alt="공유">
+                                <span>공유</span>
+                            </div>
+                        </div>
+
+                        <!-- 카테고리 태그 -->
+                        <div class="map_card_tags">
+                            <div class="map_card_tag_item">
+                                <img src="map_checkbox_checked.png" alt="체크박스_checked">
+                                <span>과일</span>
+                            </div>
+                            <div class="map_card_tag_item">
+                                <img src="map_checkbox_checked.png" alt="체크박스_checked">
+                                <span>채소</span>
+                            </div>
+                            <div class="map_card_tag_item">
+                                <img src="map_checkbox_checked.png" alt="체크박스_checked">
+                                <span>우유</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 메뉴 탭 카드 -->
+                <div class="map_tab_card">
+                    <div class="map_tab_card_tabs">
+                        <span class="map_tab_card_active">홈</span>
+                        <span id="review_link">메뉴</span>
+                        <span>리뷰</span>
+                        <span>사진</span>
+                        <span>정보</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 지도 -->
+            <div class="map_outer_container">
+                <div class="map_container">
+                    <img src="map_img.png" class="map_img" alt="지도">
+                    <img src="map_pin.png" class="map_pin" alt="핀">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
