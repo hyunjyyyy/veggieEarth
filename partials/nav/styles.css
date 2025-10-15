@@ -107,17 +107,17 @@ ul {
 
 /* 본문 흰색 박스 */
 .content_box {
-  flex: 1 1 auto;
-  width: 97%;
-  margin: 116px auto 0 auto;
+    flex: 1 1 auto;
+    width: 97%;
+    margin: 116px auto 0 auto;
 
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 
-  min-height: calc(100vh - 116px);
-  padding: 40px;
-  background-color: white;
-  box-sizing: border-box;
+    min-height: calc(100vh - 116px);
+    padding: 40px;
+    background-color: white;
+    box-sizing: border-box;
 }
