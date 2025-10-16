@@ -123,7 +123,6 @@ ul {
     padding: 15px;
     background-color: white;
     box-sizing: border-box;
-    overflow: hidden;
     
 }
 
@@ -171,7 +170,7 @@ ul {
     padding: 40px;
     display: flex;
     gap: 60px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .avatar_container {
@@ -254,7 +253,6 @@ ul {
     cursor: pointer;
     font-family: 'Noto Sans', sans-serif;
     transition: background 0.3s;
-  
 }
 
 .btn:hover {
@@ -272,14 +270,13 @@ ul {
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid #f2f2f2;
     border-radius: 15px;
-    padding: 30px;
+    padding: 30px 30px;
 }
 
 .stat_title {
     font-size: 16px;
     font-weight: bold;
     color: #333;
-    margin-bottom: 30px;
 }
 
 .chart_container {
@@ -312,13 +309,14 @@ ul {
 
 .chart_percentage {
     position: absolute;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     color: #2b463c;
     z-index: 1;
 }
 
 /* 차트 색상 */
+/* 도넛 퍼센트(각 카드별) 그대로 유지 */
 .chart_uploads {
     background: conic-gradient(
         rgba(43, 70, 60, 0.61) 0deg,
@@ -327,7 +325,6 @@ ul {
         #f4f1e9 360deg
     );
 }
-
 .chart_comments {
     background: conic-gradient(
         rgba(104, 143, 78, 0.73) 0deg,
@@ -336,7 +333,6 @@ ul {
         #f4f1e9 360deg
     );
 }
-
 .chart_scraps {
     background: conic-gradient(
         #b1d182 0deg,
@@ -346,62 +342,63 @@ ul {
     );
 }
 
-.stat_details {
-    display: flex;
-    justify-content: space-around;
-    gap: 20px;
+/* 하단 통계 레이아웃 */
+.stat_details{
+    display:flex;
+    justify-content:space-around;
+    gap:20px;
 }
 
-.stat_item {
-    text-align: center;
+/* 각 항목: 위(●+숫자), 아래 캡션 */
+.stat_item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    text-align:center;
 }
 
-.stat_item_label {
-    font-size: 12px;
-    color: #828282;
-    font-weight: 600;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+/* 윗줄: ● + 숫자 */
+.stat_row{
+    display:flex;
+    align-items:center;
+    gap:10px;        /* ●와 숫자 간격 */
+    line-height:1;
 }
 
-.stat_indicator {
-    width: 24px;
-    height: 23px;
-    border-radius: 15px;
+/* ● 스타일 */
+.stat_indicator{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+}
+.indicator_unsuccessful{ background:#f4f1e9; }
+.indicator_success_1{ background:rgba(43,70,60,.61); }
+.indicator_success_2{ background:rgba(104,143,78,.73); }
+.indicator_success_3{ background:#b1d182; }
+
+/* 숫자 */
+.stat_number{
+    font-size:32px;
+    font-weight:600;
+    color:#333;
+    opacity:.8;
+    line-height:1;
 }
 
-.indicator_unsuccessful {
-    background: #f4f1e9;
+/* 아래 작은 캡션 */
+.stat_caption{
+    font-size:12px;
+    color:#828282;
+    font-weight:600;
 }
 
-.indicator_success_1 {
-    background: rgba(43, 70, 60, 0.61);
-}
-
-.indicator_success_2 {
-    background: rgba(104, 143, 78, 0.73);
-}
-
-.indicator_success_3 {
-    background: #b1d182;
-}
-
-.stat_number {
-    font-size: 32px;
-    font-weight: 600;
-    color: #333;
-    opacity: 0.8;
-}
+/* 기존 stat_item_label는 더 이상 사용 안 함(혹시 남아있다면 영향 제거) */
+.stat_item_label{ display:none; }
 
 /* 반응형 */
 @media (max-width: 1200px) {
-    .stats_grid {
-        grid-template-columns: 1fr;
-    }
-    
+    .stats_grid { grid-template-columns: 1fr; }
     .profile_section {
         flex-direction: column;
         align-items: center;
