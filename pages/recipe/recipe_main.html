@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>레시피 메인 페이지</title>
+    <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar_container">
+            <a href="#" class="navbar_logo">
+                <img src="../../assets/images/logo.png" alt="로고">
+            </a>
+            <ul class="navbar_menu">
+                <li><a href="#" class="nav_item">HOME</a></li>
+                <li><a href="recipe_main.html" class="nav_item">RECIPE</a></li>
+                <li><a href="#" class="nav_item">MAP</a></li>
+                <li><a href="#" class="nav_item">COMMUNITY</a></li>
+                <li><a href="#" class="nav_item">MYPAGE</a></li>
+            </ul>
+            <div class="navbar_icons">
+                <a href="#"><img src="../../assets/images/login_dark.png" alt="login/out"></a>
+                <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings"></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content_wrapper">
+        <div class="recipe_filter_container">
+            <div class="recipe_filter_box">
+                <div class="recipe_filter_row">
+                    <div class="recipe_filter_item">
+                        <input type="checkbox" id="chk_fruit" checked>
+                        <label for="chk_fruit" class="recipe_filter_button">과일</label>
+                    </div>
+                    <div class="recipe_filter_item">
+                        <input type="checkbox" id="chk_veg" checked>
+                        <label for="chk_veg" class="recipe_filter_button">채소</label>
+                    </div>
+                    <div class="recipe_filter_item">
+                        <input type="checkbox" id="chk_dairy">
+                        <label for="chk_dairy" class="recipe_filter_button">유제품</label>
+                    </div>
+                    <div class="recipe_filter_item">
+                        <input type="checkbox" id="chk_egg">
+                        <label for="chk_egg" class="recipe_filter_button">달걀</label>
+                    </div>
+                    <div class="recipe_filter_item">
+                        <input type="checkbox" id="chk_seafood">
+                        <label for="chk_seafood" class="recipe_filter_button">해산물</label>
+                    </div>
+                    <div class="recipe_filter_item">
+                        <input type="checkbox" id="chk_poultry">
+                        <label for="chk_poultry" class="recipe_filter_button">가금류</label>
+                    </div>
+                    <div class="recipe_filter_item">
+                        <input type="checkbox" id="chk_meat">
+                        <label for="chk_meat" class="recipe_filter_button">육류</label>
+                    </div>
+                    </div>
+                <div class="recipe_filter_row">
+                    <div class="recipe_filter_item">
+                        <input type="radio" id="radio_all" name="cuisine_type" checked>
+                        <label for="radio_all" class="recipe_filter_button">전체</label>
+                    </div>
+                    <div class="recipe_filter_item">
+                        <input type="radio" id="radio_korean" name="cuisine_type">
+                        <label for="radio_korean" class="recipe_filter_button">한식</label>
+                    </div>
+                    <div class="recipe_filter_item">
+                        <input type="radio" id="radio_western" name="cuisine_type">
+                        <label for="radio_western" class="recipe_filter_button">양식</label>
+                    </div>
+                    <div class="recipe_filter_item">
+                        <input type="radio" id="radio_baking" name="cuisine_type">
+                        <label for="radio_baking" class="recipe_filter_button">베이킹</label>
+                    </div>
+                    <div class="recipe_filter_item">
+                        <input type="radio" id="radio_dessert" name="cuisine_type">
+                        <label for="radio_dessert" class="recipe_filter_button">디저트</label>
+                    </div>
+                </div>
+            </div>
+            <div class="recipe_search_box">
+                <input type="text" placeholder="Search...">
+            </div>
+        </div>
+
+        <div class="recipe_list_header">
+            <p class="recipe_count">총 <span class="recipe_count num">NNNN개</span>의 맛있는 레시피가 있습니다.</p>
+            <div class="recipe_sort_buttons">
+                <button class="recipe_sort_button">정확순</button>
+                <button class="recipe_sort_button">최신순</button>
+                <button class="recipe_sort_button active">추천순</button>
+            </div>
+        </div>
+        <div class="recipe_grid">
+            <div class="recipe_card">
+                <div class="recipe_card_image_box" style="background-image: url(./images/감자된장국.jpg);">
+                    <div class="recipe_card_icons">
+                        <span class="icon veggie"></span>
+                    </div>
+                </div>
+                <div class="recipe_card_content">
+                    <h4>감자 된장국</h4>
+                    
+                    <div class="recipe_card_rating">
+                        <span>★★★★☆</span> (15)
+                    </div>
+                </div>
+            </div>
+            <a href="eggplant_pizza.html" class="recipe_card_link">
+            <div class="recipe_card">
+                <div class="recipe_card_image_box" style="background-image: url(./images/가지피자.jpg);">
+                    <div class="recipe_card_icons">
+                        <span class="icon veggie"></span>
+                        <span class="icon milk"></span>
+                    </div>
+                </div>
+                <div class="recipe_card_content">
+                    <h4>가지 피자</h4>
+                    <span>🍽️ 2인분</span>
+                    <span>⏰ 30분 이내</span>
+                    <span>🍳 쉬움</span>
+                    <div class="recipe_card_rating">
+                        <span>★★★★☆</span> (0)
+                    </div>
+                </div>
+            </div>
+            </a>
+            <a href="#" class="recipe_card_link">
+            <div class="recipe_card">
+                <div class="recipe_card_image_box" style="background-image: url(./images/감자크래커.jpg);">
+                    <div class="recipe_card_icons">
+                        <span class="icon veggie"></span>
+                    </div>
+                </div>
+                <div class="recipe_card_content">
+                    <h4>감자 크래커</h4>
+                    <div class="recipe_card_rating">
+                        <span>★★★★☆</span> (0)
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
