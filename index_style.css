@@ -1,0 +1,108 @@
+/* ========== 히어로 섹션 (스플릿 레이아웃) ========== */
+.hero_split {
+    display: flex; /* 내부 요소들을 가로로 배치 */
+    width: 100%;
+    height: 90vh; /* 화면 높이를 거의 꽉 채우도록 설정 */
+    margin-top: 60px; /* 네비게이션 바 높이만큼 여백 */
+}
+
+/* 1. 왼쪽 텍스트 영역 */
+.hero_split_text {
+    flex: 1; /* 왼쪽과 오른쪽이 1:1 비율을 갖도록 함 */
+    background-color: #F4F1E9; /* 기존 배경색과 동일하게 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5vw; /* 화면 크기에 따라 유동적인 여백 */
+}
+
+.hero_text_content {
+    max-width: 500px; /* 텍스트 영역의 최대 너비 제한 */
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+}
+
+.hero_text_content .project_name {
+    font-family: 'JejuStoneWall'; /* 네비게이션 바와 같은 폰트로 강조 */
+    font-size: 70px;
+    color: #688f42; /* 요청하신 색상입니다 */
+    margin-bottom: 15px;
+}
+
+.hero_text_content h1 {
+    font-family: 'memomentKkukkkuk';
+    font-size: 44px;
+    color: #2B463C; /* 진한 녹색 텍스트 */
+    line-height: 1.4;
+    margin: 0 0 15px 0;
+}
+
+.hero_text_content p {
+    font-family: 'memomentKkukkkuk';
+    font-size: 20px;
+    color: #688F4E; /* 중간 녹색 텍스트 */
+    margin-bottom: 30px;
+}
+
+/* 2. 오른쪽 이미지 영역 */
+.hero_split_image {
+    flex: 1; /* 왼쪽과 오른쪽이 1:1 비율을 갖도록 함 */
+    background-image: url('./assets/images/background_image2.png'); /* 이미지 경로 수정 */
+    background-size: cover;
+    background-position: center;
+}
+
+/* 버튼 스타일은 여기에 유지하는 것이 좋습니다. */
+.cta_button {
+    font-family: 'memomentKkukkkuk';
+    font-size: 18px;
+    background-color: #688F4E;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.cta_button:hover {
+    background-color: #2B463C;
+    transform: translateY(-3px);
+}
+
+
+/* ========== 메인 페이지 섹션 공통 스타일 ========== */
+.featured_recipes, .site_features {
+    text-align: center;
+    margin-bottom: 80px; /* 각 섹션 사이의 간격 */
+}
+
+.featured_recipes h2, .site_features h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+}
+
+/* ========== 사이트 기능 소개 ========== */
+.features_grid {
+    display: flex;
+    justify-content: space-around; /* 아이템들을 균등하게 배치 */
+    gap: 30px;
+}
+
+.feature_item {
+    flex-basis: 30%; /* 각 아이템이 차지할 공간 */
+}
+
+.feature_item img {
+    width: 64px; /* 아이콘 크기 */
+    margin-bottom: 20px;
+}
+
+.feature_item h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.feature_item p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+}
