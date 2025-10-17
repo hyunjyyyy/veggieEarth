@@ -6,408 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Page</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #F3F1ED;
-            font-family: 'Noto Sans', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        /* 네비게이션 바 */
-        .navbar {
-            background-color: #F3F1ED;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 30px;
-        }
-
-        .navbar_container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: 100%;
-            height: 56px;
-            margin: 0 auto;
-        }
-
-        .navbar_logo {
-            flex-shrink: 0;
-            margin-left: 20px;
-        }
-
-        .navbar_logo img {
-            height: 55px;
-            width: auto;
-            display: block;
-        }
-
-        .navbar_menu {
-            display: flex;
-            flex: 0 0 70%;
-            padding: 0;
-            margin: 0;
-        }
-
-        .navbar_menu li {
-            flex: 1 1 0;
-            min-width: 0;
-        }
-
-        .nav_item {
-            color: #83C4C7;
-            font-size: clamp(16px, 1.25vw, 20px);
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            transition: color 0.3s ease;
-        }
-
-        .nav_item:hover {
-            color: #c1c1c1;
-        }
-
-        .navbar_icons {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .navbar_icons a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 41px;
-            height: 41px;
-            border-radius: 50%;
-            transition: background-color 0.3s ease;
-        }
-
-        .navbar_icons a:hover {
-            background-color: #dfddd8;
-        }
-
-        .navbar_icons img {
-            width: 25px;
-            height: 25px;
-            transition: filter 0.3s ease;
-        }
-
-        /* 사이드바 */
-        .sidebar {
-            position: fixed;
-            left: 54px;
-            top: 150px;
-            display: flex;
-            flex-direction: column;
-            gap: 58px;
-            z-index: 999;
-        }
-
-        .sidebar img {
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .sidebar img:hover {
-            transform: scale(1.1);
-        }
-
-        /* 메인 콘텐츠 박스 */
-        .content_box_mypage {
-            flex: 1 1 auto;
-            width: 97%;
-            margin: 116px auto 0;
-            min-height: calc(100vh - 116px);
-            padding: 15px;
-            background-color: white;
-            border-radius: 12px 12px 0 0;
-        }
-
-        /* 마이페이지 콘텐츠 */
-        .mypage_content {
-            width: calc(100% - 104px);
-            margin-left: 89px;
-        }
-
-        .inner_card {
-            background: #f4f1e9;
-            border: 1px solid #e9dfc6;
-            border-radius: 6px;
-            padding: 20px;
-            width: 97%;
-        }
-
-        /* 프로필 섹션 */
-        .profile_section {
-            background: rgba(255, 255, 255, 0.75);
-            border-radius: 15px;
-            padding: 40px;
-            display: flex;
-            gap: 60px;
-            margin-bottom: 20px;
-            align-items: flex-start;
-        }
-
-        .avatar_container {
-            flex-shrink: 0;
-            margin: 0 50px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .avatar_container img {
-            width: 390px;
-            height: 390px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .profile_info {
-            flex: 1 1 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 1400px;
-            margin-top: 70px;
-            margin-left: 25px;
-        }
-
-        .profile_row {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .profile_label {
-            font-size: 32px;
-            width: 250px;
-            font-weight: 600;
-            color: #2b463c;
-            flex-shrink: 0;
-        }
-
-        .profile_value {
-            display: flex;
-            align-items: center;
-            flex: 1 1 auto;
-        }
-
-        .tag {
-            border: 1px solid rgba(189, 189, 189, 0.2);
-            border-radius: 50px;
-            font-size: 23px;
-            color: #828282;
-            letter-spacing: -0.03em;
-            background: white;
-            width: 450px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .action_buttons {
-            display: flex;
-            gap: 60px;
-            margin-top: 40px;
-        }
-
-        .btn {
-            background: #b9d08d;
-            border: none;
-            border-radius: 15px;
-            padding: 16px 45px;
-            font-size: 23px;
-            font-weight: 900;
-            color: #323232;
-            cursor: pointer;
-            font-family: 'Noto Sans', sans-serif;
-            transition: background 0.3s ease;
-        }
-
-        .btn:hover {
-            background: #a8c07c;
-        }
-
-        /* 통계 섹션 */
-        .stats_grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .stat_card {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid #f2f2f2;
-            border-radius: 15px;
-            padding: 30px;
-        }
-
-        .stat_title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .chart_container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
-            position: relative;
-            height: 180px;
-        }
-
-        .donut_chart {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .donut_chart::before {
-            content: '';
-            width: 130px;
-            height: 130px;
-            background: white;
-            border-radius: 50%;
-            position: absolute;
-            z-index: 0;
-        }
-
-        .chart_percentage {
-            position: relative;
-            font-size: 20px;
-            font-weight: bold;
-            color: #2b463c;
-            z-index: 1;
-        }
-
-        /* 차트 색상 */
-        .chart_uploads {
-            background: conic-gradient(
-                rgba(43, 70, 60, 0.61) 0deg,
-                rgba(43, 70, 60, 0.61) 237deg,
-                #f4f1e9 237deg,
-                #f4f1e9 360deg
-            );
-        }
-
-        .chart_comments {
-            background: conic-gradient(
-                rgba(104, 143, 78, 0.73) 0deg,
-                rgba(104, 143, 78, 0.73) 90deg,
-                #f4f1e9 90deg,
-                #f4f1e9 360deg
-            );
-        }
-
-        .chart_scraps {
-            background: conic-gradient(
-                #b1d182 0deg,
-                #b1d182 270deg,
-                #f4f1e9 270deg,
-                #f4f1e9 360deg
-            );
-        }
-
-        /* 통계 상세 */
-        .stat_details {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
-        }
-
-        .stat_item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .stat_row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .stat_indicator {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .indicator_unsuccessful {
-            background: #f4f1e9;
-        }
-
-        .indicator_success_1 {
-            background: rgba(43, 70, 60, 0.61);
-        }
-
-        .stat_number {
-            font-size: 32px;
-            font-weight: 600;
-            color: #333;
-            opacity: 0.8;
-            line-height: 1;
-        }
-
-        .stat_caption {
-            font-size: 12px;
-            color: #828282;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        /* 반응형 */
-        @media (max-width: 1200px) {
-            .stats_grid {
-                grid-template-columns: 1fr;
-            }
-
-            .profile_section {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .profile_info {
-                margin-top: 20px;
-                margin-left: 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
@@ -415,7 +14,7 @@
     <nav class="navbar">
         <div class="navbar_container">
             <a href="#" class="navbar_logo">
-                <img src="https://via.placeholder.com/55x55/83C4C7/FFFFFF?text=LOGO" alt="베지너스">
+                <img src="../../partials/nav/logo.png" alt="베지너스">
             </a>
             <ul class="navbar_menu">
                 <li><a href="#" class="nav_item">HOME</a></li>
@@ -425,17 +24,17 @@
                 <li><a href="#" class="nav_item">MYPAGE</a></li>
             </ul>
             <div class="navbar_icons">
-                <a href="#"><img src="https://via.placeholder.com/25x25/83C4C7/FFFFFF?text=L" alt="login/out"></a>
-                <a href="#"><img src="https://via.placeholder.com/25x25/83C4C7/FFFFFF?text=S" alt="Settings"></a>
+                <a href="#"><img src="../../partials/nav/login_out.png" alt="login/out"></a>
+                <a href="#"><img src="../../partials/nav/Settings.png" alt="Settings"></a>
             </div>
         </div>
     </nav>
 
     <!-- 사이드바 -->
     <aside class="sidebar">
-        <img src="https://via.placeholder.com/50x50/b9d08d/FFFFFF?text=H" alt="Home">
-        <img src="https://via.placeholder.com/50x50/b9d08d/FFFFFF?text=R" alt="Myrecipe">
-        <img src="https://via.placeholder.com/50x50/b9d08d/FFFFFF?text=C" alt="Community">
+        <img src="home.png" alt="Home">
+        <img src="myrecipe.png" alt="Myrecipe">
+        <img src="community.png" alt="Community">
     </aside>
 
     <!-- 메인 콘텐츠 -->
@@ -445,7 +44,7 @@
                 <!-- 프로필 섹션 -->
                 <section class="profile_section">
                     <div class="avatar_container">
-                        <img src="https://via.placeholder.com/390x390/2b463c/FFFFFF?text=Avatar" alt="avatar image">
+                        <img src="Group 33.png" alt="avatar image">
                     </div>
 
                     <div class="profile_info">
@@ -527,7 +126,7 @@
 
                             <div class="stat_item">
                                 <div class="stat_row">
-                                    <span class="stat_indicator indicator_success_1"></span>
+                                    <span class="stat_indicator indicator_success_2"></span>
                                     <span class="stat_number">3</span>
                                 </div>
                                 <div class="stat_caption">Successful</div>
@@ -555,7 +154,7 @@
 
                             <div class="stat_item">
                                 <div class="stat_row">
-                                    <span class="stat_indicator indicator_success_1"></span>
+                                    <span class="stat_indicator indicator_success_3"></span>
                                     <span class="stat_number">6</span>
                                 </div>
                                 <div class="stat_caption">Successful</div>
