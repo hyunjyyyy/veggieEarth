@@ -1,20 +1,20 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="최윤서">
     <title>My Page</title>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="../../assets/styles.css">
 </head>
 
 <body>
-    <!-- 네비게이션 바 -->
     <nav class="navbar">
         <div class="navbar_container">
             <a href="#" class="navbar_logo">
-                <img src="../../partials/nav/logo.png" alt="베지너스">
+                <img src="../../assets/images/logo.png" alt="로고">
             </a>
             <ul class="navbar_menu">
                 <li><a href="#" class="nav_item">HOME</a></li>
@@ -24,146 +24,113 @@
                 <li><a href="#" class="nav_item">MYPAGE</a></li>
             </ul>
             <div class="navbar_icons">
-                <a href="#"><img src="../../partials/nav/login_out.png" alt="login/out"></a>
-                <a href="#"><img src="../../partials/nav/Settings.png" alt="Settings"></a>
+                <a href="#"><img src="../../assets/images/login_dark.png" alt="login/out"></a>
+                <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings"></a>
             </div>
         </div>
     </nav>
 
-    <!-- 사이드바 -->
     <aside class="sidebar">
-        <img src="home.png" alt="Home">
-        <img src="myrecipe.png" alt="Myrecipe">
-        <img src="community.png" alt="Community">
+        <div class="sidebar_item active">
+            <img src="home.png" alt="Home">
+        </div>
+        <div class="sidebar_item">
+            <img src="myrecipe.png" alt="Myrecipe">
+        </div>
+        <div class="sidebar_item">
+            <img src="community.png" alt="Community">
+        </div>
     </aside>
 
-    <!-- 메인 콘텐츠 -->
-    <div class="content_box_mypage">
-        <div class="mypage_content">
-            <div class="inner_card">
-                <!-- 프로필 섹션 -->
-                <section class="profile_section">
-                    <div class="avatar_container">
-                        <img src="Group 33.png" alt="avatar image">
-                    </div>
-
-                    <div class="profile_info">
-                        <div class="profile_row">
-                            <div class="profile_label">name</div>
-                            <div class="profile_value">
-                                <span class="tag">Tomatolover</span>
-                            </div>
-                        </div>
-
-                        <div class="profile_row">
-                            <div class="profile_label">vegan types</div>
-                            <div class="profile_value">
-                                <span class="tag">vegan</span>
-                            </div>
-                        </div>
-
-                        <div class="profile_row">
-                            <div class="profile_label">badge</div>
-                            <div class="profile_value">
-                                <span class="tag">새싹 비건</span>
-                            </div>
-                        </div>
-
-                        <div class="action_buttons">
-                            <button class="btn">Edit</button>
-                            <button class="btn">badge guide</button>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 통계 섹션 -->
-                <section class="stats_grid">
-                    <!-- 게시물 업로드 수 -->
-                    <div class="stat_card">
-                        <h3 class="stat_title">게시물 업로드 수</h3>
-                        <div class="chart_container">
-                            <div class="donut_chart chart_uploads">
-                                <span class="chart_percentage">66%</span>
-                            </div>
-                        </div>
-
-                        <div class="stat_details">
-                            <div class="stat_item">
-                                <div class="stat_row">
-                                    <span class="stat_indicator indicator_unsuccessful"></span>
-                                    <span class="stat_number">3</span>
-                                </div>
-                                <div class="stat_caption">Unsuccessful</div>
-                            </div>
-
-                            <div class="stat_item">
-                                <div class="stat_row">
-                                    <span class="stat_indicator indicator_success_1"></span>
-                                    <span class="stat_number">6</span>
-                                </div>
-                                <div class="stat_caption">Successful</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 댓글 수 -->
-                    <div class="stat_card">
-                        <h3 class="stat_title">댓글 수</h3>
-                        <div class="chart_container">
-                            <div class="donut_chart chart_comments">
-                                <span class="chart_percentage">25%</span>
-                            </div>
-                        </div>
-
-                        <div class="stat_details">
-                            <div class="stat_item">
-                                <div class="stat_row">
-                                    <span class="stat_indicator indicator_unsuccessful"></span>
-                                    <span class="stat_number">9</span>
-                                </div>
-                                <div class="stat_caption">Unsuccessful</div>
-                            </div>
-
-                            <div class="stat_item">
-                                <div class="stat_row">
-                                    <span class="stat_indicator indicator_success_2"></span>
-                                    <span class="stat_number">3</span>
-                                </div>
-                                <div class="stat_caption">Successful</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 스크랩 수 -->
-                    <div class="stat_card">
-                        <h3 class="stat_title">스크랩 수</h3>
-                        <div class="chart_container">
-                            <div class="donut_chart chart_scraps">
-                                <span class="chart_percentage">75%</span>
-                            </div>
-                        </div>
-
-                        <div class="stat_details">
-                            <div class="stat_item">
-                                <div class="stat_row">
-                                    <span class="stat_indicator indicator_unsuccessful"></span>
-                                    <span class="stat_number">3</span>
-                                </div>
-                                <div class="stat_caption">Unsuccessful</div>
-                            </div>
-
-                            <div class="stat_item">
-                                <div class="stat_row">
-                                    <span class="stat_indicator indicator_success_3"></span>
-                                    <span class="stat_number">6</span>
-                                </div>
-                                <div class="stat_caption">Successful</div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+    <div class="content_wrapper">
+        <section class="profile_section">
+            <div class="avatar_container">
+                <img src="Group 33.png" alt="avatar image">
             </div>
-        </div>
+
+            <div class="profile_info">
+                <div class="profile_row">
+                    <div class="profile_label">name</div>
+                    <div class="profile_value">
+                        <span class="tag">Tomatolover</span>
+                    </div>
+                </div>
+
+                <div class="profile_row">
+                    <div class="profile_label">vegan types</div>
+                    <div class="profile_value">
+                        <span class="tag">vegan</span>
+                    </div>
+                </div>
+
+                <div class="profile_row">
+                    <div class="profile_label">badge</div>
+                    <div class="profile_value">
+                        <span class="tag">
+                            새싹 비건
+                            <img src="새싹비건.png" alt="비건뱃지 lv.1">
+                        </span>
+                    </div>
+                </div>
+
+                <div class="action_buttons">
+                    <button class="btn">Edit</button>
+                    <button class="btn">badge guide</button>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="recipe_grid">
+                <div class="recipe_card">
+                    <div class="recipe_card_image_box" style="background-image: url(./images/감자된장국.jpg);">
+                        <div class="recipe_card_icons">
+                            <span class="icon veggie"></span>
+                        </div>
+                    </div>
+                    <div class="recipe_card_content">
+                        <h4>감자 된장국</h4>
+
+                        <div class="recipe_card_rating">
+                            <span>★★★★☆</span> (15)
+                        </div>
+                    </div>
+                </div>
+                <a href="eggplant_pizza.html" class="recipe_card_link">
+                    <div class="recipe_card">
+                        <div class="recipe_card_image_box" style="background-image: url(./images/가지피자.jpg);">
+                            <div class="recipe_card_icons">
+                                <span class="icon veggie"></span>
+                                <span class="icon milk"></span>
+                            </div>
+                        </div>
+                        <div class="recipe_card_content">
+                            <h4>가지 피자</h4>
+                            <span>🍽️ 2인분</span>
+                            <span>⏰ 30분 이내</span>
+                            <span>🍳 쉬움</span>
+                            <div class="recipe_card_rating">
+                                <span>★★★★☆</span> (0)
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="recipe_card_link">
+                    <div class="recipe_card">
+                        <div class="recipe_card_image_box" style="background-image: url(./images/감자크래커.jpg);">
+                            <div class="recipe_card_icons">
+                                <span class="icon veggie"></span>
+                            </div>
+                        </div>
+                        <div class="recipe_card_content">
+                            <h4>감자 크래커</h4>
+                            <div class="recipe_card_rating">
+                                <span>★★★★☆</span> (0)
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
     </div>
 </body>
 
