@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니티 페이지 - 메인 페이지</title>
+    <link rel="stylesheet" href="community.css"> 
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar_container">
+            <a href="#" class="navbar_logo">
+                <img src="../../assets/images/logo.png" alt="로고">
+            </a>
+            <ul class="navbar_menu">
+                <li><a href="#" class="nav_item">HOME</a></li>
+                <li><a href="recipe_main.html" class="nav_item">RECIPE</a></li>
+                <li><a href="#" class="nav_item">MAP</a></li>
+                <li><a href="#" class="nav_item">COMMUNITY</a></li>
+                <li><a href="#" class="nav_item">MYPAGE</a></li>
+            </ul>
+            <div class="navbar_icons">
+                <a href="#"><img src="../../assets/images/login_dark.png" alt="login/out"></a>
+                <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings"></a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <main class="main-content">
+            <div class="left-section">
+                <section class="hot-topic-section">
+                    <h2 class="hot-topic-title">HOT TOPIC!</h2>
+                    <div class="hot-topic-underline"></div>
+                    <div class="hot-topic-list">
+                        <div class="hot-topic-card community_card"> 
+                            <div class="hot-topic-image-box"></div>
+                            <div class="hot-topic-text-box">
+                                <p class="card-title">dddddd</p>
+                                <p class="card-desc">asdfasfadsfsdfasdff</p>
+                            </div>
+                        </div>
+                        <div class="hot-topic-card community_card"> 
+                            <div class="hot-topic-image-box"></div>
+                            <div class="hot-topic-text-box">
+                                <p class="card-title">dddddd</p>
+                                <p class="card-desc">asdfasfadsfsdfasdff</p>
+                            </div>
+                        </div>
+                        <div class="hot-topic-card community_card"> 
+                            <div class="hot-topic-image-box"></div>
+                            <div class="hot-topic-text-box">
+                                <p class="card-title">dddddd</p>
+                                <p class="card-desc">asdfasfadsfsdfasdff</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="community-section">
+                    <div class="tab-buttons">
+                        <button class="tab-button active">자유 게시판</button>
+                        <button class="tab-button">질문 게시판</button>
+                        <button class="tab-button">후기 게시판</button>
+                    </div>
+
+                    <div class="post-list">
+                        <div class="post-item community_post_box"> 
+                            <div class="post-content">
+                                <p class="post-title">HI</p>
+                                <p class="post-text">안녕하세요</p>
+                            </div>
+                            <div class="post-meta">
+                                <span class="post-time">1s ago</span>
+                                <span class="post-likes">1 <img src="../../assets/images/Heart.png" alt="좋아요"></span>
+                            </div>
+                        </div>
+                        <div class="post-item community_post_box"> 
+                            <div class="post-content">
+                                <p class="post-title">HI</p>
+                                <p class="post-text">안녕하세요</p>
+                            </div>
+                            <div class="post-meta">
+                                <span class="post-time">1s ago</span>
+                                <span class="post-likes">1 <img src="../../assets/images/Heart.png" alt="좋아요"></span>
+                            </div>
+                        </div>
+                        <div class="post-item community_post_box"> 
+                            <div class="post-content">
+                                <p class="post-title">HI</p>
+                                <p class="post-text">안녕하세요</p>
+                            </div>
+                            <div class="post-meta">
+                                <span class="post-time">1s ago</span>
+                                <span class="post-likes">1 <img src="../../assets/images/Heart.png" alt="좋아요"></span>
+                            </div>
+                        </div>
+                        <div class="post-item community_post_box"> 
+                            <div class="post-content">
+                                <p class="post-title">HI</p>
+                                <p class="post-text">안녕하세요</p>
+                            </div>
+                            <div class="post-meta">
+                                <span class="post-time">1s ago</span>
+                                <span class="post-likes">1 <img src="../../assets/images/Heart.png" alt="좋아요"></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="right-section">
+                <div class="search-box-wrap community_search_box">
+                    <input type="text" placeholder="Search" class="search-input">
+                </div>
+
+                <section class="new-task-section community_write_box"> 
+                    <h3 class="task-header">New Task</h3>
+                    <div class="form-group">
+                        <label for="task-title">Title</label>
+                        <input type="text" id="task-title" value="asdfasdf" class="community_input_field">
+                    </div>
+                    <div class="form-group">
+                        <label for="task-description">Description</label>
+                        <textarea id="task-description" class="community_input_field"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Pics</label>
+                        <div class="pics-upload community_upload_box">
+                            <img src="../../assets/images/Download.png" alt="파일 업로드">
+                        </div>
+                    </div>
+                    <button class="create-new-button community_button">Create New</button>
+                </section>
+            </aside>
+        </main>
+    </div>
+</body>
+</html>
