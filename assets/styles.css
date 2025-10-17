@@ -1,12 +1,19 @@
 @font-face {
     font-family:'memomentKkukkkuk';
-    src:url('../../assets/fonts/memomentKkukkkuk.otf') format('opentype');
+    src:url(./fonts/memomentKkukkkuk.otf) format('opentype');
 }
 
 @font-face {
     font-family: 'KofihJongwook';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/KOFIHDrLEEJWTTF-B.woff2') format('woff2');
     font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'JejuStoneWall';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');
+    font-weight: normal;
     font-display: swap;
 }
 
@@ -82,6 +89,10 @@ ul {
     width: 90%;
     max-width: 1200px;
     margin: 120px auto 40px auto;
+}
+
+.content_wrapper h2 {
+    margin-bottom: 50px;
 }
 
 /* 1. 필터 및 검색 영역 */
@@ -250,49 +261,70 @@ ul {
     vertical-align: middle;
 }
 .icon.fruit { 
-    background-image: url(../../assets/images/fruit.png);
+    background-image: url(./images/fruit.png);
 }
 .icon.veggie { 
-    background-image: url(../../assets/images/veggie.png);
+    background-image: url(./images/veggie.png);
 }
 .icon.milk { 
-    background-image: url(../../assets/images/milk.png);
+    background-image: url(./images/milk.png);
 }
 .icon.egg {
-    background-image: url(../../assets/images/egg.png);
+    background-image: url(./images/egg.png);
 }
 .icon.fish {
-    background-image: url(../../assets/images/fish.png);
+    background-image: url(./images/fish.png);
 }
 .icon.poultry {
-    background-image: url(../../assets/images/poultry.png);
+    background-image: url(./images/poultry.png);
 }
 .icon.meat {
-    background-image: url(../../assets/images/meat.png);
+    background-image: url(./images/meat.png);
 }
 
+/* assets/styles.css */
+
+/* 1. recipe_card_content 수정 */
 .recipe_card_content {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 120px; /* 높이를 살짝 줄여서 간격 조절 */
+    box-sizing: border-box;
+    text-align: left; /* ★★★ 1. 텍스트 왼쪽 정렬 강제 */
 }
 
+/* 2. h4 태그 아래 여백 추가 */
 .recipe_card_content h4 {
-    margin: 0 0 10px 0;
+    margin: 0 0 15px 0; /* ★★★ 2. 하단 여백을 10px -> 15px로 늘림 */
     font-size: 20px;
     font-weight: 700;
     color: #2B463C;
 }
 
+/* 3. recipe_card_meta 아래 여백 추가 */
+.recipe_card_meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px; /* ★★★ 3. 하단 여백을 10px -> 15px로 늘림 */
+}
 
+/* 4. recipe_card_rating은 그대로 유지 */
 .recipe_card_rating {
     font-size: 14px;
     color: #aaa;
     font-weight: 500;
+    margin-top: auto; /* 맨 아래 정렬 유지 */
 }
 
 .recipe_card_rating span {
     color: #FFD200;
     margin-right: 5px;
     letter-spacing: 2px;
+
 }
 .recipe_card_link {
     color: inherit;
@@ -331,6 +363,14 @@ ul {
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 20px;
+}
+
+.recipe_card_meta span img,
+.recipe_meta_info span img {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 5px;
 }
 
 .recipe_hero_info h1 {

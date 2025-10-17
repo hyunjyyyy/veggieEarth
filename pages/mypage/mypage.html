@@ -1,55 +1,70 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="최윤서" />
     <title>My Page</title>
-    <link rel="stylesheet" href="index.css">
+    <!-- 메인 스타일 -->
+    <link rel="stylesheet" href="index.css" />
 </head>
 
 <body>
-    <!-- 네비게이션 바 -->
+    <!-- ====== 네비게이션 바 ====== -->
     <nav class="navbar">
         <div class="navbar_container">
+            <!-- 로고 -->
             <a href="#" class="navbar_logo">
-                <img src="../../assets/images/logo.png" alt="로고">
+                <img src="../../assets/images/logo.png" alt="로고" />
             </a>
+
+            <!-- 상단 메뉴 -->
             <ul class="navbar_menu">
                 <li><a href="#" class="nav_item">HOME</a></li>
-                <li><a href="#" class="nav_item">RECIPE</a></li>
-                <li><a href="#" class="nav_item">MAP</a></li>
-                <li><a href="#" class="nav_item">COMMUNITY</a></li>
-                <li><a href="#" class="nav_item">MYPAGE</a></li>
+                <li><a href="../recipe/recipe_main.html" class="nav_item">RECIPE</a></li>
+                <li><a href="../map/map.html" class="nav_item">MAP</a></li>
+                <li><a href="../community/community.html" class="nav_item">COMMUNITY</a></li>
+                <li><a href="../mypage/mypage.html" class="nav_item">MYPAGE</a></li>
             </ul>
+
+            <!-- 우측 아이콘(로그인/설정) -->
             <div class="navbar_icons">
-                <a href="#"><img src="../../assets/images/login_dark.png" alt="login/out"></a>
-                <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings"></a>
+                <a href="#"><img src="../../assets/images/login_dark.png" alt="login/out" /></a>
+                <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings" /></a>
             </div>
         </div>
     </nav>
 
-    <!-- 사이드바 -->
+    <!-- ====== 사이드바 ====== -->
     <aside class="sidebar">
+        <!-- 현재 페이지 -->
         <div class="sidebar_item active">
-            <img src="home.png" alt="Home">
+            <a href="mypage.html"><img src="home.png" alt="Home" /></a>
         </div>
+        <!-- 내 레시피 -->
         <div class="sidebar_item">
-            <img src="myrecipe.png" alt="Myrecipe">
+            <a href="myrecipe_mypage.html"><img src="myrecipe.png" alt="Myrecipe" /></a>
         </div>
+        <!-- 커뮤니티 -->
         <div class="sidebar_item">
-            <img src="community.png" alt="Community">
+            <a href="#"><img src="community.png" alt="Community" /></a>
         </div>
     </aside>
 
-    <!-- 메인 콘텐츠 -->
+    <!-- ===== 메인 컨텐츠 래퍼 ===== -->
     <div class="content_wrapper">
-        <!-- 프로필 섹션 -->
+
+        <!--===== 프로필 섹션 ===== -->
         <section class="profile_section">
+            <!-- 프로필 이미지 -->
             <div class="avatar_container">
-                <img src="Group 33.png" alt="avatar image">
+                <img src="Group 33.png" alt="avatar image" />
             </div>
 
+            <!-- 프로필 텍스트 정보 -->
             <div class="profile_info">
+                <!-- 닉네임 -->
                 <div class="profile_row">
                     <div class="profile_label">name</div>
                     <div class="profile_value">
@@ -57,6 +72,7 @@
                     </div>
                 </div>
 
+                <!-- 비건 타입 -->
                 <div class="profile_row">
                     <div class="profile_label">vegan types</div>
                     <div class="profile_value">
@@ -64,13 +80,18 @@
                     </div>
                 </div>
 
+                <!-- 뱃지 -->
                 <div class="profile_row">
                     <div class="profile_label">badge</div>
                     <div class="profile_value">
-                        <span class="tag">새싹 비건</span>
+                        <span class="tag">
+                            새싹 비건
+                            <img src="새싹비건.png" alt="비건뱃지 lv.1" />
+                        </span>
                     </div>
                 </div>
 
+                <!-- 액션 버튼 -->
                 <div class="action_buttons">
                     <button class="btn">Edit</button>
                     <button class="btn">badge guide</button>
@@ -78,17 +99,21 @@
             </div>
         </section>
 
-        <!-- 통계 섹션 -->
+        <!-- ========== 통계(3개 카드) ========== -->
         <section class="stats_grid">
-            <!-- 게시물 업로드 수 -->
+
+            <!-- 업로드 통계 카드 -->
             <div class="stat_card">
                 <h3 class="stat_title">게시물 업로드 수</h3>
+
+                <!-- 도넛 차트 -->
                 <div class="chart_container">
                     <div class="donut_chart chart_uploads">
                         <span class="chart_percentage">66%</span>
                     </div>
                 </div>
 
+                <!-- 상세 지표 -->
                 <div class="stat_details">
                     <div class="stat_item">
                         <div class="stat_row">
@@ -108,9 +133,10 @@
                 </div>
             </div>
 
-            <!-- 댓글 수 -->
+            <!-- 댓글 통계 카드 -->
             <div class="stat_card">
                 <h3 class="stat_title">댓글 수</h3>
+
                 <div class="chart_container">
                     <div class="donut_chart chart_comments">
                         <span class="chart_percentage">25%</span>
@@ -136,9 +162,10 @@
                 </div>
             </div>
 
-            <!-- 스크랩 수 -->
+            <!-- 스크랩 통계 카드 -->
             <div class="stat_card">
                 <h3 class="stat_title">스크랩 수</h3>
+
                 <div class="chart_container">
                     <div class="donut_chart chart_scraps">
                         <span class="chart_percentage">75%</span>
@@ -163,7 +190,12 @@
                     </div>
                 </div>
             </div>
+            <!-- /스크랩 카드 끝 -->
+
         </section>
+        <!-- /통계 섹션 끝 -->
+
     </div>
+    <!-- /content_wrapper 끝 -->
 </body>
 </html>
