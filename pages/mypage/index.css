@@ -1,22 +1,26 @@
+/* ========== 폰트 설정 ========== */
 @font-face {
   font-family: "memomentKkukkkuk";
   src: url("../../assets/fonts/memomentKkukkkuk.otf") format("opentype");
 }
+
 
 @font-face {
   font-family: "KofihJongwook";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/KOFIHDrLEEJWTTF-B.woff2")
     format("woff2");
   font-weight: 700;
-  font-display: swap;
+  font-display: swap; 
 }
 
+/* ========== 기본 스타일 초기화 ========== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* ========== body 기본 스타일 ========== */
 body {
   margin: 0;
   background-color: #f4f1e9;
@@ -43,15 +47,15 @@ ul {
   width: 100%;
   padding: 10px 5vw;
   box-sizing: border-box;
-  z-index: 1000;
+  z-index: 1000; 
   border-bottom: 1px solid #e2e0db;
   font-family: "KofihJongwook";
 }
 
 .navbar_container {
-  display: flex;
+  display: flex; 
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; 
   margin: 0 auto;
   max-width: 1200px;
 }
@@ -69,7 +73,7 @@ ul {
   font-size: 18px;
   font-weight: 500;
   color: #688f4e;
-  transition: color 0.3s;
+  transition: color 0.3s; 
 }
 
 .nav_item:hover {
@@ -91,7 +95,7 @@ ul {
   left: 30px;
   top: 120px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
   gap: 20px;
   z-index: 999;
 }
@@ -105,13 +109,13 @@ ul {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; 
   box-shadow: 0 4px 12px rgba(43, 70, 60, 0.06);
 }
 
 .sidebar_item:hover {
   background-color: #b1d182;
-  transform: translateX(5px);
+  transform: translateX(5px); 
   box-shadow: 0 8px 16px rgba(43, 70, 60, 0.12);
 }
 
@@ -126,17 +130,18 @@ ul {
     hue-rotate(74deg) brightness(94%) contrast(88%);
 }
 
+
 .sidebar_item:hover img,
 .sidebar_item.active img {
   filter: brightness(0) saturate(100%) invert(100%);
 }
 
+
 /* ========== 메인 콘텐츠 ========== */
 .content_wrapper {
   width: 90%;
   max-width: 1200px;
-  margin: 120px auto 40px auto;
-  margin-left: 180px;
+  margin: 120px auto 40px auto; 
 }
 
 /* ========== 프로필 섹션 ========== */
@@ -146,9 +151,10 @@ ul {
   padding: 40px;
   box-shadow: 0 8px 16px rgba(43, 70, 60, 0.08);
   margin-bottom: 40px;
-  display: flex;
-  gap: 50px;
+  display: flex; 
+  gap: 80px;
   align-items: center;
+  justify-content: center;
 }
 
 .avatar_container {
@@ -156,15 +162,15 @@ ul {
 }
 
 .avatar_container img {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%; 
+  object-fit: cover; 
   box-shadow: 0 8px 16px rgba(43, 70, 60, 0.1);
 }
 
 .profile_info {
-  flex: 1;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -181,7 +187,7 @@ ul {
   font-weight: bold;
   color: #688f4e;
   width: 120px;
-  flex-shrink: 0;
+  flex-shrink: 0; 
 }
 
 .profile_value {
@@ -199,6 +205,12 @@ ul {
   border: none;
   min-width: 200px;
   text-align: center;
+}
+
+.tag img{
+  width: 14px;
+  position: relative;
+  top: 2px;
 }
 
 .action_buttons {
@@ -228,7 +240,7 @@ ul {
 /* ========== 통계 섹션 ========== */
 .stats_grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); 
   gap: 30px;
 }
 
@@ -241,7 +253,7 @@ ul {
 }
 
 .stat_card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px); 
   box-shadow: 0 12px 24px rgba(43, 70, 60, 0.12);
 }
 
@@ -262,6 +274,7 @@ ul {
   height: 180px;
 }
 
+/* ========== 도넛 차트 ========== */
 .donut_chart {
   width: 180px;
   height: 180px;
@@ -290,8 +303,8 @@ ul {
   z-index: 1;
 }
 
-/* 차트 색상 */
 .chart_uploads {
+  /* 237deg는 약 66%에 해당 (237/360) */
   background: conic-gradient(
     #2b463c 0deg,
     #2b463c 237deg,
@@ -301,6 +314,7 @@ ul {
 }
 
 .chart_comments {
+  /* 90deg는 25%에 해당 (90/360) */
   background: conic-gradient(
     #688f4e 0deg,
     #688f4e 90deg,
@@ -310,6 +324,7 @@ ul {
 }
 
 .chart_scraps {
+  /* 270deg는 75%에 해당 (270/360) */
   background: conic-gradient(
     #b1d182 0deg,
     #b1d182 270deg,
@@ -376,35 +391,45 @@ ul {
   text-align: center;
 }
 
-/* 반응형 */
-@media (max-width: 1200px) {
+/* ========== 반응형 디자인 ========== */
+/* 화면 너비가 1300px 이하일 때 적용 */
+@media (max-width: 1350px) {
   .content_wrapper {
-    margin-left: auto;
+    margin: 165px auto 40px; 
   }
 
+  /* 사이드바: 왼쪽 고정(vertical) → 상단 가로 툴바(horizontal) 형태로 변경 */
   .sidebar {
-    display: none;
-  }
-
-  .stats_grid {
-    grid-template-columns: 1fr;
-  }
-
-  .profile_section {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .profile_row {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .profile_label {
-    width: 100%;
-  }
-
-  .action_buttons {
+    position: absolute;     
+    top: 70px;            
+    left: 0; right: 0;
+    flex-direction: row;  
     justify-content: center;
+    width: 100%;
+    /* 기존 스타일 초기화 */
+    gap: 30px;
+    padding: 8px 12px;
+    margin: 12px auto;   
+    background: transparent;
+    z-index: 999;        
   }
+
+  .sidebar_item {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(43,70,60,.08);
+  }
+
+  .sidebar_item:hover {
+    transform: none; 
+    /* 호버 시 이동 효과 비활성화 */
+  }
+
+  /* 프로필과 통계 섹션을 세로로 쌓이도록 변경 */
+  .stats_grid { grid-template-columns: 1fr; } 
+  .profile_section { flex-direction: column; text-align: center; } 
+  .profile_row { flex-direction: column; gap: 10px; }
+  .profile_label { width: 100%; }
+  .action_buttons { justify-content: center; }
 }
