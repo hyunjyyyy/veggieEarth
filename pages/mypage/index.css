@@ -90,7 +90,7 @@ ul {
 }
 
 /* ========== 사이드바 ========== */
-.sidebar {
+.mypage_sidebar {
   position: fixed;
   left: 30px;
   top: 120px;
@@ -100,7 +100,7 @@ ul {
   z-index: 999;
 }
 
-.sidebar_item {
+.mypage_sidebar_item {
   width: 60px;
   height: 60px;
   background-color: white;
@@ -113,17 +113,17 @@ ul {
   box-shadow: 0 4px 12px rgba(43, 70, 60, 0.06);
 }
 
-.sidebar_item:hover {
+.mypage_sidebar_item:hover {
   background-color: #b1d182;
   transform: translateX(5px); 
   box-shadow: 0 8px 16px rgba(43, 70, 60, 0.12);
 }
 
-.sidebar_item.active {
+.mypage_sidebar_item.active {
   background-color: #688f4e;
 }
 
-.sidebar_item img {
+.mypage_sidebar_item img {
   width: 30px;
   height: 30px;
   filter: brightness(0) saturate(100%) invert(45%) sepia(13%) saturate(1072%)
@@ -131,21 +131,21 @@ ul {
 }
 
 
-.sidebar_item:hover img,
-.sidebar_item.active img {
+.mypage_sidebar_item:hover img,
+.mypage_sidebar_item.active img {
   filter: brightness(0) saturate(100%) invert(100%);
 }
 
 
 /* ========== 메인 콘텐츠 ========== */
-.content_wrapper {
+.mypage_content_wrapper {
   width: 90%;
   max-width: 1200px;
   margin: 120px auto 40px auto; 
 }
 
 /* ========== 프로필 섹션 ========== */
-.profile_section {
+.mypage_profile_section {
   background-color: white;
   border-radius: 20px;
   padding: 40px;
@@ -157,11 +157,11 @@ ul {
   justify-content: center;
 }
 
-.avatar_container {
+.mypage_avatar_container {
   flex-shrink: 0;
 }
 
-.avatar_container img {
+.mypage_avatar_container img {
   width: 220px;
   height: 220px;
   border-radius: 50%; 
@@ -169,20 +169,20 @@ ul {
   box-shadow: 0 8px 16px rgba(43, 70, 60, 0.1);
 }
 
-.profile_info {
+.mypage_profile_info {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.profile_row {
+.mypage_profile_row {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.profile_label {
+.mypage_profile_label {
   font-size: 18px;
   font-weight: bold;
   color: #688f4e;
@@ -190,11 +190,11 @@ ul {
   flex-shrink: 0; 
 }
 
-.profile_value {
+.mypage_profile_value {
   flex: 1;
 }
 
-.tag {
+.mypage_tag {
   display: inline-block;
   background-color: #f4f1e9;
   color: #2b463c;
@@ -207,19 +207,19 @@ ul {
   text-align: center;
 }
 
-.tag img{
+.mypage_tag img{
   width: 14px;
   position: relative;
   top: 2px;
 }
 
-.action_buttons {
+.mypage_action_buttons {
   display: flex;
   gap: 15px;
   margin-top: 10px;
 }
 
-.btn {
+.mypage_btn {
   color: white;
   background-color: #688f4e;
   border: none;
@@ -232,19 +232,19 @@ ul {
   transition: all 0.2s ease-in-out;
 }
 
-.btn:hover {
+.mypage_btn:hover {
   background-color: #b1d182;
   color: #2b463c;
 }
 
 /* ========== 통계 섹션 ========== */
-.stats_grid {
+.mypage_stats_grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
   gap: 30px;
 }
 
-.stat_card {
+.mypage_stat_card {
   background-color: white;
   border-radius: 20px;
   padding: 35px;
@@ -252,12 +252,12 @@ ul {
   transition: all 0.3s ease;
 }
 
-.stat_card:hover {
+.mypage_stat_card:hover {
   transform: translateY(-5px); 
   box-shadow: 0 12px 24px rgba(43, 70, 60, 0.12);
 }
 
-.stat_title {
+.mypage_stat_title {
   font-size: 18px;
   font-weight: bold;
   color: #2b463c;
@@ -265,7 +265,7 @@ ul {
   text-align: center;
 }
 
-.chart_container {
+.mypage_chart_container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -275,7 +275,7 @@ ul {
 }
 
 /* ========== 도넛 차트 ========== */
-.donut_chart {
+.mypage_donut_chart {
   width: 180px;
   height: 180px;
   border-radius: 50%;
@@ -285,7 +285,7 @@ ul {
   justify-content: center;
 }
 
-.donut_chart::before {
+.mypage_donut_chart::before {
   content: "";
   width: 130px;
   height: 130px;
@@ -295,7 +295,7 @@ ul {
   z-index: 0;
 }
 
-.chart_percentage {
+.mypage_chart_percentage {
   position: relative;
   font-size: 18px;
   font-weight: 700;
@@ -303,7 +303,7 @@ ul {
   z-index: 1;
 }
 
-.chart_uploads {
+.mypage_chart_uploads {
   /* 237deg는 약 66%에 해당 (237/360) */
   background: conic-gradient(
     #2b463c 0deg,
@@ -313,7 +313,7 @@ ul {
   );
 }
 
-.chart_comments {
+.mypage_chart_comments {
   /* 90deg는 25%에 해당 (90/360) */
   background: conic-gradient(
     #688f4e 0deg,
@@ -323,7 +323,7 @@ ul {
   );
 }
 
-.chart_scraps {
+.mypage_chart_scraps {
   /* 270deg는 75%에 해당 (270/360) */
   background: conic-gradient(
     #b1d182 0deg,
@@ -334,57 +334,57 @@ ul {
 }
 
 /* 통계 상세 */
-.stat_details {
+.mypage_stat_details {
   display: flex;
   justify-content: space-around;
   gap: 20px;
 }
 
-.stat_item {
+.mypage_stat_item {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
 }
 
-.stat_row {
+.mypage_stat_row {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.stat_indicator {
+.mypage_stat_indicator {
   width: 20px;
   height: 20px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-.indicator_unsuccessful {
+.mypage_indicator_unsuccessful {
   background: #f4f1e9;
   border: 2px solid #e2e0db;
 }
 
-.indicator_success_1 {
+.mypage_indicator_success_1 {
   background: #2b463c;
 }
 
-.indicator_success_2 {
+.mypage_indicator_success_2 {
   background: #688f4e;
 }
 
-.indicator_success_3 {
+.mypage_indicator_success_3 {
   background: #b1d182;
 }
 
-.stat_number {
+.mypage_stat_number {
   font-size: 24px;
   font-weight: 500;
   color: #2b463c;
   line-height: 1;
 }
 
-.stat_caption {
+.mypage_stat_caption {
   font-size: 14px;
   color: #688f4e;
   font-weight: 500;
@@ -394,12 +394,12 @@ ul {
 /* ========== 반응형 디자인 ========== */
 /* 화면 너비가 1300px 이하일 때 적용 */
 @media (max-width: 1350px) {
-  .content_wrapper {
+  .mypage_content_wrapper {
     margin: 165px auto 40px; 
   }
 
   /* 사이드바: 왼쪽 고정(vertical) → 상단 가로 툴바(horizontal) 형태로 변경 */
-  .sidebar {
+  .mypage_sidebar {
     position: absolute;     
     top: 70px;            
     left: 0; right: 0;
@@ -414,22 +414,22 @@ ul {
     z-index: 999;        
   }
 
-  .sidebar_item {
+  .mypage_sidebar_item {
     width: 48px;
     height: 48px;
     border-radius: 16px;
     box-shadow: 0 2px 8px rgba(43,70,60,.08);
   }
 
-  .sidebar_item:hover {
+  .mypage_sidebar_item:hover {
     transform: none; 
     /* 호버 시 이동 효과 비활성화 */
   }
 
   /* 프로필과 통계 섹션을 세로로 쌓이도록 변경 */
-  .stats_grid { grid-template-columns: 1fr; } 
-  .profile_section { flex-direction: column; text-align: center; } 
-  .profile_row { flex-direction: column; gap: 10px; }
-  .profile_label { width: 100%; }
-  .action_buttons { justify-content: center; }
+  .mypage_stats_grid { grid-template-columns: 1fr; } 
+  .mypage_profile_section { flex-direction: column; text-align: center; } 
+  .mypage_profile_row { flex-direction: column; gap: 10px; }
+  .mypage_profile_label { width: 100%; }
+  .mypage_action_buttons { justify-content: center; }
 }
