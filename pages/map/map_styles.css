@@ -506,7 +506,7 @@ ul {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    padding: 15px 0;
+    padding: 10px 0 15px;
     border-bottom: 1px solid #eee;
 }
 
@@ -517,7 +517,6 @@ ul {
 .map_review {
     flex-grow: 1;
     width: 100%;
-    padding-right: 0;
 }
 
 .map_review_user_info {
