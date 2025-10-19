@@ -606,6 +606,12 @@ ul {
     color: #4A4A4A;
 }
 
+#tab_home_link .tab_info h4 img {
+    width: 16px; 
+    height: 16px;
+    margin-right: 5px; 
+    vertical-align: middle; 
+}
 
 /* 지도 */
 .map_container {
