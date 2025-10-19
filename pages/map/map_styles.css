@@ -1,9 +1,20 @@
+@font-face {
+    font-family:'memomentKkukkkuk';
+    src:url('../../assets/fonts/memomentKkukkkuk.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'KofihJongwook';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/KOFIHDrLEEJWTTF-B.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
 body {
     margin: 0;
-    background-color: #F3F1ED;
-    font-family: Noto Sans, sans-serif;
-    display: flex;
-    flex-direction: column;
+    background-color: #F4F1E9;
+    color: #2B463C;
+    font-family: 'memomentKkukkkuk';
 }
 
 a {
@@ -13,20 +24,21 @@ a {
 
 ul {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-
-/* 네비게이션 바 */
+/* ========== 네비게이션 바 ========== */
 .navbar {
-    background-color: #F3F1ED;
+    background-color: #F4F1E9;
     position: fixed;
     top: 0;
-    left: 0;
-    z-index: 1000;
-
     width: 100%;
-    padding: 30px;
+    padding: 10px 5vw;
     box-sizing: border-box;
+    z-index: 1000;
+    border-bottom: 1px solid #e2e0db;
+    font-family: 'KofihJongwook';
 }
 
 .navbar_container {
@@ -34,195 +46,216 @@ ul {
     align-items: center;
     justify-content: space-between;
     margin: 0 auto;
-
-    height: 56px;
-    box-sizing: border-box;
-}
-
-.navbar_logo {
-    flex-shrink: 0;
-    margin-left: 20px;
+    max-width: 1200px;
 }
 
 .navbar_logo img {
-    height: 55px;
-    width: auto;
-    display: block;
+    height: 40px;
 }
 
 .navbar_menu {
     display: flex;
-    gap: 0;
-    flex: 0 0 70%;
-}
-
-.navbar_menu li {
-    flex: 1;
+    gap: 50px;
 }
 
 .nav_item {
-    color: #83C4C7;
-    font-size: 20px;
-    font-weight: 900;
-
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-
+    font-size: 18px;
+    font-weight: 500;
+    color: #688F4E;
     transition: color 0.3s;
 }
 
-.nav_item:hover {
-    color: #c1c1c1;
+.nav_item:hover{
+    color: #2B463C;
 }
 
 .navbar_icons {
     display: flex;
-    gap: 20px;
+    gap: 15px;
 }
-
 .navbar_icons img {
     width: 25px;
-    transition: filter 0.3s ease;
 }
 
-.navbar_icons a {
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-
-    width: 41px; 
-    height: 41px;
-    border-radius: 100%; 
-
-    transition: background-color 0.3s ease;
+/* ========== 본문 콘텐츠 ========== */
+.content_wrapper {
+    width: 90%;
+    max-width: 1200px;
+    margin: 120px auto 40px auto;
 }
 
-.navbar_icons a:hover {
-    background-color: #dfddd8;
-}
-
-/* 본문 박스 */
-.content_box {
-    flex: 1 1 auto;
-    width: 97%;
-    margin: 116px auto 0 auto;
-
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-
-    min-height: calc(100vh - 116px);
-    padding: 15px; /* 패딩 줄임 */
-    background-color: white;
-    box-sizing: border-box;
-}
-
-/* 검색 구역 */
-.map_search_section {
-    margin-bottom: 10px;
-}
-
-/* 검색창 */
-.map_search_bar {
+/* ========== 검색 필터 영역 ========== */
+.map_search_filter_container {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 8px;
+    padding: 35px 25px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(43, 70, 60, 0.05);
+    margin-bottom: 40px;
+    box-sizing: border-box;
+    gap: 1.5%;
+    flex-wrap: nowrap;
 }
 
-.map_search_bar input {
-    width: 400px;
+/* 왼쪽: 지역 선택 */
+.map_select {
+    flex: 0 0 20%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    height: 56px;
+    box-sizing: border-box;
+    min-width: 110px;
+}
+
+.map_select select {
+    width: 100%;
     height: 40px;
     border: 1px solid #ddd;
     border-radius: 20px;
     padding: 0 15px;
-    font-size: 16px;
+    font-size: 15px;
+    font-family: 'memomentKkukkkuk';
+    color: #3c3c3c;
+    box-sizing: border-box;
 }
 
-.map_search_bar button {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-}
-
-.map_search_bar img {
-    width: 24px;
-    height: 24px;
-    display: block;
-}
-
-/* 검색 필터 */
-.map_search_filter {
+/* 가운데: 식재료 필터 */
+.map_filter_box {
+    flex: 1 1 auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    width: 60%;
-    padding: 7px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin: 10px auto 0;
-}
-
-.map_search_filter span {
-    font-size: 15px;
-}
-
-.map_search_filter select {
-    width: 150px;
-    height: 35px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    height: 56px;
+    box-sizing: border-box;
     padding: 0 10px;
-    font-size: 15px;
-    margin: 0 15px 0 10px;
 }
 
-.map_category_check {
+.map_filter_row {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
 }
 
-.map_category_check label {
+.map_filter_item {
+    display: inline-block;
+    height: 40px;
+}
+
+.map_filter_item input[type="checkbox"],
+.map_filter_item input[type="radio"] {
+    display: none;
+}
+
+.map_filter_button {
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F4F1E9;
+    border: none;
+    color: #688F4E;
+    padding: 0 20px;
+    border-radius: 30px;
     font-size: 15px;
+    font-family: 'memomentKkukkkuk';
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    white-space: nowrap;
 }
 
-/* 식당 정보, 지도 구역 */
+.map_filter_button:hover {
+    background-color: #B1D182;
+    color: #2B463C;
+}
+
+.map_filter_item input:checked + .map_filter_button {
+    background-color: #688F4E;
+    color: white;
+}
+
+/* 오른쪽: 검색창 */
+.map_search_box {
+    flex: 0 0 25%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 56px;
+    box-sizing: border-box;
+    min-width: 150px;
+}
+
+.map_search_box input {
+    width: 100%;
+    height: 40px;
+    padding: 10px 15px;
+    border: 1px solid #e2e0db;
+    border-radius: 20px;
+    background-color: #F4F1E9;
+    font-size: 15px;
+    color: #3C3C3C;
+    font-family: 'memomentKkukkkuk';
+    box-sizing: border-box;
+}
+
+/* ========== 식당 정보, 지도 영역 ========== */
 .map_and_card_section {
     display: flex;
     gap: 10px;
     align-items: stretch;
+    height: 480px;
+    margin-top: 30px;
+    min-height: 0;
 }
 
-/* 식당 정보 카드 바깥쪽 컨테이너 */
+/* 식당 정보 카드 컨테이너 */
 .map_card_outer_container {
     display: flex;
     flex: 0 0 23%;
     flex-direction: column;
     background-color: #F3F1ED;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 20px;
+    padding: 0;
+    box-shadow: 0 8px 16px rgba(43, 70, 60, 0.08);
+    min-width: 200px;
+    min-height: 0;
+    overflow-y: scroll; 
 }
 
-/* 식당 정보 카드 */
+/* 스크롤바 */
+.map_card_outer_container::-webkit-scrollbar-track {
+    background-color: #E0DED7;
+    border-radius: 10px;
+}
+
+.map_card_outer_container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.map_card_outer_container::-webkit-scrollbar-thumb {
+    background-color: #c4c4c4;
+    border-radius: 10px;
+}
+
+/* 위: 식당 정보 카드 */
 .map_card {
-    display: flex;
-    flex-direction: column;
+    flex: 0 0 auto;
     background-color: #fff;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin: 0 6px 8px 6px;
 }
 
 .map_card img {
-    width: 97%;
-    height: 180px;
+    width: 100%;
     object-fit: cover;
     display: block;
-    margin: 10px auto 0 auto;
 }
 
 /* 식당 정보 카드 안 내용 */
@@ -232,14 +265,14 @@ ul {
 
 /* 식당 이름 */
 .map_card_info h3 {
-    margin: 13px 0 8px;
-    font-size: 19px;
+    margin: 15px 0 10px;
+    font-size: 20px;
 }
 
 /* 리뷰 링크 */
 .map_card_info .review_link {
     display: block;
-    font-size: 14px;
+    font-size: 15px;
     color: #3C3C3C;
 }
 
@@ -248,15 +281,19 @@ ul {
     display: flex;
     border-top: 1px solid #ddd;        /* 칸 위 선 */
     border-bottom: 1px solid #ddd;     /* 칸 아래 선 */
-    margin: 25px 0 20px;
+    margin: 20px 0 0;
     height: 70px;
     align-items: center;
+    gap: 10px;
+    position: relative;
 }
 
 /* 칸 사이 선 */
 .divider {
     position: absolute;
-    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 50%;
     height: 60%;
     width: 1px;
     background-color: #ddd;
@@ -268,13 +305,11 @@ ul {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     height: 100%;
     background-color: #fff;
     cursor: pointer;
     text-decoration: none;
     box-sizing: border-box;
-    position: relative;
     padding: 0;
 }
 
@@ -288,40 +323,74 @@ ul {
 .map_card_action_button span {
     display: block;
     line-height: 1;
-    font-size: 13px;
-    color: #444;
+    font-size: 15px;
+    color: #515151;
 }
 
-/* 카테고리 태그 */
-.map_card_tags {
+/* 식재료 태그 */
+.map_card_tag {
     display: flex;
-    gap: 10px;
+    gap: 6px;
+    padding: 18px 0 0;
 }
 
-.map_card_tag_item {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    font-size: 14px;
-    color: #3C3C3C;
+.map_card_tag .icon { 
+    width: 25px;
+    height: 25px;
+    border-radius:50%;
+    background-color: white;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 75%;
+    display: inline-block;
+    vertical-align: middle;
 }
 
-.map_card_tag_item img {
-    width: 20px;
-    height: 20px;
-    position: relative;
-    top: -4px;
+.icon.fruit { 
+    background-image: url(../../assets/images/fruit.png);
+}
+.icon.veggie { 
+    background-image: url(../../assets/images/veggie.png);
+}
+.icon.milk { 
+    background-image: url(../../assets/images/milk.png);
+}
+.icon.egg {
+    background-image: url(../../assets/images/egg.png);
+}
+.icon.fish {
+    background-image: url(../../assets/images/fish.png);
+}
+.icon.poultry {
+    background-image: url(../../assets/images/poultry.png);
+}
+.icon.meat {
+    background-image: url(../../assets/images/meat.png);
 }
 
-
-/* 메뉴 탭 카드 */
+/* 아래: 메뉴 탭 카드 */
 .map_tab_card {
     display: flex;
     flex: 1;
-    background-color: #fff;
+    min-height: 0;
+    background-color: white;
+    margin: 0 6px 0 6px;
 }
 
-.map_tab_card_tabs {
+.map_tab_card_inner {
+    width: 100%;
+}
+
+/* 라디오 숨김 */
+.map_tab_card_inner input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* 탭 라벨 */
+.map_tab_card_label {
     flex: 1;
     display: flex;
     align-items: center;
@@ -334,42 +403,228 @@ ul {
     position: relative;
 }
 
-.map_tab_card_tabs span {
+.map_tab_card_label label {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 45px;
+    cursor: pointer;
     font-size: 15px;
     color: #8C8C8C;
+    user-select: none;
+    background: transparent;
 }
 
-.map_tab_card span.map_tab_card_active {
-    color: #B8D08D;
-    font-weight: bold;
+.map_tab_card_label label:hover {
+    color: #2B463C;
 }
 
-/* 지도 바깥쪽 컨테이너 */
-.map_outer_container {
-    flex: 1;
-    background-color: #F3F1ED;
-    border-radius: 10px;
-    padding: 10px;
-    display: inline-block;
+/* 활성 탭 스타일 */
+#tab_home:checked  ~ .map_tab_card_label label[for="tab_home"],
+#tab_menu:checked  ~ .map_tab_card_label label[for="tab_menu"],
+#tab_review:checked ~ .map_tab_card_label label[for="tab_review"],
+#tab_photo:checked  ~ .map_tab_card_label label[for="tab_photo"],
+#tab_info:checked  ~ .map_tab_card_label label[for="tab_info"] {
+    color: #2B463C;
+    font-weight: 700;
+}
+
+/* 탭 패널 */
+.map_tab_card_panel {
+    background: white;
+    padding: 10px 16px;
+    box-sizing: border-box;
+}
+
+.map_tab_card_panel .map_tab_panel {
+    display: none;
+}
+
+#tab_home:checked  ~ .map_tab_card_panel #tab_home_link  { display: block; }
+#tab_menu:checked  ~ .map_tab_card_panel #tab_menu_link  { display: block; }
+#tab_review:checked ~ .map_tab_card_panel #tab_review_link { display: block; }
+#tab_photo:checked ~ .map_tab_card_panel #tab_image_link { display: block; }
+#tab_info:checked  ~ .map_tab_card_panel #tab_info_link  { display: block; }
+
+/* 메뉴 탭 패널 */
+.map_menu_item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.map_menu_item:last-child {
+    border-bottom: none;
+}
+
+.map_menu_info {
+    flex-grow: 1;
+    padding-right: 15px;
+}
+
+.map_menu_info h4 {
+    font-size: 17px;
+    margin: 0 0 4px 0;
+    color: #2B463C;
+    font-weight: 700;
+}
+
+.map_menu_info p {
+    font-size: 14px;
+    color: #4A4A4A;
+    margin: 0 0 8px 0;
+}
+
+.map_menu_price {
+    font-size: 18px;
+    color: #2B463C;
+    font-weight: 700;
+}
+
+.map_menu_image_container {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.map_menu_image {
+    width: 100%;
     height: 100%;
+    object-fit: cover;
+    display: block;
 }
+
+/* 리뷰 탭 패널 */
+.map_review_item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px 0 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.map_review_item:last-child {
+    border-bottom: none;
+}
+
+.map_review {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.map_review_user_info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.map_user_image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.map_review h4 {
+    font-size: 17px;
+    margin: 0;
+    color: #2B463C;
+    font-weight: 700;
+}
+
+.map_review_image_container {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.map_review_image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+}
+
+.map_review p {
+    font-size: 15px;
+    color: #4A4A4A;
+    margin: 0;
+    padding-left: 0;
+}
+
+/* 사진 탭 패널 */
+#tab_image_link {
+    padding: 15px 0 7px;
+}
+
+.tab_image_row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+    width: 100%;
+}
+
+.tab_image {
+    width: 48%; 
+    height: auto; 
+    object-fit: cover; 
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+/* 탭 정보 패널 */
+.tab_info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 15px 0;
+}
+
+.tab_info h4 {
+    margin: 0 0 10px 0;
+    font-size: 17px;
+    color: #2B463C;
+}
+
+.tab_info p {
+    margin: 0;
+    font-size: 14px;
+    color: #4A4A4A;
+}
+
 
 /* 지도 */
 .map_container {
+    flex: 1;
     position: relative;
     width: 100%;
     height: 100%;
-    border-radius: 10px;
     overflow: hidden;
+    border-radius: 20px;
+    display: block;
+    box-shadow: 0 8px 16px rgba(43, 70, 60, 0.08);
 }
 
 .map_img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
 }
 
 /* 핀 */
