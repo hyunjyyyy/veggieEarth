@@ -126,6 +126,7 @@ ul {
 .mypage_sidebar_item img {
   width: 30px;
   height: 30px;
+  display: block;
   filter: brightness(0) saturate(100%) invert(45%) sepia(13%) saturate(1072%)
     hue-rotate(74deg) brightness(94%) contrast(88%);
 }
@@ -136,6 +137,10 @@ ul {
   filter: brightness(0) saturate(100%) invert(100%);
 }
 
+.mypage_sidebar_item:first-child img {
+  width: 35px;
+  height: 35px;
+}
 
 /* ========== 메인 콘텐츠 ========== */
 .mypage_content_wrapper {
@@ -432,4 +437,64 @@ ul {
   .mypage_profile_row { flex-direction: column; gap: 10px; }
   .mypage_profile_label { width: 100%; }
   .mypage_action_buttons { justify-content: center; }
+}
+
+.mypage_myrecipe_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 0 10px;
+}
+
+.mypage_myrecipe_title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2b463c;
+  font-family: "memomentKkukkkuk";
+}
+
+.mypage_myrecipe_search_box {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 30px;
+  padding: 8px 20px;
+  box-shadow: 0 4px 12px rgba(43, 70, 60, 0.08);
+  transition: all 0.3s ease;
+}
+
+.mypage_myrecipe_search_box:focus-within {
+  box-shadow: 0 6px 16px rgba(43, 70, 60, 0.12);
+}
+
+.mypage_myrecipe_search_input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  font-family: "memomentKkukkkuk";
+  color: #2b463c;
+  width: 250px;
+  padding: 4px 8px;
+}
+
+.mypage_myrecipe_search_input::placeholder {
+  color: #b1d182;
+}
+
+.mypage_myrecipe_search_btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #688f4e;
+  transition: color 0.2s ease;
+  padding: 4px;
+}
+
+.mypage_myrecipe_search_btn:hover {
+  color: #2b463c;
 }
