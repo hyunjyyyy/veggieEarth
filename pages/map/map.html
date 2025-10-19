@@ -1,50 +1,40 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="map_styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VeggieEarth MAP</title>
+    <link rel="stylesheet" href="map_styles.css" />
 </head>
 <body>
     <!-- 네비게이션 바 -->
     <nav class="navbar">
         <div class="navbar_container">
             <a href="#" class="navbar_logo">
-                <img src = "logo.png" alt = "베지너스">
+                <img src="../../assets/images/logo.png" alt="로고" />
             </a>
             <ul class="navbar_menu">
                 <li><a href="#" class="nav_item">HOME</a></li>
-                <li><a href="#" class="nav_item">RECIPE</a></li>
+                <li><a href="recipe_main.html" class="nav_item">RECIPE</a></li>
                 <li><a href="#" class="nav_item">MAP</a></li>
                 <li><a href="#" class="nav_item">COMMUNITY</a></li>
                 <li><a href="#" class="nav_item">MYPAGE</a></li>
             </ul>
             <div class="navbar_icons">
-                <a href="#"><img src="login_out.png" alt="login/out"></a>
-                <a href="#"><img src="Settings.png" alt="Settings"></a>
+                <a href="#"><img src="../../assets/images/login_dark.png" alt="login/out" /></a>
+                <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings" /></a>
             </div>
         </div>
     </nav>
 
-    <!-- 본문 박스 -->
-    <div class="content_box">
+    <!-- 본문 -->
+    <div class="content_wrapper">
 
-        <!-- 검색 -->
-        <div class="map_search_section">
-            
-            <!-- 검색창 -->
-            <form class="map_search_bar" action="#" method="get">
-                <input type="text" name="search" placeholder="식당 검색">
-                <button type="submit">
-                    <img src="map_search_icon.png" alt="검색 아이콘">
-                </button>
-            </form>
-
-            <!-- 검색 필터 -->
-            <div class="map_search_filter">
-                <span>지역</span>
+        <!-- 검색 필터 영역 -->
+        <div class="map_search_filter_container">
+            <div class="map_select">
                 <select>
+                    <option>지역 선택</option>
                     <option>서울</option>
                     <option>경기도</option>
                     <option>강원도</option>
@@ -56,16 +46,41 @@
                     <option>경상남도</option>
                     <option>제주도</option>
                 </select>
-
-                <!-- 카테고리 체크 -->
-                <div class="map_category_check">
-                    <label><input type="checkbox" checked> 과일</label>
-                    <label><input type="checkbox"> 채소</label>
-                    <label><input type="checkbox"> 우유</label>
-                    <label><input type="checkbox"> 달걀</label>
-                    <label><input type="checkbox"> 생선</label>
-                    <label><input type="checkbox"> 육류</label>
+            </div>
+            <div class="map_filter_box">
+                <div class="map_filter_row">
+                    <div class="map_filter_item">
+                        <input type="checkbox" id="chk_fruit" checked />
+                        <label for="chk_fruit" class="map_filter_button">과일</label>
+                    </div>
+                    <div class="map_filter_item">
+                        <input type="checkbox" id="chk_veg" checked />
+                        <label for="chk_veg" class="map_filter_button">채소</label>
+                    </div>
+                    <div class="map_filter_item">
+                        <input type="checkbox" id="chk_dairy" checked />
+                        <label for="chk_dairy" class="map_filter_button">유제품</label>
+                    </div>
+                    <div class="map_filter_item">
+                        <input type="checkbox" id="chk_egg" />
+                        <label for="chk_egg" class="map_filter_button">달걀</label>
+                    </div>
+                    <div class="map_filter_item">
+                        <input type="checkbox" id="chk_seafood" />
+                        <label for="chk_seafood" class="map_filter_button">해산물</label>
+                    </div>
+                    <div class="map_filter_item">
+                        <input type="checkbox" id="chk_poultry" />
+                        <label for="chk_poultry" class="map_filter_button">가금류</label>
+                    </div>
+                    <div class="map_filter_item">
+                        <input type="checkbox" id="chk_meat" />
+                        <label for="chk_meat" class="map_filter_button">육류</label>
+                    </div>
                 </div>
+            </div>
+            <div class="map_search_box">
+                <input type="text" placeholder="식당 검색" />
             </div>
         </div>
 
@@ -75,60 +90,139 @@
 
                 <!-- 식당 정보 카드 -->
                 <div class="map_card">
-                    <img src="map_restaurant.png" alt="식당 이미지">
+                    <img src="../../assets/images/map_restaurant.png" alt="식당 이미지" />
 
                     <!-- 식당 이름, 리뷰 링크, 저장/공유 버튼 -->
                     <div class="map_card_info">
                         <h3>OO비건식당</h3>
-                        <a href="#review_link" class="review_link">리뷰 73</a>
+                        <a href="#tab_review_link" class="review_link">리뷰 73</a>
                         <div class="map_card_action">
                             <div class="map_card_action_button">
-                                <img src="map_favorite.png" alt="저장">
+                                <img src="../../assets/images/map_favorite.png" alt="저장" />
                                 <span>저장</span>
                                 <div class="divider"></div>
                             </div>
                             <div class="map_card_action_button">
-                                <img src="map_share.png" alt="공유">
+                                <img src="../../assets/images/map_share.png" alt="공유" />
                                 <span>공유</span>
                             </div>
                         </div>
 
                         <!-- 카테고리 태그 -->
-                        <div class="map_card_tags">
-                            <div class="map_card_tag_item">
-                                <img src="map_checkbox_checked.png" alt="체크박스_checked">
-                                <span>과일</span>
-                            </div>
-                            <div class="map_card_tag_item">
-                                <img src="map_checkbox_checked.png" alt="체크박스_checked">
-                                <span>채소</span>
-                            </div>
-                            <div class="map_card_tag_item">
-                                <img src="map_checkbox_checked.png" alt="체크박스_checked">
-                                <span>우유</span>
-                            </div>
+                        <div class="map_card_tag">
+                            <span class="icon fruit"></span>
+                            <span class="icon veggie"></span>
+                            <span class="icon milk"></span>
                         </div>
                     </div>
                 </div>
 
                 <!-- 메뉴 탭 카드 -->
                 <div class="map_tab_card">
-                    <div class="map_tab_card_tabs">
-                        <span class="map_tab_card_active">홈</span>
-                        <span id="review_link">메뉴</span>
-                        <span>리뷰</span>
-                        <span>사진</span>
-                        <span>정보</span>
+                    <div class="map_tab_card_inner">
+                        <input id="tab_home"  type="radio" name="map_tab" checked />
+                        <input id="tab_menu"  type="radio" name="map_tab" />
+                        <input id="tab_review" type="radio" name="map_tab" />
+                        <input id="tab_photo" type="radio" name="map_tab" />
+                        <input id="tab_info"  type="radio" name="map_tab" />
+
+                        <!-- 탭 라벨 -->
+                        <div class="map_tab_card_label">
+                            <label for="tab_home">홈</label>
+                            <label for="tab_menu">메뉴</label>
+                            <label for="tab_review">리뷰</label>
+                            <label for="tab_photo">사진</label>
+                            <label for="tab_info">정보</label>
+                        </div>
+
+                        <!-- 탭 패널 -->
+                        <div class="map_tab_card_panel">
+                            <div id="tab_home_link" class="map_tab_panel">
+                            </div>
+
+                            <div id="tab_menu_link" class="map_tab_panel">
+                                <div class="map_menu_item">
+                                    <div class="map_menu_info">
+                                        <h4>두부 스테이크</h4>
+                                        <p>두부 스테이크에 허브 그릴 야채를 곁들인 메인 요리</p>
+                                        <div class="map_menu_price">16,000원</div>
+                                    </div>
+                                    <div class="map_menu_image_container">
+                                        <img src="../../assets/images/두부스테이크.png" alt="두부 스테이크" class="map_menu_image">
+                                    </div>
+                                </div>
+                                <div class="map_menu_item">
+                                    <div class="map_menu_info">
+                                        <h4>버섯 크림 리조또</h4>
+                                        <p>캐슈넛 크림과 세 가지 버섯이 들어간 고소한 리조또</p>
+                                        <div class="map_menu_price">13,000원</div>
+                                    </div>
+                                    <div class="map_menu_image_container">
+                                        <img src="../../assets/images/버섯크림리조또.png" alt="버섯 크림 리조또" class="map_menu_image">
+                                    </div>
+                                </div>
+                                <div class="map_menu_item">
+                                    <div class="map_menu_info">
+                                        <h4>단호박 크림 파스타</h4>
+                                        <p>부드러운 단호박과 귀리우유로 만든 달콤한 크림 파스타</p>
+                                        <div class="map_menu_price">12,000원</div>
+                                    </div>
+                                    <div class="map_menu_image_container">
+                                        <img src="../../assets/images/단호박크림파스타.png" alt="단호박 크림 파스타" class="map_menu_image">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="tab_review_link" class="map_tab_panel">
+                                <div class="map_review_item">
+                                    <div class="map_review">
+                                        <div class="map_review_user_info">
+                                            <img src="../../assets/images/badge-icon.png" alt="유저 이미지" class="map_user_image">
+                                            <h4>비건사랑</h4>
+                                        </div>
+                                        <div class="map_review_image_container">
+                                            <img src="../../assets/images/두부스테이크.png" alt="두부 스테이크" class="map_review_image">
+                                        </div>
+                                        <p>두부 스테이크 최고예요!</p>
+                                    </div>
+                                </div>
+                                <div class="map_review_item">
+                                    <div class="map_review">
+                                        <div class="map_review_user_info">
+                                            <img src="../../assets/images/badge-icon1.png" alt="유저 이미지" class="map_user_image">
+                                            <h4>버섯러버</h4>
+                                        </div>
+                                        <div class="map_review_image_container">
+                                            <img src="../../assets/images/버섯크림리조또.png" alt="버섯 크림 리조또" class="map_review_image">
+                                        </div>
+                                        <p>크림이 부드럽고 맛있네요.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="tab_image_link" class="map_tab_panel">
+                                <div class="tab_image_row">
+                                    <img src="../../assets/images/두부스테이크.png" alt="두부 스테이크" class="tab_image">
+                                    <img src="../../assets/images/버섯크림리조또.png" alt="버섯 크림 리조또" class="tab_image">
+                                    <img src="../../assets/images/단호박크림파스타.png" alt="단호박 크림 파스타" class="tab_image">
+                                </div>
+                            </div>
+
+                            <div id="tab_info_link" class="map_tab_panel">
+                                <div class="tab_info">
+                                    <h4>소개</h4>
+                                    <p>건강한 한 끼를 제공합니다.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- 지도 -->
-            <div class="map_outer_container">
-                <div class="map_container">
-                    <img src="map_img.png" class="map_img" alt="지도">
-                    <img src="map_pin.png" class="map_pin" alt="핀">
-                </div>
+            <div class="map_container">
+                <img src="../../assets/images/map_img.png" class="map_img" alt="지도" />
+                <img src="../../assets/images/map_pin.png" class="map_pin" alt="핀" />
             </div>
         </div>
     </div>
