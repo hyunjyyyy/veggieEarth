@@ -1,4 +1,3 @@
-/* ========== 폰트 설정 ========== */
 @font-face {
   font-family: "memomentKkukkkuk";
   src: url("../../assets/fonts/memomentKkukkkuk.otf") format("opentype");
@@ -13,14 +12,12 @@
   font-display: swap; 
 }
 
-/* ========== 기본 스타일 초기화 ========== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ========== body 기본 스타일 ========== */
 body {
   margin: 0;
   background-color: #f4f1e9;
@@ -39,7 +36,6 @@ ul {
   margin: 0;
 }
 
-/* ========== 네비게이션 바 ========== */
 .navbar {
   background-color: #f4f1e9;
   position: fixed;
@@ -89,7 +85,6 @@ ul {
   width: 25px;
 }
 
-/* ========== 사이드바 ========== */
 .mypage_sidebar {
   position: fixed;
   left: 30px;
@@ -142,14 +137,12 @@ ul {
   height: 35px;
 }
 
-/* ========== 메인 콘텐츠 ========== */
 .mypage_content_wrapper {
   width: 90%;
   max-width: 1200px;
   margin: 120px auto 40px auto; 
 }
 
-/* ========== 프로필 섹션 ========== */
 .mypage_profile_section {
   background-color: white;
   border-radius: 20px;
@@ -242,7 +235,6 @@ ul {
   color: #2b463c;
 }
 
-/* ========== 통계 섹션 ========== */
 .mypage_stats_grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
@@ -279,7 +271,6 @@ ul {
   height: 180px;
 }
 
-/* ========== 도넛 차트 ========== */
 .mypage_donut_chart {
   width: 180px;
   height: 180px;
@@ -309,36 +300,23 @@ ul {
 }
 
 .mypage_chart_uploads {
-  /* 237deg는 약 66%에 해당 (237/360) */
+  /* uploads: ~66% */
   background: conic-gradient(
-    #2b463c 0deg,
-    #2b463c 237deg,
-    #f4f1e9 237deg,
-    #f4f1e9 360deg
+    #2b463c 0deg,#2b463c 237deg,#f4f1e9 237deg,#f4f1e9 360deg
   );
 }
 
 .mypage_chart_comments {
-  /* 90deg는 25%에 해당 (90/360) */
   background: conic-gradient(
-    #688f4e 0deg,
-    #688f4e 90deg,
-    #f4f1e9 90deg,
-    #f4f1e9 360deg
+    #688f4e 0deg,#688f4e 90deg,#f4f1e9 90deg,#f4f1e9 360deg
   );
 }
 
 .mypage_chart_scraps {
-  /* 270deg는 75%에 해당 (270/360) */
-  background: conic-gradient(
-    #b1d182 0deg,
-    #b1d182 270deg,
-    #f4f1e9 270deg,
-    #f4f1e9 360deg
+  background: conic-gradient(#b1d182 0deg,#b1d182 270deg,#f4f1e9 270deg,#f4f1e9 360deg
   );
 }
 
-/* 통계 상세 */
 .mypage_stat_details {
   display: flex;
   justify-content: space-around;
@@ -396,14 +374,13 @@ ul {
   text-align: center;
 }
 
-/* ========== 반응형 디자인 ========== */
+/* 화면 비율 조정 */
 /* 화면 너비가 1300px 이하일 때 적용 */
 @media (max-width: 1350px) {
   .mypage_content_wrapper {
     margin: 165px auto 40px; 
   }
 
-  /* 사이드바: 왼쪽 고정(vertical) → 상단 가로 툴바(horizontal) 형태로 변경 */
   .mypage_sidebar {
     position: absolute;     
     top: 70px;            
@@ -428,10 +405,8 @@ ul {
 
   .mypage_sidebar_item:hover {
     transform: none; 
-    /* 호버 시 이동 효과 비활성화 */
   }
 
-  /* 프로필과 통계 섹션을 세로로 쌓이도록 변경 */
   .mypage_stats_grid { grid-template-columns: 1fr; } 
   .mypage_profile_section { flex-direction: column; text-align: center; } 
   .mypage_profile_row { flex-direction: column; gap: 10px; }
@@ -439,6 +414,8 @@ ul {
   .mypage_action_buttons { justify-content: center; }
 }
 
+
+/* 마이페이지 나의 레시피 헤더 */
 .mypage_myrecipe_header {
   display: flex;
   justify-content: space-between;

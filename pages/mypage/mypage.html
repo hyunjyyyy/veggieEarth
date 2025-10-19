@@ -6,20 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="최윤서" />
     <title>마이페이지 - 베지어스</title>
-    <!-- 메인 스타일 -->
     <link rel="stylesheet" href="mypage.css" />
 </head>
 
 <body>
-    <!-- ====== 네비게이션 바 ====== -->
+    <!-- 네비게이션바 -->
     <nav class="navbar">
         <div class="navbar_container">
-            <!-- 로고 -->
             <a href="../../index.html" class="navbar_logo">
                 <img src="../../assets/images/logo.png" alt="로고" />
             </a>
-
-            <!-- 상단 메뉴 -->
             <ul class="navbar_menu">
                 <li><a href="../../index.html" class="nav_item">HOME</a></li>
                 <li><a href="../recipe/recipe_main.html" class="nav_item">RECIPE</a></li>
@@ -27,8 +23,6 @@
                 <li><a href="../community/community.html" class="nav_item">COMMUNITY</a></li>
                 <li><a href="../mypage/mypage.html" class="nav_item">MYPAGE</a></li>
             </ul>
-
-            <!-- 우측 아이콘(로그인/설정) -->
             <div class="navbar_icons">
                 <a href="#"><img src="../../assets/images/login_dark.png" alt="login/out" /></a>
                 <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings" /></a>
@@ -36,51 +30,39 @@
         </div>
     </nav>
 
-    <!-- ====== 사이드바 ====== -->
+    <!-- 사이드바 -->
     <aside class="mypage_sidebar">
-        <!-- 현재 페이지 -->
         <div class="mypage_sidebar_item active">
             <a href="mypage.html"><img src="../../assets/images/home.png" alt="Home" /></a>
         </div>
-        <!-- 내 레시피 -->
         <div class="mypage_sidebar_item">
             <a href="myrecipe_mypage.html"><img src="../../assets/images/myrecipe.png" alt="Myrecipe" /></a>
         </div>
-        <!-- 커뮤니티 -->
         <div class="mypage_sidebar_item">
             <a href="#"><img src="../../assets/images/community.png" alt="Community" /></a>
         </div>
     </aside>
 
-    <!-- ===== 메인 컨텐츠 래퍼 ===== -->
     <div class="mypage_content_wrapper">
-
-        <!--===== 프로필 섹션 ===== -->
+        <!-- 프로필 섹션 -->
         <section class="mypage_profile_section">
-            <!-- 프로필 이미지 -->
             <div class="mypage_avatar_container">
                 <img src="../../assets/images/Profile3.png" alt="avatar image" />
             </div>
 
-            <!-- 프로필 텍스트 정보 -->
             <div class="mypage_profile_info">
-                <!-- 닉네임 -->
                 <div class="mypage_profile_row">
                     <div class="mypage_profile_label">name</div>
                     <div class="mypage_profile_value">
                         <span class="mypage_tag">Tomatolover</span>
                     </div>
                 </div>
-
-                <!-- 비건 타입 -->
                 <div class="mypage_profile_row">
                     <div class="mypage_profile_label">vegan types</div>
                     <div class="mypage_profile_value">
                         <span class="mypage_tag">vegan</span>
                     </div>
                 </div>
-
-                <!-- 뱃지 -->
                 <div class="mypage_profile_row">
                     <div class="mypage_profile_label">badge</div>
                     <div class="mypage_profile_value">
@@ -90,8 +72,6 @@
                         </span>
                     </div>
                 </div>
-
-                <!-- 액션 버튼 -->
                 <div class="mypage_action_buttons">
                     <button class="mypage_btn">Edit</button>
                     <button class="mypage_btn">badge guide</button>
@@ -99,21 +79,18 @@
             </div>
         </section>
 
-        <!-- ========== 통계(3개 카드) ========== -->
+        <!-- 도넛차트 -->
         <section class="mypage_stats_grid">
 
-            <!-- 업로드 통계 카드 -->
             <div class="mypage_stat_card">
                 <h3 class="mypage_stat_title">게시물 업로드 수</h3>
 
-                <!-- 도넛 차트 -->
                 <div class="mypage_chart_container">
                     <div class="mypage_donut_chart mypage_chart_uploads">
                         <span class="mypage_chart_percentage">66%</span>
                     </div>
                 </div>
 
-                <!-- 상세 지표 -->
                 <div class="mypage_stat_details">
                     <div class="mypage_stat_item">
                         <div class="mypage_stat_row">
@@ -133,7 +110,6 @@
                 </div>
             </div>
 
-            <!-- 댓글 통계 카드 -->
             <div class="mypage_stat_card">
                 <h3 class="mypage_stat_title">댓글 수</h3>
 
@@ -162,7 +138,6 @@
                 </div>
             </div>
 
-            <!-- 스크랩 통계 카드 -->
             <div class="mypage_stat_card">
                 <h3 class="mypage_stat_title">스크랩 수</h3>
 
