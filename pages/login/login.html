@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>베지어스 - VeggieEarth</title>
+    <link rel="stylesheet" href="../../assets/styles.css">
+    <link rel="stylesheet" href="login.css">
+    <link rel="icon" href="../../assets/images/logo.ico" type="image/x-icon">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar_container">
+            <a href="../../index.html" class="navbar_logo">
+                <img src="../../assets/images/logo.png" alt="로고">
+            </a>
+            <ul class="navbar_menu">
+                <li><a href="../../index.html" class="nav_item">HOME</a></li>
+                <li><a href="../recipe/recipe_main.html" class="nav_item">RECIPE</a></li>
+                <li><a href="../map/map.html" class="nav_item">MAP</a></li>
+                <li><a href="../community/community.html" class="nav_item">COMMUNITY</a></li>
+                <li><a href="../mypage/mypage.html" class="nav_item">MYPAGE</a></li>
+            </ul>
+            <div class="navbar_icons">
+                <a href="#"><img src="../../assets/images/login_dark.png" alt="login/out"></a>
+                <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings"></a>
+            </div>
+        </div>
+    </nav>
+    <main class="login_container">
+        <h2>Login</h2>
+        <form class="login_form" action="#" method="post">
+            <label for="username">ID</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">PW</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" class="login_button">로그인</button>
+        </form>
+        <p class="signup_prompt">계정이 없으신가요? <a href="#">회원가입</a></p>
+    </main>
+</body>
+
+</html>
