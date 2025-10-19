@@ -208,7 +208,7 @@ ul {
 /* ========== 식당 정보, 지도 영역 ========== */
 .map_and_card_section {
     display: flex;
-    gap: 10px;
+    gap: 20px;
     align-items: stretch;
     height: 480px;
     margin-top: 30px;
