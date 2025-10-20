@@ -3,13 +3,6 @@
     src:url('../../assets/fonts/memomentKkukkkuk.otf') format('opentype');
 }
 
-@font-face {
-    font-family: 'KofihJongwook';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/KOFIHDrLEEJWTTF-B.woff2') format('woff2');
-    font-weight: 700;
-    font-display: swap;
-}
-
 body {
     margin: 0;
     background-color: #F4F1E9;
