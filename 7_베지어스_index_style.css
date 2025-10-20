@@ -158,7 +158,7 @@ ul {
 .hero_split_image {
     flex: 1;
     /* 왼쪽과 오른쪽이 1:1 비율을 갖도록 함 */
-    background-image: url('./assets/images/background_image2.png');
+    background-image: url('./assets/images/7_background_image.png');
     /* 이미지 경로 수정 */
     background-size: cover;
     background-position: center;

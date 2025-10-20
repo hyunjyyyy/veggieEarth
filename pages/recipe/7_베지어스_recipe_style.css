@@ -253,25 +253,25 @@ ul {
     vertical-align: middle;
 }
 .icon.fruit { 
-    background-image: url(../../assets/images/fruit.png);
+    background-image: url(../../assets/images/7_fruit.png);
 }
 .icon.veggie { 
-    background-image: url(../../assets/images/veggie.png);
+    background-image: url(../../assets/images/7_veggie.png);
 }
 .icon.milk { 
-    background-image: url(../../assets/images/milk.png);
+    background-image: url(../../assets/images/7_milk.png);
 }
 .icon.egg {
-    background-image: url(../../assets/images/egg.png);
+    background-image: url(../../assets/images/7_egg.png);
 }
 .icon.fish {
-    background-image: url(../../assets/images/fish.png);
+    background-image: url(../../assets/images/7_fish.png);
 }
 .icon.poultry {
-    background-image: url(../../assets/images/poultry.png);
+    background-image: url(../../assets/images/7_poultry.png);
 }
 .icon.meat {
-    background-image: url(../../assets/images/meat.png);
+    background-image: url(../../assets/images/7_meat.png);
 }
 
 .recipe_card_content {
@@ -491,7 +491,7 @@ ul {
     display: block;
     width: 40px;
     height: 40px;
-    background-image: url('../../assets/images/bookmark.png');
+    background-image: url('../../assets/images/7_bookmark.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
