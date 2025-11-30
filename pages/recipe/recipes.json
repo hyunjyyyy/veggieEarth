@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "가지 피자",
+    "image": "../../assets/images/가지피자.jpg",
+    "icons": ["veggie", "milk"],
+    "servings": "2인분",
+    "time": "30분 이내",
+    "difficulty": "쉬움",
+    "rating": 4.5,
+    "reviews": 0,
+    "category": "western",
+    "ingredients": ["veg", "dairy"],
+    "hashtags": ["#채소", "#유제품", "#락토베지테리언", "#양식", "#오븐요리"],
+    "description": "가지를 이용하여 간단하면서 맛있게 만들 수 있는 편식 방지 레시피!",
+    "detailIngredients": [
+      { "name": "가지", "amount": "2개" },
+      { "name": "양파", "amount": "1/2개" }
+    ],
+    "steps": [
+      { "img": "이미지경로1.jpg", "desc": "가지를 반으로 가른 뒤..." },
+      { "img": "이미지경로2.jpg", "desc": "올리브 오일을 발라줍니다." }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "감자 된장국",
+    "image": "../../assets/images/감자된장국.jpg",
+    "icons": ["veggie"],
+    "servings": "3~4인분",
+    "time": "30분 이내",
+    "difficulty": "중간",
+    "rating": 4.0,
+    "reviews": 15,
+    "category": "korean",
+    "ingredients": ["veg"],
+    "hashtags": ["#한식", "#국물요리"],
+    "description": "구수한 맛이 일품인 감자 된장국입니다.",
+    "detailIngredients": [],
+    "steps": []
+  }
+]

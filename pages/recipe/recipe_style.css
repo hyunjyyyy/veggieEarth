@@ -506,3 +506,30 @@ ul {
 .recipe_bookmark_checkbox:checked + .recipe_bookmark_label img {
     opacity: 1;
 }
+
+.recipe_write_btn {
+    position:fixed;
+    bottom: 40px;
+    right : 40px;
+    width : 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(43, 70, 60, 0.3);
+    z-index:1000;
+    transition: all 0.3s ease;
+}
+
+.recipe_write_btn img {
+    width : 30px;
+    height: 30px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.recipe_write_btn:hover {
+    transform: translateY(-5px);
+}
