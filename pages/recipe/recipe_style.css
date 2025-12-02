@@ -533,3 +533,264 @@ ul {
 .recipe_write_btn:hover {
     transform: translateY(-5px);
 }
+
+/* --- [수정] 기존 코드 아래에 이것만 추가하세요 --- */
+
+/* 1. 이미지 업로드 박스 (새로운 기능이라 이건 필요함) */
+.file_upload_box {
+    width: 100%;
+    height: 350px;
+    background-color: #e2e0db;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    color: #666;
+    transition: all 0.3s;
+}
+.file_upload_box:hover {
+    background-color: #d1cfca;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* 2. 기존 search_box 클래스를 재활용하되, 글쓰기 창에서는 꽉 차게 변경 */
+.write_input_box {
+    width: 100% !important; /* 기존 200px 고정 해제 */
+    box-sizing: border-box;
+    margin-top: 5px;
+    font-size: 16px; /* 글씨 조금 키움 */
+}
+
+/* 3. 재료/과정 삭제 버튼 (기존 필터 버튼 스타일 역이용) */
+.btn_del {
+    background-color: transparent;
+    border: 1px solid #e2e0db;
+    color: #999;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* =========================================
+   [글쓰기 페이지 전용 스타일]
+   기존 디자인 시스템(색상, 폰트, 둥글기)을 100% 상속받아 구현
+   ========================================= */
+
+/* 1. 전체 컨테이너 (기존 .recipe_card 스타일 계승) */
+.write_container {
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(43, 70, 60, 0.08); /* 메인 카드 그림자 동일 */
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* 2. 섹션 공통 레이아웃 */
+.form_section {
+    margin-bottom: 30px;
+}
+.form_divider {
+    border: 0;
+    border-top: 1px dashed #e2e0db;
+    margin: 40px 0;
+}
+.section_title {
+    color: #2B463C;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #F4F1E9;
+    padding-bottom: 10px;
+    font-size: 22px;
+}
+
+/* 3. 라벨 및 입력창 스타일 */
+.form_label {
+    display: block;
+    color: #688F4E; /* 포인트 컬러 통일 */
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* 입력창 박스 (기존 .recipe_search_box 스타일과 똑같이 만들되 width 100% 적용) */
+.input_box_wrapper {
+    background-color: #F4F1E9;
+    border: 1px solid #e2e0db;
+    border-radius: 20px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+/* 실제 input/textarea (투명하게) */
+.form_input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'memomentKkukkkuk';
+    font-size: 16px;
+    color: #2B463C;
+    resize: none; /* textarea 크기 조절 방지 */
+}
+
+/* 4. 이미지 업로드 박스 */
+.image_upload_area {
+    width: 100%;
+    height: 350px;
+    background-color: #e2e0db;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    color: #666;
+    transition: all 0.3s ease;
+}
+.image_upload_area:hover {
+    background-color: #d1cfca;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+}
+.upload_icon { font-size: 40px; margin-bottom: 10px; }
+.upload_text { font-weight: 500; }
+
+/* 5. 그리드 레이아웃 (2단 배열 등) */
+.form_grid_2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+/* 6. 재료/양념 그룹 박스 */
+.ingredient_group_box {
+    background-color: #F9F9F9;
+    padding: 20px;
+    border-radius: 20px;
+}
+.group_title {
+    margin-top: 0;
+    color: #688F4E;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+/* 재료 한 줄 */
+.ing_row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* 7. 조리 순서 박스 */
+.step_item {
+    background-color: white;
+    border: 1px solid #e2e0db;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.step_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    color: #688F4E;
+    font-weight: bold;
+    font-size: 18px;
+}
+.step_content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+/* 스텝 이미지 업로드 버튼 */
+.step_upload_label {
+    display: flex;
+    width: 120px;
+    height: 120px;
+    background-color: #e2e0db;
+    border-radius: 10px;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    flex-shrink: 0; /* 크기 줄어듦 방지 */
+}
+.step_preview_img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: none;
+    flex-shrink: 0;
+}
+
+/* 8. 버튼류 (추가/삭제/등록) */
+/* 메인페이지의 .recipe_filter_button 스타일을 베이스로 활용 */
+.btn_add_full {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 30px;
+    border: none;
+    background-color: #B1D182;
+    color: #2B463C;
+    font-family: 'memomentKkukkkuk';
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn_add_full:hover { background-color: #688F4E; color: white; }
+
+.btn_add_step {
+    width: 100%;
+    padding: 15px;
+    border: 2px dashed #688F4E;
+    background-color: transparent;
+    color: #688F4E;
+    border-radius: 15px;
+    font-family: 'memomentKkukkkuk';
+    font-weight: bold;
+    cursor: pointer;
+}
+.btn_add_step:hover { background-color: #f4f9f2; }
+
+.btn_delete_mini {
+    background: transparent;
+    border: 1px solid #e2e0db;
+    color: #999;
+    border-radius: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn_submit_final {
+    width: 100%;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #688F4E;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: 'memomentKkukkkuk';
+    box-shadow: 0 4px 12px rgba(67, 104, 80, 0.3);
+}
+.btn_submit_final:hover { background-color: #2B463C; transform: translateY(-2px); }
+
+/* 해시태그 컨테이너 */
+.hashtag_box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+}

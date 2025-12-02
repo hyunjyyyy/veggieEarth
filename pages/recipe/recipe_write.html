@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>레시피 등록 - 베지어스</title>
+    <link rel="stylesheet" href="recipe_style.css">
+    <link rel="icon" href="../../assets/images/logo.ico" type="image/x-icon">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar_container">
+            <a href="../../index.html" class="navbar_logo"><img src="../../assets/images/logo.png" alt="로고"></a>
+            <ul class="navbar_menu">
+                <li><a href="../../index.html" class="nav_item">HOME</a></li>
+                <li><a href="recipe_main.html" class="nav_item">RECIPE</a></li>
+                <li><a href="../map/map.html" class="nav_item">MAP</a></li>
+                <li><a href="../community/community.html" class="nav_item">COMMUNITY</a></li>
+                <li><a href="../mypage/mypage.html" class="nav_item">MYPAGE</a></li>
+            </ul>
+             <div class="navbar_icons">
+                <a href="../../pages/login/login.html"><img src="../../assets/images/login_dark.png"></a>
+                <a href="#"><img src="../../assets/images/setting_dark.png"></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content_wrapper">
+        <div class="write_container">
+            <h2 class="section_title" style="text-align:center; border:none;">레시피 등록</h2>
+            
+            <form id="recipeForm">
+                <div class="form_section">
+                    <label for="imageFile" class="image_upload_area" id="mainImagePreview">
+                        <span class="upload_icon">📷</span>
+                        <span class="upload_text">완성된 요리 사진을 올려주세요</span>
+                    </label>
+                    <input type="file" id="imageFile" accept="image/*" style="display: none;" onchange="previewMainImage(this)">
+                    
+                    <div style="margin-top: 20px;">
+                        <label class="form_label">레시피 제목</label>
+                        <div class="input_box_wrapper">
+                            <input type="text" id="title" class="form_input" placeholder="레시피의 이름을 적어주세요." required>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <label class="form_label">한줄 소개</label>
+                        <div class="input_box_wrapper">
+                            <input type="text" id="description" class="form_input" placeholder="이 레시피의 매력을 소개해주세요.">
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="form_divider">
+
+                <div class="form_grid_2">
+                    <div>
+                        <label class="form_label">카테고리</label>
+                        <div class="recipe_filter_row">
+                            <div class="recipe_filter_item"><input type="radio" name="category" id="cat_korean" value="korean"><label for="cat_korean" class="recipe_filter_button">한식</label></div>
+                            <div class="recipe_filter_item"><input type="radio" name="category" id="cat_western" value="western" checked><label for="cat_western" class="recipe_filter_button">양식</label></div>
+                            <div class="recipe_filter_item"><input type="radio" name="category" id="cat_baking" value="baking"><label for="cat_baking" class="recipe_filter_button">베이킹</label></div>
+                            <div class="recipe_filter_item"><input type="radio" name="category" id="cat_dessert" value="dessert"><label for="cat_dessert" class="recipe_filter_button">디저트</label></div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form_label">난이도</label>
+                        <div class="recipe_filter_row">
+                            <div class="recipe_filter_item"><input type="radio" name="difficulty" id="diff_easy" value="쉬움" checked><label for="diff_easy" class="recipe_filter_button">쉬움</label></div>
+                            <div class="recipe_filter_item"><input type="radio" name="difficulty" id="diff_normal" value="보통"><label for="diff_normal" class="recipe_filter_button">보통</label></div>
+                            <div class="recipe_filter_item"><input type="radio" name="difficulty" id="diff_mid" value="중간"><label for="diff_mid" class="recipe_filter_button">중간</label></div>
+                            <div class="recipe_filter_item"><input type="radio" name="difficulty" id="diff_hard" value="어려움"><label for="diff_hard" class="recipe_filter_button">어려움</label></div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form_label">인분</label>
+                        <div class="recipe_filter_row">
+                            <div class="recipe_filter_item"><input type="radio" name="servings" id="serv_1" value="1인분"><label for="serv_1" class="recipe_filter_button">1인분</label></div>
+                            <div class="recipe_filter_item"><input type="radio" name="servings" id="serv_2" value="2인분" checked><label for="serv_2" class="recipe_filter_button">2인분</label></div>
+                            <div class="recipe_filter_item"><input type="radio" name="servings" id="serv_34" value="3~4인분"><label for="serv_34" class="recipe_filter_button">3~4인분</label></div>
+                        </div>
+                    </div>
+                     <div>
+                        <label class="form_label">시간</label>
+                        <div class="recipe_filter_row">
+                            <div class="recipe_filter_item"><input type="radio" name="time" id="time_15" value="15분 이내"><label for="time_15" class="recipe_filter_button">15분 이내</label></div>
+                            <div class="recipe_filter_item"><input type="radio" name="time" id="time_30" value="30분 이내" checked><label for="time_30" class="recipe_filter_button">30분 이내</label></div>
+                            <div class="recipe_filter_item"><input type="radio" name="time" id="time_60" value="1시간"><label for="time_60" class="recipe_filter_button">1시간</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form_section" style="margin-top:30px;">
+                    <label class="form_label">재료 태그</label>
+                    <div class="recipe_filter_row">
+                        <div class="recipe_filter_item"><input type="checkbox" name="icons" id="icon_veg" value="veggie" checked><label for="icon_veg" class="recipe_filter_button">🥦 채소</label></div>
+                        <div class="recipe_filter_item"><input type="checkbox" name="icons" id="icon_fruit" value="fruit"><label for="icon_fruit" class="recipe_filter_button">🍎 과일</label></div>
+                        <div class="recipe_filter_item"><input type="checkbox" name="icons" id="icon_milk" value="milk"><label for="icon_milk" class="recipe_filter_button">🧀 유제품</label></div>
+                        <div class="recipe_filter_item"><input type="checkbox" name="icons" id="icon_egg" value="egg"><label for="icon_egg" class="recipe_filter_button">🥚 달걀</label></div>
+                        <div class="recipe_filter_item"><input type="checkbox" name="icons" id="icon_fish" value="fish"><label for="icon_fish" class="recipe_filter_button">🐟 해산물</label></div>
+                        <div class="recipe_filter_item"><input type="checkbox" name="icons" id="icon_poultry" value="poultry"><label for="icon_poultry" class="recipe_filter_button">🍗 가금류</label></div>
+                        <div class="recipe_filter_item"><input type="checkbox" name="icons" id="icon_meat" value="meat"><label for="icon_meat" class="recipe_filter_button">🥩 육류</label></div>
+                    </div>
+                </div>
+                <div class="form_section" style="margin-top: 40px;">
+                    <label class="form_label">해시태그</label>
+                    <div class="input_box_wrapper">
+                         <div id="hashtag_container" class="hashtag_box">
+                            <input type="text" id="tag_input" class="form_input" placeholder="스페이스바로 태그 입력">
+                         </div>
+                    </div>
+                </div>
+                <br>
+                <h3 class="section_title">재료 준비</h3>
+                
+                <div class="form_grid_2">
+                    <div class="ingredient_group_box">
+                        <h4 class="group_title">[ 주재료 ]</h4>
+                        <div id="ing_main_list"></div>
+                        <button type="button" class="btn_add_full" onclick="addIngRow('ing_main_list')">+ 재료 추가</button>
+                    </div>
+
+                    <div class="ingredient_group_box">
+                        <h4 class="group_title">[ 양념 ]</h4>
+                        <div id="ing_season_list"></div>
+                        <button type="button" class="btn_add_full" onclick="addIngRow('ing_season_list')">+ 양념 추가</button>
+                    </div>
+                </div>
+
+                <h3 class="section_title" style="margin-top: 40px;">조리 순서</h3>
+                <div id="step_container"></div>
+                <button type="button" class="btn_add_step" onclick="addStep()">+ 다음 단계 추가하기</button>
+
+                <button type="submit" class="btn_submit_final">레시피 등록 완료</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="recipe_write.js"></script>
+</body>
+</html>
