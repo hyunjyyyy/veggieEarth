@@ -1,3 +1,9 @@
+/**
+ * [파일명: 7_베지어스_mypage.js]
+ * 마이페이지 메인 로직
+ * 역할: 데이터 로드, 프로필 표시/수정, 배지 모달 제어, 차트 렌더링 함수 호출
+ */
+
 // ===== 전역 변수 =====
 let userData = null;
 let badgesData = null;
@@ -10,9 +16,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('페이지 로드 시작');
     try {
         await loadAllData();
-        initializeProfile();
-        initializeBadgeGuide(); // 여기서 에러나도 멈추지 않게
-        setupEventListeners();
+        initializeProfile();    // 프로필 초기화 (+ 차트 그리기 호출)
+        initializeBadgeGuide(); // 뱃지 가이드 모달 초기화
+        setupEventListeners();  // 버튼 이벤트 연결
         console.log('초기화 완료');
     } catch (e) {
         console.error('초기화 중 치명적 오류 발생:', e);
@@ -21,8 +27,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function loadAllData() {
     try {
+        // 1. 유저 데이터 로드 (로컬스토리지 우선)
         const storedUserData = localStorage.getItem('vegetus_user_profile');
-        
         if (storedUserData) {
             userData = JSON.parse(storedUserData);
         } else {
@@ -32,10 +38,12 @@ async function loadAllData() {
             localStorage.setItem('vegetus_user_profile', JSON.stringify(userData));
         }
         
+        // 2. 뱃지 데이터 로드
         const badgesResponse = await fetch('7_베지어스_mypage_badges.json');
         if (!badgesResponse.ok) throw new Error('badges.json 로드 실패');
         badgesData = await badgesResponse.json();
         
+        // 3. 비건 타입 데이터 로드
         const veganTypesResponse = await fetch('7_베지어스_mypage_vegan_types.json');
         if (!veganTypesResponse.ok) throw new Error('vegan_types.json 로드 실패');
         veganTypesData = await veganTypesResponse.json();
@@ -45,6 +53,7 @@ async function loadAllData() {
     }
 }
 
+// 현재 내 활동량에 맞는 뱃지 계산
 function calculateMyBadge() {
     if (!userData || !badgesData) return null;
 
@@ -54,6 +63,7 @@ function calculateMyBadge() {
         scrap: userData.statistics.scraps?.successful || 0
     };
 
+    // 레벨 높은 순으로 정렬 후 조건 체크
     const sortedBadges = [...badgesData.badges].sort((a, b) => b.level - a.level);
 
     for (const badge of sortedBadges) {
@@ -68,14 +78,13 @@ function calculateMyBadge() {
             return badge;
         }
     }
-
+    // 조건 맞는게 없으면 레벨 1 리턴
     return badgesData.badges.find(b => b.level === 1);
 }
 
 function initializeProfile() {
     if (!userData) return;
 
-    // 프로필 요소가 있는 경우에만 실행
     nameTag = document.getElementById('profileName');
     veganTypeTag = document.getElementById('profileType');
     
@@ -101,89 +110,18 @@ function initializeProfile() {
         avatar.src = userData.profile.avatar;
     }
 
-    updateStatistics();
-}
-
-function updateStatistics() {
-    if (!userData || !badgesData) return;
-
-    const statsContainer = document.getElementById('statsContainer');
-    
-    // ✨ 핵심 수정: statsContainer가 없으면(나의 레시피 페이지 등) 함수 종료 ✨
-    if (!statsContainer) {
-        return; 
+    // ★ 차트 파일(7_베지어스_mypage_charts.js)에 있는 함수 호출
+    if (typeof renderMyPageCharts === 'function') {
+        renderMyPageCharts(userData, badgesData);
+    } else {
+        console.warn('차트 스크립트(charts.js)가 로드되지 않아 차트를 그릴 수 없습니다.');
     }
-
-    const statsData = userData.statistics;
-    const currentLevel = userData.profile.badge ? userData.profile.badge.level : 1;
-    const nextBadge = badgesData.badges.find(b => b.level === currentLevel + 1);
-    
-    const statConfig = [
-        { key: 'recipes', jsonKey: 'recipe', title: '레시피 업로드 수', color: '#2b463c', successClass: 'mypage_indicator_success_1' },
-        { key: 'community', jsonKey: 'community', title: '게시글 업로드 수', color: '#688f4e', successClass: 'mypage_indicator_success_2' },
-        { key: 'scraps', jsonKey: 'scrap', title: '스크랩 수', color: '#b1d182', successClass: 'mypage_indicator_success_3' }
-    ];
-
-    statsContainer.innerHTML = '';
-
-    statConfig.forEach(config => {
-        const data = statsData[config.key]; 
-        const successCount = data ? (data.successful || 0) : 0;
-        const failCount = data ? (data.unsuccessful || 0) : 0;
-        
-        let percentage = 0;
-        let targetCount = 0;
-
-        if (!nextBadge) {
-            percentage = 100;
-            targetCount = successCount;
-        } else {
-            targetCount = nextBadge.condition[config.jsonKey];
-            if (targetCount > 0) {
-                percentage = Math.round((successCount / targetCount) * 100);
-                if (percentage > 100) percentage = 100;
-            }
-        }
-
-        const cardHTML = `
-            <div class="mypage_stat_card">
-                <h3 class="mypage_stat_title">${config.title}</h3>
-                <div class="mypage_chart_container">
-                    <div class="mypage_donut_chart" style="background: conic-gradient(${config.color} 0% ${percentage}%, #f4f1e9 ${percentage}% 100%);">
-                        <span class="mypage_chart_percentage">${percentage}%</span>
-                    </div>
-                </div>
-                <div class="mypage_stat_details">
-                    <div class="mypage_stat_item">
-                        <div class="mypage_stat_row">
-                            <span class="mypage_stat_indicator mypage_indicator_unsuccessful"></span>
-                            <span class="mypage_stat_number">${failCount}</span>
-                        </div>
-                        <div class="mypage_stat_caption">Unsuccessful</div>
-                    </div>
-                    <div class="mypage_stat_item">
-                        <div class="mypage_stat_row">
-                            <span class="mypage_stat_indicator ${config.successClass}"></span>
-                            <span class="mypage_stat_number">${successCount}</span>
-                        </div>
-                        <div class="mypage_stat_caption">Successful</div>
-                    </div>
-                </div>
-            </div>
-        `;
-        statsContainer.insertAdjacentHTML('beforeend', cardHTML);
-    });
 }
 
 function initializeBadgeGuide() {
     if (!badgesData) return;
-
     const badgeList = document.querySelector('.mypage_badge_list');
-    
-    // ✨ 핵심 수정: 뱃지 리스트 컨테이너가 없으면 종료 ✨
-    if (!badgeList) { 
-        return; 
-    }
+    if (!badgeList) return;
     
     badgeList.innerHTML = '';
     
@@ -208,71 +146,55 @@ function initializeBadgeGuide() {
 }
 
 function setupEventListeners() {
-    // 안전한 버튼 선택을 위해 for loop 사용 혹은 존재 여부 체크
+    // 1. 프로필 수정/가이드 버튼
     const btns = document.querySelectorAll('.mypage_btn');
-    
-    if (btns.length > 0) {
-        // 첫 번째 버튼 (Edit)
-        btns[0].addEventListener('click', toggleEditMode);
-    }
+    if (btns.length > 0) btns[0].addEventListener('click', toggleEditMode);
     if (btns.length > 1) {
-        // 두 번째 버튼 (Badge Guide)
         btns[1].addEventListener('click', () => {
             const modal = document.getElementById('mypage_badgeGuideModal');
             if (modal) modal.classList.add('active');
         });
     }
 
+    // 2. 모달 닫기
     const closeModalBtn = document.querySelector('.mypage_badge_modal_close');
     const modalOverlay = document.querySelector('.mypage_badge_modal_overlay');
     const badgeModal = document.getElementById('mypage_badgeGuideModal');
     
     if (closeModalBtn && badgeModal) {
-        closeModalBtn.addEventListener('click', () => {
-            badgeModal.classList.remove('active');
-        });
+        closeModalBtn.addEventListener('click', () => badgeModal.classList.remove('active'));
     }
-    
     if (modalOverlay && badgeModal) {
-        modalOverlay.addEventListener('click', () => {
-            badgeModal.classList.remove('active');
-        });
+        modalOverlay.addEventListener('click', () => badgeModal.classList.remove('active'));
     }
 
+    // 3. 이미지 업로드
     const avatar = document.getElementById('profileAvatar');
     const fileInput = document.getElementById('profileImageInput');
-
     if (avatar && fileInput) {
         avatar.addEventListener('click', () => {
-            if (isEditMode) {
-                fileInput.click();
-            }
+            if (isEditMode) fileInput.click();
         });
-
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = (event) => {
-                    avatar.src = event.target.result;
-                };
+                reader.onload = (event) => avatar.src = event.target.result;
                 reader.readAsDataURL(file);
             }
         });
     }
     
+    // 4. 키보드 이벤트 (ESC, Enter)
     document.addEventListener('keydown', handleKeyPress);
 }
 
+// ===== Edit Mode Functions (수정 모드 관련) =====
 function toggleEditMode() {
     const editBtn = document.querySelectorAll('.mypage_btn')[0];
     if (!editBtn) return;
-
-    if (!isEditMode) {
-        enterEditMode(editBtn);
-    } else {
-        exitEditMode(editBtn);
-    }
+    if (!isEditMode) enterEditMode(editBtn);
+    else exitEditMode(editBtn);
 }
 
 function enterEditMode(editBtn) {
@@ -280,27 +202,24 @@ function enterEditMode(editBtn) {
         alert('데이터를 불러오는 중입니다.');
         return;
     }
-
     isEditMode = true;
     editBtn.textContent = 'Complete';
     
     const avatar = document.getElementById('profileAvatar');
-    if (avatar) {
-        avatar.classList.add('mypage_avatar_edit_mode');
-    }
+    if (avatar) avatar.classList.add('mypage_avatar_edit_mode');
 
     const currentNameTag = document.getElementById('profileName') || nameTag;
     const currentVeganTag = document.getElementById('profileType') || veganTypeTag;
-    
-    // 요소가 없을 경우 대비
     if (!currentNameTag || !currentVeganTag) return;
 
+    // 이름 -> input 변환
     const nameInput = document.createElement('input');
     nameInput.type = 'text';
     nameInput.value = userData.profile.name;
     nameInput.className = 'mypage_tag mypage_edit_input';
     currentNameTag.replaceWith(nameInput);
     
+    // 비건 타입 -> select 변환
     const veganSelect = document.createElement('select');
     veganSelect.className = 'mypage_tag mypage_edit_select';
     
@@ -308,12 +227,9 @@ function enterEditMode(editBtn) {
         const option = document.createElement('option');
         option.value = type.name;
         option.textContent = type.name;
-        if (type.name === userData.profile.veganType) {
-            option.selected = true;
-        }
+        if (type.name === userData.profile.veganType) option.selected = true;
         veganSelect.appendChild(option);
     });
-    
     currentVeganTag.replaceWith(veganSelect);
 }
 
@@ -322,15 +238,13 @@ function exitEditMode(editBtn) {
     editBtn.textContent = 'Edit';
 
     const avatar = document.getElementById('profileAvatar');
-    if (avatar) {
-        avatar.classList.remove('mypage_avatar_edit_mode');
-    }
+    if (avatar) avatar.classList.remove('mypage_avatar_edit_mode');
     
     const nameInput = document.querySelector('.mypage_edit_input');
     const veganSelect = document.querySelector('.mypage_edit_select');
-    
     if (!nameInput || !veganSelect) return;
     
+    // 값 저장
     const newName = nameInput.value.trim() || userData.profile.name;
     const newVeganType = veganSelect.value;
     const newAvatar = avatar ? avatar.src : userData.profile.avatar;
@@ -341,6 +255,7 @@ function exitEditMode(editBtn) {
     
     localStorage.setItem('vegetus_user_profile', JSON.stringify(userData));
     
+    // UI 원복
     const newNameTag = document.createElement('span');
     newNameTag.className = 'mypage_tag';
     newNameTag.id = 'profileName';
@@ -359,11 +274,12 @@ function exitEditMode(editBtn) {
 
 function handleKeyPress(e) {
     const badgeModal = document.getElementById('mypage_badgeGuideModal');
+    // 모달 닫기
     if (e.key === 'Escape' && badgeModal && badgeModal.classList.contains('active')) {
         badgeModal.classList.remove('active');
         return;
     }
-    
+    // 수정 모드 제어
     if (isEditMode) {
         if (e.key === 'Enter') {
             const editBtn = document.querySelectorAll('.mypage_btn')[0];
@@ -387,9 +303,9 @@ function cancelEdit() {
     
     const nameInput = document.querySelector('.mypage_edit_input');
     const veganSelect = document.querySelector('.mypage_edit_select');
-    
     if (!nameInput || !veganSelect) return;
     
+    // 원래 값으로 복구
     const newNameTag = document.createElement('span');
     newNameTag.className = 'mypage_tag';
     newNameTag.id = 'profileName';
