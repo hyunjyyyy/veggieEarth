@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="최윤서" />
+    <title>마이페이지 - 베지어스</title>
+    <link rel="stylesheet" href="mypage.css" />
+    <link rel="icon" href="../../assets/images/logo.ico" type="image/x-icon">
+	<link rel="stylesheet" href="../community/community.css" />
+</head>
+
+<body>
+    <!-- 네비게이션바 -->
+    <nav class="navbar">
+        <div class="navbar_container">
+            <a href="../../index.html" class="navbar_logo">
+                <img src="../../assets/images/logo.png" alt="로고" />
+            </a>
+            <ul class="navbar_menu">
+                <li><a href="../../index.html" class="nav_item">HOME</a></li>
+                <li><a href="../recipe/recipe_main.html" class="nav_item">RECIPE</a></li>
+                <li><a href="../map/map.html" class="nav_item">MAP</a></li>
+                <li><a href="../community/community.html" class="nav_item">COMMUNITY</a></li>
+                <li><a href="../mypage/mypage.html" class="nav_item">MYPAGE</a></li>
+            </ul>
+            <div class="navbar_icons">
+                <a href="../../pages/login/7_베지어스_login.html"><img src="../../assets/images/login_dark.png"
+                        alt="login/out"></a>
+                <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings" /></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 사이드바 -->
+    <aside class="mypage_sidebar">
+        <div class="mypage_sidebar_item">
+            <a href="mypage.html"><img src="../../assets/images/home.png" alt="Home" /></a>
+        </div>
+        <div class="mypage_sidebar_item">
+            <a href="mypage_myrecipe.html"><img src="../../assets/images/myrecipe.png" alt="Myrecipe" /></a>
+        </div>
+        <div class="mypage_sidebar_item active">
+            <a href="mypage_mycommunity.html"><img src="../../assets/images/community.png" alt="Mycommunity" /></a>
+        </div>
+    </aside>
+
+    <div class="mypage_content_wrapper">
+        <!-- 프로필 섹션 -->
+        <section class="mypage_profile_section">
+            <div class="mypage_avatar_container">
+                <img src="../../assets/images/Profile3.png" alt="avatar image" id="profileAvatar" />
+                <input type="file" id="profileImageInput" accept="image/*" style="display: none;" />
+            </div>
+
+            <div class="mypage_profile_info">
+                <div class="mypage_profile_row">
+                    <div class="mypage_profile_label">name</div>
+                    <div class="mypage_profile_value">
+                        <span class="mypage_tag" id="profileName">-</span>
+                    </div>
+                </div>
+                <div class="mypage_profile_row">
+                    <div class="mypage_profile_label">vegan types</div>
+                    <div class="mypage_profile_value">
+                        <span class="mypage_tag" id="profileType">-</span>
+                    </div>
+                </div>
+                <div class="mypage_profile_row">
+                    <div class="mypage_profile_label">badge</div>
+                    <div class="mypage_profile_value">
+                        <span class="mypage_tag" id="profileBadge">
+                            Loading...
+                        </span>
+                    </div>
+                </div>
+                <div class="mypage_action_buttons">
+                    <button class="mypage_btn">Edit</button>
+                    <button class="mypage_btn">badge guide</button>
+                </div>
+            </div>
+        </section>
+
+
+		<!-- 커뮤니티 활동 헤더 -->
+		<section class="mypage_section_header">
+			<h2 class="mypage_section_title">커뮤니티 활동</h2>
+			<div class="mypage_mycommunity_board_filter">
+				<button class="mypage_mycommunity_filter_btn active" data-board="all">전체</button>
+				<button class="mypage_mycommunity_filter_btn" data-board="free">자유게시판</button>
+				<button class="mypage_mycommunity_filter_btn" data-board="question">질문게시판</button>
+				<button class="mypage_mycommunity_filter_btn" data-board="review">후기게시판</button>
+			</div>
+		</section>
+
+		<section class="community-section">
+			<div class="community_post_list">
+				<div class="community_post_item community_post_box">
+					<div class="community_post_main_wrapper">
+
+						<div class="community_post_text_wrap">
+
+							<div class="community_post_header">
+								<img src="../../assets/images/7_profile3.png" alt="프로필 사진"
+									class="community_user_profile_img">
+								<span class="community_user_name">pxibvaw</span>
+								<img src="../../assets/images/7_badge_icon.png" alt="뱃지"
+									class="community_user_badge_img">
+							</div>
+
+							<div class="community_post_content">
+								<p class="community_post_title">저속노화 식단 시작했어요~</p>
+								<p class="community_post_text">저속노화 식단 처음 먹어봤는데 맛있네요</p>
+							</div>
+
+							<div class="community_post_meta">
+								<span class="community_post_time">1m ago</span>
+								<span class="community_post_likes">9 <img src="../../assets/images/7_heart.png"
+										alt="좋아요"></span>
+							</div>
+
+						</div>
+
+						<div class="community_post_image_box">
+							<img src="../../assets/images/7_hot_topic.jpg" alt="게시글 이미지">
+						</div>
+
+					</div>
+				</div>
+
+				<div class="community_post_item community_post_box">
+					<div class="community_post_main_wrapper">
+
+						<div class="community_post_text_wrap">
+
+							<div class="community_post_header">
+								<img src="../../assets/images/7_profile3.png" alt="프로필 사진"
+									class="community_user_profile_img">
+								<span class="community_user_name">Heo221</span>
+								<img src="../../assets/images/7_badge_icon1.png" alt="뱃지"
+									class="community_user_badge_img">
+							</div>
+
+							<div class="community_post_content">
+								<p class="community_post_title">김밥 만들음</p>
+								<p class="community_post_text">상추 넣고 김밥 만들었는데 굳</p>
+							</div>
+
+							<div class="community_post_meta">
+								<span class="community_post_time">1m ago</span>
+								<span class="community_post_likes">9 <img src="../../assets/images/7_heart.png"
+										alt="좋아요"></span>
+							</div>
+
+						</div>
+
+						<div class="community_post_image_box">
+							<img src="../../assets/images/7_hot_topic.jpg" alt="게시글 이미지">
+						</div>
+
+					</div>
+				</div>
+
+				<div class="community_post_item community_post_box">
+					<div class="community_post_main_wrapper">
+
+						<div class="community_post_text_wrap">
+
+							<div class="community_post_header">
+								<img src="../../assets/images/7_profile3.png" alt="프로필 사진"
+									class="community_user_profile_img">
+								<span class="community_user_name">새싹입니당!</span>
+								<img src="../../assets/images/7_badge_icon1.png" alt="뱃지"
+									class="community_user_badge_img">
+							</div>
+
+							<div class="community_post_content">
+								<p class="community_post_title">등업함 !!</p>
+								<p class="community_post_text">드디어 등업했다 우하하</p>
+							</div>
+
+							<div class="community_post_meta">
+								<span class="community_post_time">1m ago</span>
+								<span class="community_post_likes">9 <img src="../../assets/images/7_heart.png"
+										alt="좋아요"></span>
+							</div>
+
+						</div>
+
+						<div class="community_post_image_box">
+							<!--<img src="../../assets/images/7_hot_topic.jpg" alt="게시글 이미지">!-->
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<div id="mypage_badgeGuideModal" class="mypage_badge_modal">
+        <div class="mypage_badge_modal_overlay"></div>
+        <div class="mypage_badge_modal_content">
+            <button class="mypage_badge_modal_close">&times;</button>
+
+            <h2 class="mypage_badge_modal_title">🌱 비건 뱃지 가이드</h2>
+            <p class="mypage_badge_modal_subtitle">활동하면서 뱃지를 업그레이드 해보세요!</p>
+
+            <div class="mypage_badge_list">
+            </div>
+
+        </div>
+    </div>
+	<script src="7_베지어스_mypage.js"></script>
+</body>
+
+</html>

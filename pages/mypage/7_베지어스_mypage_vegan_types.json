@@ -1,0 +1,34 @@
+{
+	"veganTypes": [
+		{
+			"id": 1,
+			"name": "vegan",
+			"description": "동물성 식품을 일체 섭취하지 않는 완전 채식"
+		},
+		{
+			"id": 2,
+			"name": "lacto vegetarian",
+			"description": "유제품은 섭취하는 채식"
+		},
+		{
+			"id": 3,
+			"name": "lacto-ovo vegetarian",
+			"description": "유제품과 계란을 섭취하는 채식"
+		},
+		{
+			"id": 4,
+			"name": "pesco vegetarian",
+			"description": "생선과 해산물을 섭취하는 채식"
+		},
+		{
+			"id": 5,
+			"name": "pollo vegetarian",
+			"description": "닭고기를 섭취하는 채식"
+		},
+		{
+			"id": 6,
+			"name": "flexitarian",
+			"description": "유연한 채식, 가끔 육류를 섭취"
+		}
+	]
+}

@@ -1,0 +1,22 @@
+{
+    "userId": "user001",
+    "profile": {
+        "name": "Tomatolover",
+        "veganType": "vegan",
+        "avatar": "../../assets/images/Profile3.png"
+    },
+    "statistics": {
+        "recipes": { 
+            "successful": 6,
+            "unsuccessful": 3
+        },
+        "community": { 
+            "successful": 6,
+            "unsuccessful": 6
+        },
+        "scraps": {
+            "successful": 3,
+            "unsuccessful": 9
+        }
+    }
+}

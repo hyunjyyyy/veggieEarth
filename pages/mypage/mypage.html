@@ -25,7 +25,8 @@
                 <li><a href="../mypage/mypage.html" class="nav_item">MYPAGE</a></li>
             </ul>
             <div class="navbar_icons">
-                <a href="../../pages/login/login.html"><img src="../../assets/images/login_dark.png" alt="login/out"></a>
+                <a href="../../pages/login/7_베지어스_login.html"><img src="../../assets/images/login_dark.png"
+                        alt="login/out"></a>
                 <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings" /></a>
             </div>
         </div>
@@ -37,10 +38,10 @@
             <a href="mypage.html"><img src="../../assets/images/home.png" alt="Home" /></a>
         </div>
         <div class="mypage_sidebar_item">
-            <a href="myrecipe_mypage.html"><img src="../../assets/images/myrecipe.png" alt="Myrecipe" /></a>
+            <a href="mypage_myrecipe.html"><img src="../../assets/images/myrecipe.png" alt="Myrecipe" /></a>
         </div>
         <div class="mypage_sidebar_item">
-            <a href="#"><img src="../../assets/images/community.png" alt="Community" /></a>
+            <a href="mypage_mycommunity.html"><img src="../../assets/images/community.png" alt="Mycommunity" /></a>
         </div>
     </aside>
 
@@ -48,28 +49,28 @@
         <!-- 프로필 섹션 -->
         <section class="mypage_profile_section">
             <div class="mypage_avatar_container">
-                <img src="../../assets/images/Profile3.png" alt="avatar image" />
+                <img src="../../assets/images/Profile3.png" alt="avatar image" id="profileAvatar" />
+                <input type="file" id="profileImageInput" accept="image/*" style="display: none;" />
             </div>
 
             <div class="mypage_profile_info">
                 <div class="mypage_profile_row">
                     <div class="mypage_profile_label">name</div>
                     <div class="mypage_profile_value">
-                        <span class="mypage_tag">Tomatolover</span>
+                        <span class="mypage_tag" id="profileName">-</span>
                     </div>
                 </div>
                 <div class="mypage_profile_row">
                     <div class="mypage_profile_label">vegan types</div>
                     <div class="mypage_profile_value">
-                        <span class="mypage_tag">vegan</span>
+                        <span class="mypage_tag" id="profileType">-</span>
                     </div>
                 </div>
                 <div class="mypage_profile_row">
                     <div class="mypage_profile_label">badge</div>
                     <div class="mypage_profile_value">
-                        <span class="mypage_tag">
-                            새싹 비건
-                            <img src="../../assets/images/새싹비건.png" alt="비건뱃지 lv.1" />
+                        <span class="mypage_tag" id="profileBadge">
+                            Loading...
                         </span>
                     </div>
                 </div>
@@ -80,93 +81,25 @@
             </div>
         </section>
 
-        <!-- 도넛차트 -->
-        <section class="mypage_stats_grid">
-
-            <div class="mypage_stat_card">
-                <h3 class="mypage_stat_title">게시물 업로드 수</h3>
-
-                <div class="mypage_chart_container">
-                    <div class="mypage_donut_chart mypage_chart_uploads">
-                        <span class="mypage_chart_percentage">66%</span>
-                    </div>
-                </div>
-
-                <div class="mypage_stat_details">
-                    <div class="mypage_stat_item">
-                        <div class="mypage_stat_row">
-                            <span class="mypage_stat_indicator mypage_indicator_unsuccessful"></span>
-                            <span class="mypage_stat_number">3</span>
-                        </div>
-                        <div class="mypage_stat_caption">Unsuccessful</div>
-                    </div>
-
-                    <div class="mypage_stat_item">
-                        <div class="mypage_stat_row">
-                            <span class="mypage_stat_indicator mypage_indicator_success_1"></span>
-                            <span class="mypage_stat_number">6</span>
-                        </div>
-                        <div class="mypage_stat_caption">Successful</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mypage_stat_card">
-                <h3 class="mypage_stat_title">댓글 수</h3>
-
-                <div class="mypage_chart_container">
-                    <div class="mypage_donut_chart mypage_chart_comments">
-                        <span class="mypage_chart_percentage">25%</span>
-                    </div>
-                </div>
-
-                <div class="mypage_stat_details">
-                    <div class="mypage_stat_item">
-                        <div class="mypage_stat_row">
-                            <span class="mypage_stat_indicator mypage_indicator_unsuccessful"></span>
-                            <span class="mypage_stat_number">9</span>
-                        </div>
-                        <div class="mypage_stat_caption">Unsuccessful</div>
-                    </div>
-
-                    <div class="mypage_stat_item">
-                        <div class="mypage_stat_row">
-                            <span class="mypage_stat_indicator mypage_indicator_success_2"></span>
-                            <span class="mypage_stat_number">3</span>
-                        </div>
-                        <div class="mypage_stat_caption">Successful</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mypage_stat_card">
-                <h3 class="mypage_stat_title">스크랩 수</h3>
-
-                <div class="mypage_chart_container">
-                    <div class="mypage_donut_chart mypage_chart_scraps">
-                        <span class="mypage_chart_percentage">75%</span>
-                    </div>
-                </div>
-
-                <div class="mypage_stat_details">
-                    <div class="mypage_stat_item">
-                        <div class="mypage_stat_row">
-                            <span class="mypage_stat_indicator mypage_indicator_unsuccessful"></span>
-                            <span class="mypage_stat_number">3</span>
-                        </div>
-                        <div class="mypage_stat_caption">Unsuccessful</div>
-                    </div>
-
-                    <div class="mypage_stat_item">
-                        <div class="mypage_stat_row">
-                            <span class="mypage_stat_indicator mypage_indicator_success_3"></span>
-                            <span class="mypage_stat_number">9</span>
-                        </div>
-                        <div class="mypage_stat_caption">Successful</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- 도넛차트 동적 생성으로 변경-->
+        <section class="mypage_stats_grid" id="statsContainer"></section>
     </div>
+
+    <!-- 뱃지 가이드 -->
+    <div id="mypage_badgeGuideModal" class="mypage_badge_modal">
+        <div class="mypage_badge_modal_overlay"></div>
+        <div class="mypage_badge_modal_content">
+            <button class="mypage_badge_modal_close">&times;</button>
+
+            <h2 class="mypage_badge_modal_title">🌱 비건 뱃지 가이드</h2>
+            <p class="mypage_badge_modal_subtitle">활동하면서 뱃지를 업그레이드 해보세요!</p>
+
+            <div class="mypage_badge_list">
+            </div>
+
+        </div>
+    </div>
+    <script src="7_베지어스_mypage.js"></script>
 </body>
+
 </html>

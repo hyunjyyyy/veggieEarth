@@ -2,25 +2,22 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="최윤서">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="최윤서" />
     <title>마이페이지 - 베지어스</title>
-    <link rel="stylesheet" href="mypage.css">
-    <!-- recipe page 카드와 통일성 유지 -->
-    <link rel="stylesheet" href="../recipe/recipe_style.css">
+    <link rel="stylesheet" href="mypage.css" />
     <link rel="icon" href="../../assets/images/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../recipe/recipe_style.css" />
 </head>
 
 <body>
     <!-- 네비게이션바 -->
     <nav class="navbar">
         <div class="navbar_container">
-
             <a href="../../index.html" class="navbar_logo">
-                <img src="../../assets/images/logo.png" alt="로고">
+                <img src="../../assets/images/logo.png" alt="로고" />
             </a>
-
             <ul class="navbar_menu">
                 <li><a href="../../index.html" class="nav_item">HOME</a></li>
                 <li><a href="../recipe/recipe_main.html" class="nav_item">RECIPE</a></li>
@@ -28,61 +25,56 @@
                 <li><a href="../community/community.html" class="nav_item">COMMUNITY</a></li>
                 <li><a href="../mypage/mypage.html" class="nav_item">MYPAGE</a></li>
             </ul>
-
             <div class="navbar_icons">
-                <a href="../../pages/login/login.html"><img src="../../assets/images/login_dark.png" alt="login/out"></a>
-                <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings"></a>
+                <a href="../../pages/login/7_베지어스_login.html"><img src="../../assets/images/login_dark.png"
+                        alt="login/out"></a>
+                <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings" /></a>
             </div>
         </div>
     </nav>
 
     <!-- 사이드바 -->
     <aside class="mypage_sidebar">
-        
         <div class="mypage_sidebar_item">
             <a href="mypage.html"><img src="../../assets/images/home.png" alt="Home" /></a>
         </div>
         <div class="mypage_sidebar_item active">
-            <a href="myrecipe_mypage.html"><img src="../../assets/images/myrecipe.png" alt="Myrecipe" /></a>
+            <a href="mypage_myrecipe.html"><img src="../../assets/images/myrecipe.png" alt="Myrecipe" /></a>
         </div>
         <div class="mypage_sidebar_item">
-            <a href="#"><img src="../../assets/images/community.png" alt="Community" /></a>
+            <a href="mypage_mycommunity.html"><img src="../../assets/images/community.png" alt="Mycommunity" /></a>
         </div>
     </aside>
 
     <div class="mypage_content_wrapper">
-
-        <!-- 프로필 -->
+        <!-- 프로필 섹션 -->
         <section class="mypage_profile_section">
             <div class="mypage_avatar_container">
-                <img src="../../assets/images/Profile3.png" alt="avatar image">
+                <img src="../../assets/images/Profile3.png" alt="avatar image" id="profileAvatar" />
+                <input type="file" id="profileImageInput" accept="image/*" style="display: none;" />
             </div>
-            <div class="mypage_profile_info">
 
+            <div class="mypage_profile_info">
                 <div class="mypage_profile_row">
                     <div class="mypage_profile_label">name</div>
                     <div class="mypage_profile_value">
-                        <span class="mypage_tag">Tomatolover</span>
+                        <span class="mypage_tag" id="profileName">-</span>
                     </div>
                 </div>
-
                 <div class="mypage_profile_row">
                     <div class="mypage_profile_label">vegan types</div>
                     <div class="mypage_profile_value">
-                        <span class="mypage_tag">vegan</span>
+                        <span class="mypage_tag" id="profileType">-</span>
                     </div>
                 </div>
-
                 <div class="mypage_profile_row">
                     <div class="mypage_profile_label">badge</div>
                     <div class="mypage_profile_value">
-                        <span class="mypage_tag">
-                            새싹 비건
-                            <img src="../../assets/images/새싹비건.png" alt="비건뱃지 lv.1">
+                        <span class="mypage_tag" id="profileBadge">
+                            Loading...
                         </span>
                     </div>
                 </div>
-                
                 <div class="mypage_action_buttons">
                     <button class="mypage_btn">Edit</button>
                     <button class="mypage_btn">badge guide</button>
@@ -92,8 +84,8 @@
 
 
         <!-- 나의 레시피 헤더 -->
-        <section class="mypage_myrecipe_header">
-            <h2 class="mypage_myrecipe_title">나의 레시피</h2>
+        <section class="mypage_section_header">
+            <h2 class="mypage_section_title">나의 레시피</h2>
             <div class="mypage_myrecipe_search_box">
                 <input type="text" placeholder="Search recipes..." class="mypage_myrecipe_search_input">
                 <button class="mypage_myrecipe_search_btn">
@@ -173,6 +165,20 @@
             </div>
         </section>
     </div>
+    <div id="mypage_badgeGuideModal" class="mypage_badge_modal">
+        <div class="mypage_badge_modal_overlay"></div>
+        <div class="mypage_badge_modal_content">
+            <button class="mypage_badge_modal_close">&times;</button>
+
+            <h2 class="mypage_badge_modal_title">🌱 비건 뱃지 가이드</h2>
+            <p class="mypage_badge_modal_subtitle">활동하면서 뱃지를 업그레이드 해보세요!</p>
+
+            <div class="mypage_badge_list">
+            </div>
+
+        </div>
+    </div>
+    <script src="7_베지어스_mypage.js"></script>
 </body>
 
 </html>

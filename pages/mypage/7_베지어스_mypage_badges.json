@@ -1,0 +1,60 @@
+{
+	"badges": [
+		{
+			"id": 1,
+			"name": "새싹 비건",
+			"emoji": "🌱",
+			"icon": "../../assets/images/badge_icon.png",
+			"description": "비건 여정의 첫 페이지를 연 순간! 작은 시작이 베지어스를 더 푸르게 만들어요.",
+			"requirement": "비건 여정을 시작한 회원에게 주어지는 [기본 뱃지]입니다",
+			"level": 1,
+			"condition": {
+				"recipe": 0,
+				"community": 0,
+				"scrap": 0
+			}
+		},
+		{
+			"id": 2,
+			"name": "열정 비건",
+			"emoji": "🔥",
+			"icon": "../../assets/images/badge_icon1.png",
+			"description": "활발한 활동으로 베지어스의 분위기를 뜨겁게 채워가는 중이에요 !",
+			"requirement": "레시피 9개 이상 & 게시글 12개 이상 작성 & 스크랩 12개 이상 등록",
+			"level": 2,
+			"condition": {
+				"recipe": 9,
+				"community": 12,
+				"scrap": 12
+			}
+		},
+		{
+			"id": 3,
+			"name": "비건 인플루언서",
+			"emoji": "✈️",
+			"icon": "../../assets/images/badge_icon2.png",
+			"description": "비건 커뮤니티의 아이콘 ! 베지어스 곳곳에 당신의 발자국이 남아있어요",
+			"requirement": "레시피 27개 이상 & 게시글 36개 이상 작성 & 스크랩 36개 이상 등록",
+			"level": 3,
+			"condition": {
+				"recipe": 27,
+				"community": 36,
+				"scrap": 36
+			}
+		},
+		{
+			"id": 4,
+			"name": "마스터 비건",
+			"emoji": "👑",
+			"icon": "../../assets/images/badge_icon3.png",
+			"description": "베지어스에 없어서는 안 될 존재. 모두에게 작은 기적처럼 영감을 전하는 멤버",
+			"requirement": "레시피 90개 이상 & 게시글 120개 이상 작성 & 스크랩 120개 이상 등록",
+			"level": 4,
+			"condition": {
+				"recipe": 90,
+				"community": 120,
+				"scrap": 120
+			}
+		}
+	]
+}
