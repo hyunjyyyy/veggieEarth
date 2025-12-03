@@ -4,10 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>지도 - 베지어스</title>
-    <link rel="stylesheet" href="map_styles.css" />
+    <link rel="stylesheet" href="map_style.css" />
     <link rel="icon" href="../../assets/images/logo.ico" type="image/x-icon">
 </head>
 <body>
+
+    <!-- 공유 팝업 -->
+    <div class="share_popup" id="share_popup">
+        <div class="share_popup_content">
+            <h3>지도 공유</h3>
+            <p>아래 링크를 복사하세요</p>
+
+            <input type="text" id="share_link_input" readonly />
+
+            <button id="share_copy_btn">복사</button>
+
+            <button id="share_close_btn" class="close_btn">닫기</button>
+        </div>
+    </div>
 
     <!-- 네비게이션 바 -->
     <nav class="navbar">
@@ -52,15 +66,15 @@
             <div class="map_filter_box">
                 <div class="map_filter_row">
                     <div class="map_filter_item">
-                        <input type="checkbox" id="chk_fruit" checked />
+                        <input type="checkbox" id="chk_fruit" />
                         <label for="chk_fruit" class="map_filter_button">과일</label>
                     </div>
                     <div class="map_filter_item">
-                        <input type="checkbox" id="chk_veg" checked />
+                        <input type="checkbox" id="chk_veg" />
                         <label for="chk_veg" class="map_filter_button">채소</label>
                     </div>
                     <div class="map_filter_item">
-                        <input type="checkbox" id="chk_dairy" checked />
+                        <input type="checkbox" id="chk_dairy" />
                         <label for="chk_dairy" class="map_filter_button">유제품</label>
                     </div>
                     <div class="map_filter_item">
@@ -104,7 +118,7 @@
                                 <span>저장</span>
                                 <div class="divider"></div>
                             </div>
-                            <div class="map_card_action_button">
+                            <div class="map_card_action_button" id="share_button">
                                 <img src="../../assets/images/map_share.png" alt="공유" />
                                 <span>공유</span>
                             </div>
@@ -207,7 +221,7 @@
                                 <div class="map_review_item">
                                     <div class="map_review">
                                         <div class="map_review_user_info">
-                                            <img src="../../assets/images/Profile3.png" alt="유저2 이미지" class="map_user_image">
+                                            <img src="../../assets/images/profile3.png" alt="유저2 이미지" class="map_user_image">
                                             <h4>pxibvaw</h4>
                                         </div>
                                         <div class="map_review_image_container">
@@ -238,10 +252,12 @@
 
             <!-- 지도 -->
             <div class="map_container">
-                <img src="../../assets/images/map_img.png" class="map_img" alt="지도" />
-                <img src="../../assets/images/map_pin.png" class="map_pin" alt="핀" />
+                <div id="map"></div>
             </div>
         </div>
     </div>
+
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=6cfa4152ca4584c70500553be887a310"></script>
+    <script src="map_script.js"></script>
 </body>
 </html>
