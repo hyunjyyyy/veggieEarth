@@ -17,29 +17,32 @@ const CURRENT_USER_ID = "user01"; // 현재 로그인한 사용자 ID
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('🔹 페이지 로드 및 초기화 시작');
     try {
-        await loadAllData();     // 1. 모든 데이터 로드 및 통계 최신화
-        initializeProfile();     // 2. 프로필 UI 및 뱃지 업데이트
-        initializeBadgeGuide();  // 3. 뱃지 가이드 모달 생성
-        setupEventListeners();   // 4. 이벤트 연결
-        console.log('✅ 초기화 완료');
+        await loadAllData();    
+        initializeProfile();     
+        initializeBadgeGuide();  
+        setupEventListeners();   
+        console.log('초기화 완료');
     } catch (e) {
-        console.error('❌ 초기화 중 치명적 오류 발생:', e);
+        console.error('초기화 중 오류 발생:', e);
     }
 });
 
-// 1. 데이터 로드 및 통계 업데이트 통합 함수
+
 async function loadAllData() {
     try {
-        // (1) 유저 프로필 로드
+
+        const userResponse = await fetch('7_베지어스_mypage_user_profile.json');
+        const defaultUserData = await userResponse.json();
+        
         const storedUserData = localStorage.getItem('vegetus_user_profile');
         if (storedUserData) {
             userData = JSON.parse(storedUserData);
+
+            if(!userData.statistics) userData.statistics = defaultUserData.statistics;
         } else {
-            const userResponse = await fetch('7_베지어스_mypage_user_profile.json');
-            userData = await userResponse.json();
+            userData = defaultUserData;
         }
 
-        // (2) 뱃지 & 비건 타입 JSON 로드 (병렬 처리)
         const [badgesRes, veganTypesRes] = await Promise.all([
             fetch('7_베지어스_mypage_badges.json'),
             fetch('7_베지어스_mypage_vegan_types.json')
@@ -48,7 +51,7 @@ async function loadAllData() {
         badgesData = await badgesRes.json();
         veganTypesData = await veganTypesRes.json();
 
-        // (3) ★ 실제 활동 데이터(커뮤니티, 레시피) 카운팅 후 userData 업데이트
+
         await updateRealTimeStats();
 
     } catch (error) {
@@ -56,97 +59,88 @@ async function loadAllData() {
     }
 }
 
-// ★★★ 실제 데이터 파일들을 읽어서 통계 숫자를 계산하고 userData에 반영 ★★★
 async function updateRealTimeStats() {
-    if (!userData) return;
+    if (!userData || !badgesData) return;
 
     try {
-        // ========== 1. 커뮤니티 게시글 수 계산 ==========
-        let allPosts = [];
-        const localPosts = localStorage.getItem("community_posts");
-        if (localPosts) {
-            allPosts = JSON.parse(localPosts);
-        } else {
-            const res = await fetch('community_posts.json');
-            const data = await res.json();
-            allPosts = data.posts || [];
-        }
-        const myPostCount = allPosts.filter(post => post.id === CURRENT_USER_ID).length;
-        
-        // ========== 2. 레시피 작성 수 계산 ==========
-        let myRecipeCount = 0;
+        let myPostCount = 0;
         try {
-            const recipeRes = await fetch('7_베지어스_recipe.json');
+            const communityRes = await fetch('../community/community_posts.json');
+            const communityData = await communityRes.json();
+            myPostCount = (communityData.posts || []).filter(p => p.id === CURRENT_USER_ID).length;
+        } catch (e) { console.warn('커뮤니티 로드 실패', e); }
+
+        // (2) 레시피 & 스크랩
+        let myRecipeCount = 0;
+        let myScrapCount = 0;
+        try {
+            const recipeRes = await fetch('../recipe/recipes.json');
             const recipeData = await recipeRes.json();
             const allRecipes = recipeData.recipes || [];
             
-            myRecipeCount = allRecipes.filter(recipe => 
-                recipe.author === CURRENT_USER_ID || recipe.id === CURRENT_USER_ID
-            ).length;
-        } catch (e) {
-            console.warn('레시피 파일 로드 실패 (0으로 처리)', e);
+            myRecipeCount = allRecipes.filter(r => r.id === CURRENT_USER_ID || r.author === CURRENT_USER_ID).length;
+            myScrapCount = allRecipes.filter(r => r.scraps && r.scraps.includes(CURRENT_USER_ID)).length;
+        } catch (e) { console.warn('레시피 로드 실패', e); }
+
+
+        const sortedBadges = [...badgesData.badges].sort((a, b) => a.level - b.level);
+        
+        let currentLevelBadge = sortedBadges[0]; 
+        let nextLevelBadge = sortedBadges[1];  
+
+        const reverseBadges = [...sortedBadges].reverse();
+        for (const badge of reverseBadges) {
+            const c = badge.condition;
+            if (myRecipeCount >= c.recipe && myPostCount >= c.community && myScrapCount >= c.scrap) {
+                currentLevelBadge = badge;
+                break;
+            }
         }
 
-        // ========== 3. 스크랩 수 계산 (기존 방식 유지 - 추후 수정) ==========
-        let myScrapCount = 0;
-        const localScraps = localStorage.getItem("vegetus_scraps");
-        if (localScraps) {
-            myScrapCount = JSON.parse(localScraps).length;
-        } else if (userData.statistics.scraps?.list) {
-            myScrapCount = userData.statistics.scraps.list.length;
-        } else {
-            myScrapCount = userData.statistics.scraps?.successful || 0;
+        const nextBadgeCandidate = sortedBadges.find(b => b.level === currentLevelBadge.level + 1);
+        
+        const targetCondition = nextBadgeCandidate ? nextBadgeCandidate.condition : {
+            recipe: myRecipeCount,
+            community: myPostCount,
+            scrap: myScrapCount
+        };
+
+
+        function calculateStat(current, target) {
+            if (target === 0) return { successful: current, unsuccessful: 0, percentage: 100 };
+
+            if (current >= target) {
+                return { successful: current, unsuccessful: 0, percentage: 100 };
+            }
+
+            const unsuccess = target - current;
+            const percent = Math.floor((current / target) * 100);
+            return {
+                successful: current,
+                unsuccessful: unsuccess,
+                percentage: percent
+            };
         }
 
-        // ========== 4. UserData 객체에 최신 통계 반영 ==========
-        if (!userData.statistics.community) userData.statistics.community = {};
-        if (!userData.statistics.recipes) userData.statistics.recipes = {};
-        if (!userData.statistics.scraps) userData.statistics.scraps = {};
+        userData.statistics = {
+            recipes: calculateStat(myRecipeCount, targetCondition.recipe),
+            community: calculateStat(myPostCount, targetCondition.community),
+            scraps: calculateStat(myScrapCount, targetCondition.scrap)
+        };
+        
+        userData.profile.badge = currentLevelBadge;
 
-        userData.statistics.community.successful = myPostCount;
-        userData.statistics.recipes.successful = myRecipeCount;
-        userData.statistics.scraps.successful = myScrapCount;
-
-        // 로컬스토리지에 저장 (다음 방문 시 유지)
         localStorage.setItem('vegetus_user_profile', JSON.stringify(userData));
 
-        console.log(`📊 [실시간 통계] 게시글: ${myPostCount}, 레시피: ${myRecipeCount}, 스크랩: ${myScrapCount}`);
+        console.log(`[통계 갱신 완료] 현재 레벨: ${currentLevelBadge.name} (Lv.${currentLevelBadge.level})`);
+        console.log(`   - 다음 목표: ${nextBadgeCandidate ? nextBadgeCandidate.name : 'MAX LEVEL'}`);
+        console.log(`   - 게시글: ${userData.statistics.community.successful}/${targetCondition.community} (${userData.statistics.community.percentage}%)`);
+        console.log(`   - 레시피: ${userData.statistics.recipes.successful}/${targetCondition.recipe} (${userData.statistics.recipes.percentage}%)`);
+        console.log(`   - 스크랩: ${userData.statistics.scraps.successful}/${targetCondition.scrap} (${userData.statistics.scraps.percentage}%)`);
 
     } catch (e) {
         console.error('통계 업데이트 중 오류:', e);
     }
-}
-
-// ★ 핵심 로직: badges.json의 기준과 내 통계를 비교하여 뱃지 결정
-function calculateMyBadge() {
-    if (!userData || !badgesData) return null;
-
-    // 내 현재 스탯
-    const myStats = {
-        recipe: userData.statistics.recipes.successful || 0,
-        community: userData.statistics.community.successful || 0,
-        scrap: userData.statistics.scraps.successful || 0
-    };
-
-    // 레벨이 높은 순서대로 정렬 (4 -> 3 -> 2 -> 1)
-    const sortedBadges = [...badgesData.badges].sort((a, b) => b.level - a.level);
-
-    for (const badge of sortedBadges) {
-        const cond = badge.condition;
-        if (!cond) continue; 
-
-        const isRecipeMet = myStats.recipe >= cond.recipe;
-        const isCommunityMet = myStats.community >= cond.community;
-        const isScrapMet = myStats.scrap >= cond.scrap;
-
-        if (isRecipeMet && isCommunityMet && isScrapMet) {
-            console.log(`🎉 뱃지 획득! [${badge.name}] 조건을 만족했습니다.`);
-            return badge;
-        }
-    }
-
-    console.log('🌱 만족하는 상위 뱃지가 없어 [새싹 비건] 유지');
-    return badgesData.badges.find(b => b.level === 1);
 }
 
 function initializeProfile() {
@@ -158,10 +152,8 @@ function initializeProfile() {
     if (nameTag) nameTag.textContent = userData.profile.name;
     if (veganTypeTag) veganTypeTag.textContent = userData.profile.veganType;
 
-    // 뱃지 계산 및 표시
-    const currentBadge = calculateMyBadge();
+    const currentBadge = userData.profile.badge;
     if (currentBadge) {
-        userData.profile.badge = currentBadge;
         const badgeTag = document.getElementById('profileBadge');
         if (badgeTag) {
             badgeTag.innerHTML = `
@@ -176,7 +168,6 @@ function initializeProfile() {
         avatar.src = userData.profile.avatar;
     }
 
-    // 차트 렌더링
     if (typeof renderMyPageCharts === 'function') {
         renderMyPageCharts(userData, badgesData);
     }
@@ -194,6 +185,7 @@ function initializeBadgeGuide() {
     sortedForDisplay.forEach((badge) => {
         const badgeItem = document.createElement('div');
         badgeItem.className = 'mypage_badge_item';
+
         badgeItem.innerHTML = `
             <div class="mypage_badge_icon_box">
                 <img src="${badge.icon}" alt="${badge.name}">
@@ -251,7 +243,7 @@ function setupEventListeners() {
     document.addEventListener('keydown', handleKeyPress);
 }
 
-// ===== 수정 모드 관련 함수들 =====
+
 function toggleEditMode() {
     const editBtn = document.querySelectorAll('.mypage_btn')[0];
     if (!editBtn) return;
