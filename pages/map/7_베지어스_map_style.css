@@ -224,7 +224,7 @@ ul {
 
 /* 식당 정보 카드 컨테이너 */
 .map_card_outer_container {
-    display: flex;
+    display: none;
     flex: 0 0 23%;
     flex-direction: column;
     background-color: #F3F1ED;
@@ -234,6 +234,7 @@ ul {
     min-width: 200px;
     min-height: 0;
     overflow-y: scroll; 
+
 }
 
 /* 스크롤바 */
@@ -261,8 +262,9 @@ ul {
 
 .map_card img {
     width: 100%;
+    height: 180px;
     object-fit: cover;
-    display: block;
+    object-position: center;
 }
 
 /* 식당 정보 카드 안 내용 */
@@ -621,7 +623,7 @@ ul {
     vertical-align: middle; 
 }
 
-/* 지도 */
+/* 지도 전체 컨테이너 */
 .map_container {
     flex: 1;
     position: relative;
@@ -633,15 +635,14 @@ ul {
     box-shadow: 0 8px 16px rgba(43, 70, 60, 0.08);
 }
 
-.map_img {
+/* 실제 지도 (카카오/네이버 지도 API가 들어올 자리) */
+#map {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    display: block;
+    border-radius: inherit;
 }
 
-/* 핀 */
+/* 핀(커스텀 이미지) – 지도 위에 오버레이 */
 .map_pin {
     position: absolute;
     top: 50%;
@@ -649,5 +650,59 @@ ul {
     width: 50px;
     height: 50px;
     transform: translate(-50%, -100%);
+    pointer-events: none;   /* 지도 클릭을 방해하지 않도록 */
+}
+
+.share_popup {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.share_popup_content {
+    background: #fff;
+    padding: 24px 28px;
+    border-radius: 14px;
+    width: 320px;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.share_popup_content h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+#share_link_input {
+    width: 100%;
+    padding: 10px;
+    margin: 12px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+#share_copy_btn,
+.close_btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.close_btn {
+    background: #666;
 }
