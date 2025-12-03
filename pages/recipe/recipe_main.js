@@ -38,7 +38,7 @@ async function loadRecipeData() {
     let recipes = localStorage.getItem("allRecipes");
     if (!recipes) {
         try {
-            const response = await fetch("./data/recipes.json"); // data 폴더 위치 확인!
+            const response = await fetch("recipes.json"); // data 폴더 위치 확인!
             const data = await response.json();
             localStorage.setItem("allRecipes", JSON.stringify(data));
             renderRecipes(data); // 초기 렌더링 시에는 그냥 데이터를 넘김 (필터 함수 내부에서 정렬 처리)

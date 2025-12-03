@@ -19,7 +19,7 @@ async function loadRecipeDetail(id) {
 
     if (!recipes) {
         try {
-            const response = await fetch("./data/recipes.json");
+            const response = await fetch("recipes.json");
             recipes = await response.json();
             localStorage.setItem("allRecipes", JSON.stringify(recipes));
         } catch (e) {
