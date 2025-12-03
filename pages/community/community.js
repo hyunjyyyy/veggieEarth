@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
             post.text.toLowerCase().includes(k) ||
             post.authorName.toLowerCase().includes(k)
         );
-        }
+    }
 
     function updateTabButtons() {
         tabButtons.forEach(btn => {
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const img = post.imageData || post.image || "";
             const item = document.createElement("div");
             item.className = "community_post_item community_post_box";
-            item.dataset.id = post.id;
+            item.dataset.id = post.postId || post.id;
 
             item.innerHTML = `
                 <div class="community_post_main_wrapper">
@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const img = p.imageData || p.image || "../../assets/images/hot_topic.JPG";
             const card = document.createElement("div");
             card.className = "community_hot_topic_card community_card";
-            card.dataset.id = p.id;
+            card.dataset.id = p.postId || p.id;
 
             card.innerHTML = `
                 <div class="community_hot_topic_image_box">
@@ -213,13 +213,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     postListEl.addEventListener("click", e => {
         const like = e.target.closest(".community_post_likes");
-        if (!like) return;
+        if (like) {
+            const id = like.closest(".community_post_item").dataset.id;
+            const post = allPosts.find(p => (p.postId || p.id) == id);
+            if (!post) return;
+            post.likes++;
+            savePosts();
+            renderAll();
+            return;
+        }
 
-        const id = like.closest(".community_post_item").dataset.id;
-        const post = allPosts.find(p => p.id == id);
-        post.likes++;
-        savePosts();
-        renderAll();
+        const item = e.target.closest(".community_post_item");
+        if (!item) return;
+
+        const id = item.dataset.id;
+        if (!id) return;
+
+        window.location.href = `community_post_wide.html?id=${id}`;
     });
 
     createBtn.addEventListener("click", () => {
@@ -231,8 +241,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        const newPostId = "p_" + Date.now();
+
         allPosts.unshift({
-            id: "p_" + Date.now(),
+            postId: newPostId,
+            id: "user00",
             category: currentTab,
             title,
             text,
@@ -307,8 +320,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        const newPostId = "p_" + Date.now();
+
         allPosts.unshift({
-            id: "p_" + Date.now(),
+            postId: newPostId,
+            id: "user00",
             category: currentTab,
             title,
             text,
@@ -330,16 +346,6 @@ document.addEventListener("DOMContentLoaded", () => {
         modalUploadBox.style.backgroundImage = "none";
         modalIcon.style.display = "block";
         modalOverlay.style.display = "none";
-    });
-
-    postListEl.addEventListener("click", e => {
-        const item = e.target.closest(".community_post_item");
-        if (!item) return;
-
-        const id = item.dataset.id;
-        if (!id) return;
-
-        window.location.href = `community_post_wide.html?id=${id}`;
     });
 
     hotTopicListEl.addEventListener("click", e => {

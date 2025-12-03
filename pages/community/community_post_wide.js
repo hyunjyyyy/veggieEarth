@@ -16,7 +16,7 @@ function getPostId() {
 
 function getPostById(id) {
     const posts = getAllPosts();
-    const post = posts.find(p => p.id == id);
+    const post = posts.find(p => (p.postId || p.id) == id);
 
     if (!post) return null;
 
@@ -44,7 +44,6 @@ function timeAgo(dateStr) {
 
     return `${Math.floor(h / 24)}일 전`;
 }
-
 
 function renderPostDetail() {
     const postId = getPostId();
@@ -81,16 +80,17 @@ function renderPostDetail() {
 
     likeIcon.onclick = () => {
         const posts = getAllPosts();
-        const idx = posts.findIndex(p => p.id == post.id);
+        const idx = posts.findIndex(p => (p.postId || p.id) == (post.postId || post.id));
+
+        if (idx === -1) return;
 
         if (!posts[idx].liked) {
             posts[idx].liked = true;
             posts[idx].likes += 1;
-        }
-        else {
+        } else {
             posts[idx].liked = false;
             posts[idx].likes -= 1;
-            if (posts[idx].likes < 0) posts[idx].likes = 0; 
+            if (posts[idx].likes < 0) posts[idx].likes = 0;
         }
 
         saveAllPosts(posts);
@@ -114,7 +114,7 @@ function renderHotTopics() {
     hot.forEach(p => {
         const item = document.createElement("div");
         item.className = "hot_topic_item";
-        item.dataset.id = p.id;
+        item.dataset.id = p.postId || p.id;
 
         const img = p.imageData || p.image || "../../assets/images/hot_topic.JPG";
 
@@ -138,13 +138,12 @@ function renderHotTopics() {
         `;
 
         item.addEventListener("click", () => {
-            window.location.href = `community_post_wide.html?id=${p.id}`;
+            window.location.href = `community_post_wide.html?id=${p.postId || p.id}`;
         });
 
         hotList.appendChild(item);
     });
 }
-
 
 function renderComments(post) {
     const list = document.querySelector(".comment_section");
@@ -201,7 +200,9 @@ function addComment(post, text) {
     });
 
     const posts = getAllPosts();
-    const idx = posts.findIndex(p => p.id == post.id);
+    const idx = posts.findIndex(p => (p.postId || p.id) == (post.postId || post.id));
+    if (idx === -1) return;
+
     posts[idx] = post;
 
     saveAllPosts(posts);
@@ -212,13 +213,14 @@ function deleteComment(post, commentId) {
     post.comments = post.comments.filter(c => c.id !== commentId);
 
     const posts = getAllPosts();
-    const idx = posts.findIndex(p => p.id == post.id);
+    const idx = posts.findIndex(p => (p.postId || p.id) == (post.postId || post.id));
+    if (idx === -1) return;
+
     posts[idx] = post;
 
     saveAllPosts(posts);
     renderComments(post);
 }
-
 
 document.addEventListener("DOMContentLoaded", () => {
     renderPostDetail();
@@ -230,7 +232,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const text = input.value.trim();
         if (!text) return;
 
-        addComment(getPostById(getPostId()), text);
+        const post = getPostById(getPostId());
+        if (!post) return;
+
+        addComment(post, text);
         input.value = "";
     });
 });
