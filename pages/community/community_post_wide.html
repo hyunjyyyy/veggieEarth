@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니티 페이지 - 글 확인 페이지</title>
+    <link rel="stylesheet" href="community_post_wide.css">
+    <link rel="icon" href="../../assets/images/logo.ico" type="image/x-icon">
+</head>
+<body>
+
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="navbar_container">
+            <a href="../../index.html" class="navbar_logo">
+                <img src="../../assets/images/logo.png" alt="로고">
+            </a>
+
+            <ul class="navbar_menu">
+                <li><a href="../../index.html" class="nav_item">HOME</a></li>
+                <li><a href="../recipe/recipe_main.html" class="nav_item">RECIPE</a></li>
+                <li><a href="../map/map.html" class="nav_item">MAP</a></li>
+                <li><a href="../community/community.html" class="nav_item">COMMUNITY</a></li>
+                <li><a href="../mypage/mypage.html" class="nav_item">MYPAGE</a></li>
+            </ul>
+
+            <div class="navbar_icons">
+                <a href="../../pages/login/login.html"><img src="../../assets/images/login_dark.png" alt="login/out"></a>
+                <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings"></a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- 메인 -->
+    <div class="post_wide_container">
+
+        <!-- 왼쪽 -->
+        <div class="post_left_section">
+
+            <!-- 글 박스 -->
+            <section class="post_main_box">
+
+                <div class="post_user_header">
+                    <img src="../../assets/images/Profile3.png" class="post_user_profile">
+                    <span class="post_user_name">user1</span>
+                    <img class="post_user_badge" src="../../assets/images/badge-icon1.png">
+                </div>
+
+                <div class="post_content_box">
+                    <h2 class="post_title">Title</h2>
+
+                    <div class="post_content_area">
+                        <div class="post_text"></div>
+                        <div class="post_image_area"></div>
+                    </div>
+                </div>
+
+                <!-- 좋아요 버튼 -->
+                <div class="post_like_area">
+                    <img class="post_like_icon" src="../../assets/images/Heart_empty.png">
+                    <span class="post_like_count">0</span>
+                </div>
+
+            </section>
+
+            <!-- 댓글 -->
+            <section class="comment_section"></section>
+            <section class="comment_input_section">
+                <input type="text" placeholder="Write your comment" class="comment_input">
+                <button class="comment_submit_btn">➤</button>
+            </section>
+
+        </div>
+
+        <!-- Hot Topic -->
+        <aside class="post_right_section">
+            <h3 class="hot_topic_title">HOT TOPIC!</h3>
+            <div class="hot_topic_underline"></div>
+            <div class="hot_topic_list"></div>
+        </aside>
+
+    </div>
+
+    <script src="community_post_wide.js"></script>
+</body>
+</html>

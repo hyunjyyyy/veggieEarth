@@ -1,0 +1,370 @@
+:root {
+    --community_main_color: #688F4E;
+    --community_dark_color: #2B463C;
+    --community_light_bg: #F4F1E9;
+    --community_primary_bg: #FFF;
+    --community_active_button: #B1D182;
+    --community_light_shadow: 0 4px 4px rgba(142, 142, 142, 0.25);
+    --community_card_shadow: 0 8px 16px rgba(43,70,60,0.08);
+
+    --community_large_radius: 20px;
+    --community_medium_radius: 15px;
+    --community_pill_radius: 25px;
+}
+
+/* ==================== 폰트 정의 ==================== */
+@font-face {
+    font-family:'memomentKkukkkuk';
+    src:url('../../assets/fonts/memomentKkukkkuk.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'KofihJongwook';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/KOFIHDrLEEJWTTF-B.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
+/* ==================== 기본 스타일 재정의 ==================== */
+body {
+    margin: 0;
+    background-color: var(--community_light_bg);
+    color: var(--community_dark_color);
+    font-family: 'memomentKkukkkuk', sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* ==================== 네비게이션 바 ==================== */
+.navbar {
+    background-color: var(--community_light_bg);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 10px 5vw;
+    box-sizing: border-box;
+    z-index: 1000;
+    border-bottom: 1px solid #e2e0db;
+    font-family: 'KofihJongwook', sans-serif;
+}
+
+.navbar_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.navbar_logo img {
+    height: 40px;
+}
+
+.navbar_menu {
+    display: flex;
+    gap: 50px;
+}
+
+.nav_item {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--community_main_color);
+    transition: color 0.3s;
+}
+
+.nav_item:hover {
+    color: var(--community_dark_color);
+}
+
+.navbar_icons {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar_icons img {
+    width: 25px;
+}
+
+/* ==================== 전체 레이아웃 ==================== */
+.post_wide_container {
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+    margin: 70px auto 0 auto;
+}
+
+.post_left_section {
+    flex: 1;
+    padding-top: 22px;
+    min-width: 0;
+}
+
+.post_right_section {
+    width: 291px;
+    min-width: 291px;
+    margin-left: 25px;
+}
+
+/* ==================== 왼쪽 글 영역 ==================== */
+.post_main_box {
+    padding: 30px;
+    background: var(--community_primary_bg);
+    border-radius: var(--community_large_radius);
+    box-shadow: var(--community_card_shadow);
+    margin-bottom: 30px;
+}
+
+.post_user_header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.post_user_profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.post_user_name {
+    font-size: 17px;
+    font-weight: bold;
+    color: var(--community_dark_color);
+}
+
+.post_user_badge {
+    width: 20px;
+    height: 20px;
+    margin-left: -5px;
+}
+
+.post_title {
+    margin: 0 0 20px;
+    font-size: 24px;
+    color: var(--community_dark_color);
+    font-weight: 600;
+}
+
+.post_content_area {
+    display: flex;
+    gap: 20px;
+}
+
+.post_text {
+    flex: 1;
+    background: var(--community_primary_bg);
+    padding: 18px;
+    border-radius: var(--community_medium_radius);
+    border: 1px solid #e8e6df;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.post_image_area {
+    width: 240px;
+    height: 240px;
+    border-radius: var(--community_medium_radius);
+    background: #d4d4d4;
+    overflow: hidden;
+}
+
+.post_like_area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.post_like_icon {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.post_like_count {
+    font-size: 16px;
+    color: var(--community_dark_color);
+}
+
+/* ==================== 댓글 리스트 ==================== */
+.comment_section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.comment_item {
+    background: var(--community_primary_bg);
+    padding: 18px;
+    border-radius: var(--community_large_radius);
+    box-shadow: var(--community_light_shadow);
+    position: relative;
+}
+
+.comment_header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.comment_profile {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.comment_username {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.comment_options_btn {
+    margin-left: auto;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.comment_options_menu {
+    position: absolute;
+    right: 10px;
+    top: 40px;
+    background: white;
+    width: 100px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    display: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    z-index: 10;
+}
+
+.comment_options_menu button {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    background: none;
+    text-align: left;
+}
+
+.comment_options_menu button:hover {
+    background: #f0f0f0;
+}
+
+.comment_text {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #626262;
+}
+
+.comment_time {
+    font-size: 12px;
+    color: #777;
+    margin-top: 5px;
+}
+
+/* ==================== 댓글 입력창 ==================== */
+.comment_input_section {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+}
+
+.comment_input {
+    flex: 1;
+    height: 50px;
+    padding: 0 16px;
+    border-radius: var(--community_pill_radius);
+    border: 1px solid #d9d9d9;
+    background: var(--community_primary_bg);
+    font-size: 16px;
+}
+
+.comment_submit_btn {
+    width: 70px;
+    border-radius: var(--community_pill_radius);
+    background: var(--community_active_button);
+    color: var(--community_dark_color);
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.comment_submit_btn:hover {
+    background: var(--community_main_color);
+    color: #fff;
+}
+
+/* ==================== HOT TOPIC ==================== */
+.hot_topic_title {
+    font-size: 20px;
+    color: var(--community_dark_color);
+    margin-bottom: 5px;
+}
+
+.hot_topic_underline {
+    width: 149px;
+    height: 7px;
+    background: var(--community_active_button);
+    border-radius: var(--community_pill_radius);
+    margin-bottom: 20px;
+}
+
+.hot_topic_list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.hot_topic_item {
+    background: var(--community_primary_bg);
+    padding: 14px;
+    border-radius: var(--community_large_radius);
+    box-shadow: var(--community_light_shadow);
+}
+
+.hot_topic_image {
+    width: 100%;
+    height: 130px;
+    border-radius: var(--community_medium_radius);
+    background: #d4d4d4;
+}
+
+.hot_topic_text {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.hot_topic_user_area {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.hot_topic_user_img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.hot_topic_user_badge {
+    width: 15px;
+    height: 15px;
+}

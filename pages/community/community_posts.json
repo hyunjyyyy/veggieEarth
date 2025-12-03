@@ -1,0 +1,96 @@
+{
+    "posts": [
+        {
+            "id": "p1",
+            "category": "free",
+            "title": "가로수길 새 비건식당 !!",
+            "text": "후무스가 너무 맛있어서 눈물날 뻔 했어",
+            "authorName": "dqauxiam",
+            "authorImage": "../../assets/images/user-profile1.jpg",
+            "badgeImage": "../../assets/images/badge_icon1.png",
+            "image": "../../assets/images/hot_topic.JPG",
+            "likes": 9,
+            "createdAt": "2025-12-01T12:00:00.000Z",
+            "comments": []
+        },
+        {
+            "id": "p2",
+            "category": "free",
+            "title": "저속노화 식단 시작했어요~",
+            "text": "저속노화 식단 처음 먹어봤는데 맛있네요",
+            "authorName": "pxibvaw",
+            "authorImage": "../../assets/images/user-profile2.png",
+            "badgeImage": "../../assets/images/badge_icon.png",
+            "image": "../../assets/images/hot_topic1.JPG",
+            "likes": 7,
+            "createdAt": "2025-12-01T12:10:00.000Z",
+            "comments": []
+        },
+        {
+            "id": "p3",
+            "category": "free",
+            "title": "김밥 만들음",
+            "text": "상추 넣고 김밥 만들었는데 굳",
+            "authorName": "Heo221",
+            "authorImage": "../../assets/images/user-profile3.jpg",
+            "badgeImage": "../../assets/images/badge_icon.png",
+            "image": "../../assets/images/hot_topic2.JPG",
+            "likes": 6,
+            "createdAt": "2025-12-01T12:20:00.000Z",
+            "comments": []
+        },
+        {
+            "id": "p4",
+            "category": "qna",
+            "title": "처음 비건 식단 시작하려면 뭐부터 해야 하나요?",
+            "text": "완전 초보인데, 현실적인 팁 있으면 알려주세요!",
+            "authorName": "newbie_veg",
+            "authorImage": "../../assets/images/user-profile1.jpg",
+            "badgeImage": "../../assets/images/badge_icon1.png",
+            "image": "",
+            "likes": 3,
+            "createdAt": "2025-12-02T09:00:00.000Z",
+            "comments": []
+        },
+        {
+            "id": "p5",
+            "category": "qna",
+            "title": "저속노화 식단, 학생도 가능해요?",
+            "text": "기숙사 사는 학생이라서 현실적으로 가능한지 궁금해요.",
+            "authorName": "uni_stu",
+            "authorImage": "../../assets/images/user-profile2.png",
+            "badgeImage": "../../assets/images/badge_icon.png",
+            "image": "",
+            "likes": 2,
+            "createdAt": "2025-12-02T11:30:00.000Z",
+            "comments": []
+        },
+
+        {
+            "id": "p6",
+            "category": "review",
+            "title": "오늘 점심 샐러드 후기",
+            "text": "콩고기 들어간 샐러드 먹었는데 생각보다 진짜 맛있었음.",
+            "authorName": "leafy",
+            "authorImage": "../../assets/images/user-profile1.jpg",
+            "badgeImage": "../../assets/images/badge_icon1.png",
+            "image": "",
+            "likes": 4,
+            "createdAt": "2025-12-03T10:20:00.000Z",
+            "comments": []
+        },
+        {
+            "id": "p7",
+            "category": "review",
+            "title": "비건 김밥 도전 후기",
+            "text": "치즈 빼고 아보카도 넣었는데 기름져서 좋았음 ㅋㅋ",
+            "authorName": "riceball",
+            "authorImage": "../../assets/images/user-profile3.jpg",
+            "badgeImage": "../../assets/images/badge_icon.jpg",
+            "image": "",
+            "likes": 5,
+            "createdAt": "2025-12-03T14:40:00.000Z",
+            "comments": []
+        }
+    ]
+}
