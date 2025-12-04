@@ -3,6 +3,7 @@
     "id": 1,
     "title": "가지 피자",
     "image": "../../assets/images/가지피자.jpg",
+    "author": "user01",
     "icons": ["veggie", "milk"],
     "servings": "2인분",
     "time": "30분 이내",
@@ -16,7 +17,7 @@
     "description": "가지를 이용하여 간단하면서 맛있게 만들 수 있는 편식 방지 레시피!",
     "ingredientGroups": [
       {
-        "category": "[주재료]",
+        "category": "주재료",
         "items": [
           { "name": "가지", "amount": "2개" },
           { "name": "양파", "amount": "1/2개" },
@@ -25,7 +26,7 @@
         ]
       },
       {
-        "category": "[양념]",
+        "category": "양념",
         "items": [
           { "name": "스파게티 소스", "amount": "200g" },
           { "name": "허브솔트", "amount": "조금" },
@@ -44,12 +45,14 @@
       { "img": "", "desc": "다져준 야채들을 스파게티 소스 200g을 부어 볶아줍니다." },
       { "img": "", "desc": "오븐에서 꺼내 가지에 볶아둔 야채소스를 채워주세요" },
       { "img": "", "desc": "피자 치즈를 올리고 파슬리를 뿌린 후 오븐에서 5분간 더 조리합니다." }
-    ]
+    ],
+    "reviewList": []
   },
   {
     "id": 2,
     "title": "감자 된장국",
     "image": "../../assets/images/감자된장국.jpg",
+    "author": "user02",
     "icons": ["veggie"],
     "servings": "3~4인분",
     "time": "30분 이내",
@@ -62,12 +65,14 @@
     "hashtags": ["#한식", "#국물요리"],
     "description": "구수한 맛이 일품인 감자 된장국입니다.",
     "ingredientGroups": [],
-    "steps": []
+    "steps": [],
+    "reviewList": []
   },
   {
     "id": 3,
     "title": "감자 크래커",
     "image": "../../assets/images/감자크래커.jpg",
+    "author": "user02",
     "icons": ["veggie"],
     "servings": "2인분",
     "time": "1시간",
@@ -80,12 +85,14 @@
     "hashtags": ["#간식", "#비건"],
     "description": "바삭한 감자 간식",
     "ingredientGroups": [],
-    "steps": []
+    "steps": [],
+    "reviewList": []
   },
   {
     "id": 4,
     "title": "두부 스테이크",
     "image": "../../assets/images/두부스테이크.png",
+    "author": "user01",
     "icons": ["veggie"],
     "servings": "3~4인분",
     "time": "30분 이내",
@@ -98,12 +105,14 @@
     "hashtags": ["#비건", "#스테이크"],
     "description": "고기 없이 즐기는 스테이크",
     "ingredientGroups": [],
-    "steps": []
+    "steps": [],
+    "reviewList": []
   },
   {
     "id": 5,
     "title": "버섯 크림 리조또",
     "image": "../../assets/images/버섯크림리조또.png",
+    "author": "user01",
     "icons": ["veggie", "milk", "egg"],
     "servings": "2인분",
     "time": "1시간",
@@ -116,6 +125,7 @@
     "hashtags": ["#양식", "#크림"],
     "description": "부드러운 크림 리조또",
     "ingredientGroups": [],
-    "steps": []
+    "steps": [],
+    "reviewList": []
   }
 ]
