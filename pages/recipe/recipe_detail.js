@@ -43,7 +43,7 @@ async function loadRecipeDetail(id) {
         try {
             // 경로가 data 폴더 안에 있다면 ./data/recipes.json 일 수도 있음. 
             // 현재 페이지 위치에 따라 다르므로 주의 (여기선 기본값 유지)
-            const response = await fetch("./data/recipes.json"); 
+            const response = await fetch("recipes.json"); 
             recipes = await response.json();
             localStorage.setItem("allRecipes", JSON.stringify(recipes));
         } catch (e) {
