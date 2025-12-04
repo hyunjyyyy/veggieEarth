@@ -26,7 +26,7 @@
                 <li><a href="../mypage/mypage.html" class="nav_item">MYPAGE</a></li>
             </ul>
             <div class="navbar_icons">
-                <a href="../../pages/login/7_베지어스_login.html"><img src="../../assets/images/login_dark.png"
+                <a href="../../pages/login/login.html"><img src="../../assets/images/login_dark.png"
                         alt="login/out"></a>
                 <a href="#"><img src="../../assets/images/setting_dark.png" alt="Settings" /></a>
             </div>
@@ -85,11 +85,20 @@
 
         <!-- 나의 레시피 헤더 -->
         <section class="mypage_section_header">
-            <h2 class="mypage_section_title">나의 레시피</h2>
+            <div class="mypage_header_left_group">
+                <h2 class="mypage_section_title">나의 레시피</h2>
+
+                <div class="mypage_filter_buttons">
+                    <button id="mypage_myrecipe_upload_btn" class="mypage_filter_button active">업로드</button>
+                    <button id="mypage_myrecipe_scrap_btn" class="mypage_filter_button">스크랩</button>
+                </div>
+            </div>
+
             <div class="mypage_myrecipe_search_box">
                 <input type="text" placeholder="Search recipes..." class="mypage_myrecipe_search_input">
                 <button class="mypage_myrecipe_search_btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.35-4.35"></path>
                     </svg>
@@ -97,74 +106,12 @@
             </div>
         </section>
 
-        <!-- 나의 레시피 카드 그리드 -->
-        <!-- 레시피 페이지 카드 그리드와 동일함 -->
         <section>
-            <div class="recipe_grid">
-                <div class="recipe_card">
-                    <div class="recipe_card_image_box" style="background-image: url(../recipe/images/감자된장국.jpg);">
-                        <div class="recipe_card_icons">
-                            <span class="icon veggie"></span>
-                        </div>
-                    </div>
-                    <div class="recipe_card_content">
-                        <h4>감자 된장국</h4>
-                        <div class="recipe_card_meta">
-                            <span><img src="../../assets/images/served.png" alt="인분"> 3~4인분</span>
-                            <span><img src="../../assets/images/time.png" alt="소요시간"> 30분 이내</span>
-                            <span><img src="../../assets/images/difficulty.png" alt="난이도"> 중간</span>
-                        </div>
-                        <div class="recipe_card_rating">
-                            <span>★★★★☆</span> (15)
-                        </div>
-                    </div>
-                </div>
-
-                <a href="../recipe/eggplant_pizza.html" class="recipe_card_link">
-                    <div class="recipe_card">
-                        <div class="recipe_card_image_box" style="background-image: url(../../assets/images/가지피자.jpg);">
-                            <div class="recipe_card_icons">
-                                <span class="icon veggie"></span>
-                                <span class="icon milk"></span>
-                            </div>
-                        </div>
-                        <div class="recipe_card_content">
-                            <h4>가지 피자</h4>
-                            <div class="recipe_card_meta">
-                                <span><img src="../../assets/images/served.png" alt="인분"> 2인분</span>
-                                <span><img src="../../assets/images/time.png" alt="소요시간"> 30분 이내</span>
-                                <span><img src="../../assets/images/difficulty.png" alt="난이도"> 쉬움</span>
-                            </div>
-                            <div class="recipe_card_rating">
-                                <span>★★★★☆</span> (0)
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                
-                <a href="#" class="recipe_card_link">
-                    <div class="recipe_card">
-                        <div class="recipe_card_image_box" style="background-image: url(../recipe/images/감자크래커.jpg);">
-                            <div class="recipe_card_icons">
-                                <span class="icon veggie"></span>
-                            </div>
-                        </div>
-                        <div class="recipe_card_content">
-                            <h4>감자 크래커</h4>
-                            <div class="recipe_card_meta">
-                                <span><img src="../../assets/images/served.png" alt="인분"> 2인분</span>
-                                <span><img src="../../assets/images/time.png" alt="소요시간"> 1시간</span>
-                                <span><img src="../../assets/images/difficulty.png" alt="난이도"> 쉬움</span>
-                            </div>
-                            <div class="recipe_card_rating">
-                                <span>★★★★☆</span> (0)
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
+            <div class="recipe_grid" id="recipe-list"></div>
         </section>
     </div>
+
+
     <div id="mypage_badgeGuideModal" class="mypage_badge_modal">
         <div class="mypage_badge_modal_overlay"></div>
         <div class="mypage_badge_modal_content">
@@ -178,6 +125,8 @@
 
         </div>
     </div>
+
+    <script src="../recipe/recipe_main.js"></script>
     <script src="7_베지어스_mypage.js"></script>
 </body>
 

@@ -163,3 +163,57 @@ ul {
 .signup_prompt a:hover {
     text-decoration: underline;
 }
+
+/* ========== 로그인 성공 시 스타일 ========== */
+.login_success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.success_icon {
+    font-size: 50px;
+    margin-bottom: 20px;
+    color: #688F4E;
+}
+
+.success_text {
+    font-size: 24px;
+    color: #2B463C;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.redirect_text {
+    font-size: 20px;
+    color: #888;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 네비게이션 바 - 로그인한 사용자 표시 */
+.navbar_icons a:first-child {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.user_greeting {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2B463C;
+    margin-right: 12px;
+    font-family: 'memomentKkukkkuk', sans-serif;
+}
