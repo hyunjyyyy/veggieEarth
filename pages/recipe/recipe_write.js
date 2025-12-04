@@ -268,13 +268,12 @@ document.getElementById("recipeForm").addEventListener("submit", async function(
     const newId = allRecipes.length > 0 ? Math.max(...allRecipes.map(r => r.id)) + 1 : 1;
 
     const today = new Date().toISOString().split('T')[0];
-    
-    const currentUser = "user" + Math.floor(Math.random() * 100); 
+
 
     const newRecipe = {
         id: newId,
         title: title,
-        author: currentUser,
+        author: "pxibvaw",
         date: today,
         description: document.getElementById("description").value,
         image: mainImg,
