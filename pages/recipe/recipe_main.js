@@ -131,13 +131,30 @@ function filterRecipes() {
         return matchSearch && matchCategory && matchIcon;
     });
 
-    // 2. 정렬 (Sorting)
     filtered.sort((a, b) => {
         if (currentSortMode === "newest") {
+            // 최신순
             return new Date(b.date) - new Date(a.date);
         } else if (currentSortMode === "recommend") {
-            return b.rating - a.rating;
+            const m = 3; 
+            // C: 보정할 기준 점수 (보통 3.5점 정도가 적당)
+            const C = 3.5;
+
+            // A의 가중 점수 계산
+            let scoreA = 0;
+            if (a.reviews > 0) {
+                scoreA = (a.rating * a.reviews + C * m) / (a.reviews + m);
+            }
+
+            // B의 가중 점수 계산
+            let scoreB = 0;
+            if (b.reviews > 0) {
+                scoreB = (b.rating * b.reviews + C * m) / (b.reviews + m);
+            }
+
+            return scoreB - scoreA; // 내림차순
         } else {
+            // 정확순 (기본 ID순)
             return a.id - b.id;
         }
     });

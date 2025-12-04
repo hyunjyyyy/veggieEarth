@@ -886,3 +886,23 @@ ul {
 .review_date { color: #aaa; font-size: 12px; }
 .review_stars { color: #FFD200; letter-spacing: 2px; }
 .review_text { color: #555; line-height: 1.5; }
+
+.btn_modify, .btn_delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+.btn_modify img, .btn_delete img {
+    width: 18px; 
+    height: 18px;
+    opacity: 0.5; 
+    transition: opacity 0.2s;
+}
+
+.btn_modify:hover img, .btn_delete:hover img {
+    opacity: 1; 
+}

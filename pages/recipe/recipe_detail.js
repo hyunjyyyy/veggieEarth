@@ -1,23 +1,22 @@
-// 전역 변수: 현재 선택된 별점 (기본 5점), 현재 레시피 ID
+// 전역 변수
 let currentRatingInput = 5;
 let currentRecipeId = null; 
 
+// ★ 현재 로그인한 사용자 ID
+const CURRENT_USER = "pxibvaw"; 
+
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. URL에서 레시피 ID 가져오기
     const params = new URLSearchParams(window.location.search);
     currentRecipeId = parseInt(params.get("id"));
 
-    // ID가 없으면 메인으로 돌려보냄
     if (!currentRecipeId) {
         alert("잘못된 접근입니다.");
         location.href = "recipe_main.html";
         return;
     }
 
-    // 2. 데이터 로드 및 렌더링
     loadRecipeDetail(currentRecipeId);
 
-    // 3. 별점 클릭 이벤트 연결 (후기 작성용)
     document.querySelectorAll(".star_btn").forEach(star => {
         star.addEventListener("click", function() {
             currentRatingInput = parseInt(this.dataset.value);
@@ -26,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// 별점 UI 업데이트 함수
 function updateStarUI(score) {
     document.querySelectorAll(".star_btn").forEach(star => {
         const val = parseInt(star.dataset.value);
@@ -36,13 +34,10 @@ function updateStarUI(score) {
 }
 
 async function loadRecipeDetail(id) {
-    // 로컬스토리지 우선, 없으면 JSON fetch
     let recipes = JSON.parse(localStorage.getItem("allRecipes"));
 
     if (!recipes) {
         try {
-            // 경로가 data 폴더 안에 있다면 ./data/recipes.json 일 수도 있음. 
-            // 현재 페이지 위치에 따라 다르므로 주의 (여기선 기본값 유지)
             const response = await fetch("recipes.json"); 
             recipes = await response.json();
             localStorage.setItem("allRecipes", JSON.stringify(recipes));
@@ -52,7 +47,6 @@ async function loadRecipeDetail(id) {
         }
     }
 
-    // 현재 ID에 해당하는 레시피 찾기
     const recipe = recipes.find(r => r.id === id);
     if (!recipe) {
         alert("레시피를 찾을 수 없습니다.");
@@ -64,25 +58,60 @@ async function loadRecipeDetail(id) {
 }
 
 function renderDetail(recipe) {
-    // 1. 기본 정보 & 작성자 표시
     document.title = `${recipe.title} - 베지어스`;
     document.getElementById("recipeTitle").textContent = recipe.title;
-    document.getElementById("recipeAuthor").textContent = recipe.author || "익명"; 
+    
+    // 작성자 표시
+    const authorName = recipe.author || "익명";
+    document.getElementById("recipeAuthor").textContent = authorName;
+    
+    // ★ [수정됨] 수정/삭제 버튼 컨테이너 처리
+    const authorContainer = document.querySelector(".author_info");
+    
+    // 중복 방지를 위해 기존 버튼들 제거 (재렌더링 시)
+    const oldModBtn = document.getElementById("btnRecipeModify");
+    const oldDelBtn = document.getElementById("btnRecipeDelete");
+    if(oldModBtn) oldModBtn.remove();
+    if(oldDelBtn) oldDelBtn.remove();
+
+    if (recipe.author === CURRENT_USER) {
+        // 1. 수정 버튼
+        const modBtn = document.createElement("button");
+        modBtn.className = "btn_modify";
+        modBtn.id = "btnRecipeModify";
+        modBtn.title = "수정";
+        modBtn.innerHTML = `<img src="../../assets/images/modify.png" alt="수정">`;
+        modBtn.onclick = function() {
+            alert("레시피 수정 페이지로 이동합니다. (기능 준비중)");
+        };
+        authorContainer.appendChild(modBtn);
+
+        // 2. 삭제 버튼 (★추가됨)
+        const delBtn = document.createElement("button");
+        delBtn.className = "btn_delete";
+        delBtn.id = "btnRecipeDelete";
+        delBtn.title = "삭제";
+        delBtn.innerHTML = `<img src="../../assets/images/delete.png" alt="삭제">`; // 아이콘 필요
+        delBtn.onclick = function() {
+            if(confirm("정말 이 레시피를 삭제하시겠습니까?")) {
+                deleteRecipe(recipe.id);
+            }
+        };
+        authorContainer.appendChild(delBtn);
+    }
+
     document.getElementById("recipeDescription").textContent = recipe.description;
     document.getElementById("recipeHeroImage").style.backgroundImage = `url('${recipe.image}')`;
 
-    // 메타 정보
     document.getElementById("metaServings").innerHTML = `<img src="../../assets/images/served.png"> ${recipe.servings}`;
     document.getElementById("metaTime").innerHTML = `<img src="../../assets/images/time.png"> ${recipe.time}`;
     document.getElementById("metaDifficulty").innerHTML = `<img src="../../assets/images/difficulty.png"> ${recipe.difficulty}`;
 
-    // 해시태그
     const tagContainer = document.getElementById("recipeHashtags");
     if (recipe.hashtags) {
         tagContainer.innerHTML = recipe.hashtags.map(tag => `<a href="#" class="hashtag">${tag}</a>`).join('');
     }
 
-    // 재료 목록
     const ingContainer = document.getElementById("ingredientContainer");
     let ingHtml = "";
     if (recipe.ingredientGroups && recipe.ingredientGroups.length > 0) {
@@ -98,7 +127,6 @@ function renderDetail(recipe) {
     }
     ingContainer.innerHTML = ingHtml;
 
-    // 조리 과정
     const stepList = document.getElementById("stepList");
     if (recipe.steps && recipe.steps.length > 0) {
         stepList.innerHTML = recipe.steps.map(step => `
@@ -111,39 +139,35 @@ function renderDetail(recipe) {
         stepList.innerHTML = "<p>조리 과정 정보가 준비 중입니다.</p>";
     }
 
-    // ★ 스크랩(북마크) 상태 확인 및 이벤트 연결
     handleScrap(recipe);
-
-    // 후기 리스트 렌더링
     renderReviews(recipe);
 }
 
-// ★ 스크랩(북마크) 처리 함수 (JSON 데이터 기반)
+// ★ [추가됨] 레시피 삭제 함수
+function deleteRecipe(id) {
+    let allRecipes = JSON.parse(localStorage.getItem("allRecipes"));
+    // 해당 ID를 제외한 나머지로 배열 필터링
+    const newRecipes = allRecipes.filter(r => r.id !== id);
+    
+    localStorage.setItem("allRecipes", JSON.stringify(newRecipes));
+    alert("삭제되었습니다.");
+    window.location.href = "recipe_main.html"; // 메인으로 이동
+}
+
 function handleScrap(recipe) {
     const bookmarkBtn = document.getElementById("recipeBookmark");
-    
-    // 1. 현재 상태 반영 (recipe.scrap 값이 1이면 체크됨)
     bookmarkBtn.checked = (recipe.scrap === 1);
 
-    // 2. 클릭(변경) 이벤트
-    // 기존 이벤트 리스너 중복 방지를 위해 onchange 프로퍼티 사용 권장 혹은 replaceNode
-    // 여기서는 간단히 onclick으로 처리
     bookmarkBtn.onclick = function(e) {
         const isChecked = e.target.checked;
-        const newScrapStatus = isChecked ? 1 : 0; // 1: 스크랩, 0: 해제
+        const newScrapStatus = isChecked ? 1 : 0; 
 
-        // 전체 데이터 가져오기
         const allRecipes = JSON.parse(localStorage.getItem("allRecipes"));
         const index = allRecipes.findIndex(r => r.id === recipe.id);
         
         if (index !== -1) {
-            // 데이터 업데이트
             allRecipes[index].scrap = newScrapStatus;
-            
-            // 저장
             localStorage.setItem("allRecipes", JSON.stringify(allRecipes));
-            
-            // 현재 보고 있는 객체 업데이트 (화면 싱크)
             recipe.scrap = newScrapStatus;
         }
     };
@@ -153,7 +177,6 @@ function renderReviews(recipe) {
     const container = document.getElementById("reviewListContainer");
     const countBadge = document.getElementById("reviewCountBadge");
     
-    // 후기 개수
     const reviewCount = recipe.reviewList ? recipe.reviewList.length : 0;
     countBadge.textContent = `(${reviewCount})`;
 
@@ -162,24 +185,73 @@ function renderReviews(recipe) {
         return;
     }
 
-    // 최신순 정렬
-    const sortedReviews = [...recipe.reviewList].reverse();
+    // ★ 중요: 역순 정렬 시 인덱스가 꼬이지 않도록, 원본 인덱스를 포함한 객체로 매핑 후 정렬
+    const reviewsWithIndex = recipe.reviewList.map((review, index) => ({
+        ...review,
+        originalIndex: index // 원래 배열에서의 위치 저장
+    }));
 
-    container.innerHTML = sortedReviews.map(review => `
+    // 최신순(역순) 정렬
+    const sortedReviews = reviewsWithIndex.reverse();
+
+    container.innerHTML = sortedReviews.map(item => {
+        let actionBtns = "";
+        
+        // 본인 댓글일 경우 수정/삭제 버튼 표시
+        if (item.user === CURRENT_USER) {
+            actionBtns = `
+                <button class="btn_modify" onclick="alert('댓글 수정은 준비중입니다.')" title="수정">
+                    <img src="../../assets/images/modify.png" alt="수정">
+                </button>
+                <button class="btn_delete" onclick="deleteReview(${item.originalIndex})" title="삭제">
+                    <img src="../../assets/images/delete.png" alt="삭제">
+                </button>
+            `;
+        }
+
+        return `
         <div class="review_item">
             <div class="review_user_row">
-                <span class="review_user_id">${review.user}</span>
-                <span class="review_date">${review.date}</span>
+                <span class="review_user_id">${item.user}</span>
+                <span class="review_date">${item.date} ${actionBtns}</span>
             </div>
             <div style="margin-bottom:5px;">
-                <span class="review_stars">${"★".repeat(review.rating)}${"☆".repeat(5-review.rating)}</span>
+                <span class="review_stars">${"★".repeat(item.rating)}${"☆".repeat(5-item.rating)}</span>
             </div>
-            <div class="review_text">${review.text}</div>
+            <div class="review_text">${item.text}</div>
         </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
-// 후기 등록 함수
+// ★ [추가됨] 댓글 삭제 함수 (전역 접근 가능해야 HTML onclick에서 호출됨)
+window.deleteReview = function(index) {
+    if(!confirm("이 후기를 삭제하시겠습니까?")) return;
+
+    const allRecipes = JSON.parse(localStorage.getItem("allRecipes"));
+    const recipeIndex = allRecipes.findIndex(r => r.id === currentRecipeId);
+    
+    if (recipeIndex !== -1) {
+        const recipe = allRecipes[recipeIndex];
+        
+        // 해당 인덱스의 댓글 삭제
+        recipe.reviewList.splice(index, 1);
+
+        // 평점 및 개수 재계산
+        recipe.reviews = recipe.reviewList.length;
+        if (recipe.reviews > 0) {
+            const sum = recipe.reviewList.reduce((acc, cur) => acc + cur.rating, 0);
+            recipe.rating = (sum / recipe.reviews).toFixed(1);
+        } else {
+            recipe.rating = 0;
+        }
+
+        // 저장 및 화면 갱신
+        localStorage.setItem("allRecipes", JSON.stringify(allRecipes));
+        renderDetail(recipe); // 전체 다시 렌더링
+    }
+};
+
 function submitReview() {
     const text = document.getElementById("reviewText").value;
     
@@ -196,7 +268,7 @@ function submitReview() {
     const recipe = allRecipes[recipeIndex];
 
     const newReview = {
-        user: "guest" + Math.floor(Math.random() * 1000), 
+        user: CURRENT_USER, 
         text: text,
         rating: currentRatingInput,
         date: new Date().toISOString().split('T')[0]
@@ -205,7 +277,6 @@ function submitReview() {
     if (!recipe.reviewList) recipe.reviewList = [];
     recipe.reviewList.push(newReview);
 
-    // 평균 별점 재계산
     recipe.reviews = recipe.reviewList.length;
     const sum = recipe.reviewList.reduce((acc, cur) => acc + cur.rating, 0);
     recipe.rating = (sum / recipe.reviews).toFixed(1);
@@ -216,6 +287,5 @@ function submitReview() {
     alert("후기가 등록되었습니다!");
     document.getElementById("reviewText").value = ""; 
     
-    // 현재 화면 업데이트
     renderDetail(recipe);
 }
