@@ -418,7 +418,7 @@ ul {
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 30px;
-  padding: 0 10px;
+  padding: 0;
 }
 
 .mypage_section_title {
@@ -762,8 +762,6 @@ ul {
   color: #2b463c; 
   background-color: #f4f1e9; 
   
-  
-
   text-align: center;
   border-radius: 30px;
   width: 200px;
@@ -787,7 +785,9 @@ ul {
   background-image: url("...");
   background-repeat: no-repeat;
   background-position: right 15px center;
+  padding-left: 40px;
   padding-right: 40px;
+  text-align-last: center;
 }
 
 .mypage_avatar_edit_mode {

@@ -1,8 +1,3 @@
-/**
- * [파일명: 7_베지어스_mypage.js]
- * 마이페이지 메인 로직
- * 역할: 데이터 로드(커뮤니티/레시피 연동), 통계 자동 계산, 뱃지 JSON 기준 비교, 프로필 렌더링
- */
 
 // ===== 전역 변수 =====
 let userData = null;
@@ -15,7 +10,7 @@ let veganTypeTag = null;
 const CURRENT_USER_ID = "user01"; // 현재 로그인한 사용자 ID
 
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('🔹 페이지 로드 및 초기화 시작');
+    console.log('페이지 로드 및 초기화 시작');
     try {
         await loadAllData();    
         initializeProfile();     
@@ -59,6 +54,7 @@ async function loadAllData() {
     }
 }
 
+// 실제 데이터 파일들을 읽어서 통계 숫자를 최신화하는 함수
 async function updateRealTimeStats() {
     if (!userData || !badgesData) return;
 
@@ -67,57 +63,65 @@ async function updateRealTimeStats() {
         try {
             const communityRes = await fetch('../community/community_posts.json');
             const communityData = await communityRes.json();
-            myPostCount = (communityData.posts || []).filter(p => p.id === CURRENT_USER_ID).length;
-        } catch (e) { console.warn('커뮤니티 로드 실패', e); }
+            const posts = communityData.posts || [];
+            
+            myPostCount = posts.filter(p => p.id === CURRENT_USER_ID).length;
+        } catch (e) { 
+            console.warn('커뮤니티 데이터 로드 실패', e); 
+        }
 
-        // (2) 레시피 & 스크랩
+        // (2) 레시피 & 스크랩 수 계산
         let myRecipeCount = 0;
         let myScrapCount = 0;
         try {
+
             const recipeRes = await fetch('../recipe/recipes.json');
-            const recipeData = await recipeRes.json();
-            const allRecipes = recipeData.recipes || [];
-            
-            myRecipeCount = allRecipes.filter(r => r.id === CURRENT_USER_ID || r.author === CURRENT_USER_ID).length;
-            myScrapCount = allRecipes.filter(r => r.scraps && r.scraps.includes(CURRENT_USER_ID)).length;
-        } catch (e) { console.warn('레시피 로드 실패', e); }
+            const allRecipes = await recipeRes.json(); 
 
+            if (Array.isArray(allRecipes)) {
+                myRecipeCount = allRecipes.filter(r => r.author === CURRENT_USER_ID).length;
+                myScrapCount = allRecipes.filter(r => r.scrap === 1).length;
+            } else {
+                console.warn('레시피 데이터가 배열 형식이 아닙니다.');
+            }
+        } catch (e) { 
+            console.warn('레시피 데이터 로드 실패', e); 
+        }
 
-        const sortedBadges = [...badgesData.badges].sort((a, b) => a.level - b.level);
+        const sortedBadges = [...badgesData.badges].sort((a, b) => b.level - a.level); 
         
-        let currentLevelBadge = sortedBadges[0]; 
-        let nextLevelBadge = sortedBadges[1];  
+        let newBadge = null;
 
-        const reverseBadges = [...sortedBadges].reverse();
-        for (const badge of reverseBadges) {
+        for (const badge of sortedBadges) {
             const c = badge.condition;
+            if (!c) continue;
+
             if (myRecipeCount >= c.recipe && myPostCount >= c.community && myScrapCount >= c.scrap) {
-                currentLevelBadge = badge;
-                break;
+                newBadge = badge;
+                break; 
             }
         }
 
-        const nextBadgeCandidate = sortedBadges.find(b => b.level === currentLevelBadge.level + 1);
-        
+
+        if (!newBadge) {
+            newBadge = sortedBadges.find(b => b.level === 1);
+        }
+        const nextBadgeCandidate = [...badgesData.badges]
+            .sort((a, b) => a.level - b.level)
+            .find(b => b.level === newBadge.level + 1);
+
         const targetCondition = nextBadgeCandidate ? nextBadgeCandidate.condition : {
             recipe: myRecipeCount,
             community: myPostCount,
             scrap: myScrapCount
         };
 
-
         function calculateStat(current, target) {
             if (target === 0) return { successful: current, unsuccessful: 0, percentage: 100 };
-
-            if (current >= target) {
-                return { successful: current, unsuccessful: 0, percentage: 100 };
-            }
-
-            const unsuccess = target - current;
-            const percent = Math.floor((current / target) * 100);
+            const percent = Math.min(100, Math.floor((current / target) * 100)); // 최대 100%
             return {
                 successful: current,
-                unsuccessful: unsuccess,
+                unsuccessful: Math.max(0, target - current),
                 percentage: percent
             };
         }
@@ -128,15 +132,13 @@ async function updateRealTimeStats() {
             scraps: calculateStat(myScrapCount, targetCondition.scrap)
         };
         
-        userData.profile.badge = currentLevelBadge;
+        userData.profile.badge = newBadge;
 
         localStorage.setItem('vegetus_user_profile', JSON.stringify(userData));
 
-        console.log(`[통계 갱신 완료] 현재 레벨: ${currentLevelBadge.name} (Lv.${currentLevelBadge.level})`);
-        console.log(`   - 다음 목표: ${nextBadgeCandidate ? nextBadgeCandidate.name : 'MAX LEVEL'}`);
-        console.log(`   - 게시글: ${userData.statistics.community.successful}/${targetCondition.community} (${userData.statistics.community.percentage}%)`);
-        console.log(`   - 레시피: ${userData.statistics.recipes.successful}/${targetCondition.recipe} (${userData.statistics.recipes.percentage}%)`);
-        console.log(`   - 스크랩: ${userData.statistics.scraps.successful}/${targetCondition.scrap} (${userData.statistics.scraps.percentage}%)`);
+        console.log(`[통계 업데이트 완료]`);
+        console.log(`   - 획득 뱃지: ${newBadge.name}`);
+        console.log(`   - 내 활동: 레시피(${myRecipeCount}), 게시글(${myPostCount}), 스크랩(${myScrapCount})`);
 
     } catch (e) {
         console.error('통계 업데이트 중 오류:', e);
