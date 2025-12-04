@@ -38,7 +38,7 @@ async function loadRecipeData() {
     let recipes = localStorage.getItem("allRecipes");
     if (!recipes) {
         try {
-            const response = await fetch("./data/recipes.json"); // data 폴더 위치 확인!
+            const response = await fetch("recipes.json"); // data 폴더 위치 확인!
             const data = await response.json();
             localStorage.setItem("allRecipes", JSON.stringify(data));
             renderRecipes(data); // 초기 렌더링 시에는 그냥 데이터를 넘김 (필터 함수 내부에서 정렬 처리)
@@ -97,10 +97,10 @@ function filterRecipes() {
     const selectedCategoryRadio = document.querySelector('input[name="cuisine_type"]:checked');
     const selectedCategory = selectedCategoryRadio ? selectedCategoryRadio.id.replace('radio_', '') : 'all';
 
-    // 체크박스 (재료) - 하나라도 체크된 것이 있으면 필터링
+    // 체크박스 (재료)
     const checkedIcons = Array.from(document.querySelectorAll('.recipe_filter_item input[type="checkbox"]:checked'))
                               .map(cb => cb.id.replace('chk_', ''));
-    // 매핑 (HTML ID -> JSON 데이터 값)
+    
     const iconMap = {
         "veg": "veggie", "fruit": "fruit", "dairy": "milk", "egg": "egg",
         "seafood": "fish", "poultry": "poultry", "meat": "meat"
@@ -118,13 +118,12 @@ function filterRecipes() {
             matchCategory = (recipe.category === selectedCategory);
         }
 
-        // 재료 필터 (체크된 것 중 하나라도 포함하면 보여줌 OR 체크된 게 없으면 다 보여줌)
-        // 여기서는 "체크된 재료 속성이 있는 레시피"를 보여줍니다.
+        // ★ [수정됨] 재료 필터 (AND 로직: every 사용)
         let matchIcon = true;
         if (checkedIcons.length > 0) {
-            // 레시피의 icons 배열에, 체크된 항목이 하나라도 들어있는지 확인
-            matchIcon = checkedIcons.some(checkId => {
-                const jsonValue = iconMap[checkId] || checkId; // 매핑된 값이 있으면 쓰고, 없으면 그대로
+            // 체크된 모든(every) 아이콘이 레시피에 포함되어 있어야 함
+            matchIcon = checkedIcons.every(checkId => {
+                const jsonValue = iconMap[checkId] || checkId; 
                 return recipe.icons.includes(jsonValue);
             });
         }
@@ -132,17 +131,13 @@ function filterRecipes() {
         return matchSearch && matchCategory && matchIcon;
     });
 
-    // 2. ★ 정렬 (Sorting)
+    // 2. 정렬 (Sorting)
     filtered.sort((a, b) => {
         if (currentSortMode === "newest") {
-            // 최신순: 날짜 내림차순 (2025-10-20 > 2025-01-01)
             return new Date(b.date) - new Date(a.date);
         } else if (currentSortMode === "recommend") {
-            // 추천순: 평점 내림차순
             return b.rating - a.rating;
         } else {
-            // 정확순: ID 오름차순 (등록된 순서) or 검색 시 관련도
-            // 여기서는 기본 ID 순서로 둠
             return a.id - b.id;
         }
     });

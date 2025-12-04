@@ -63,11 +63,27 @@
         </div>
         
         <div class="recipe_review_section">
-            <h3>생생 후기</h3>
-            <div class="recipe_review_list">
-                <p>아직 등록된 후기가 없어요. 첫 후기를 남겨주세요!</p>
+        <h3>생생 후기 <span id="reviewCountBadge" style="font-size:14px; color:#688F4E;">(0)</span></h3>
+        
+        <div class="review_input_container">
+            <div class="review_header">
+                <span style="font-weight:bold; color:#2B463C;">후기 작성</span>
+                <div class="star_rating_select" id="starContainer">
+                    <span class="star_btn selected" data-value="1">★</span>
+                    <span class="star_btn selected" data-value="2">★</span>
+                    <span class="star_btn selected" data-value="3">★</span>
+                    <span class="star_btn selected" data-value="4">★</span>
+                    <span class="star_btn selected" data-value="5">★</span>
+                </div>
+            </div>
+            <textarea id="reviewText" class="review_textarea" rows="3" placeholder="레시피에 대한 솔직한 후기를 남겨주세요!"></textarea>
+            <div style="overflow:hidden;"> <button type="button" class="btn_review_submit" onclick="submitReview()">등록하기</button>
             </div>
         </div>
+
+        <div class="recipe_review_list" id="reviewListContainer">
+            </div>
+    </div>
     </div>
 
     <script src="recipe_detail.js"></script>
