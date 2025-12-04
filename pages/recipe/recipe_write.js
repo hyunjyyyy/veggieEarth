@@ -269,13 +269,12 @@ document.getElementById("recipeForm").addEventListener("submit", async function(
 
     const today = new Date().toISOString().split('T')[0];
     
-    // 현재 로그인 기능이 없으므로 임의의 작성자 ID 부여
     const currentUser = "user" + Math.floor(Math.random() * 100); 
 
     const newRecipe = {
         id: newId,
         title: title,
-        author: currentUser, // ★ 작성자 정보 추가
+        author: currentUser,
         date: today,
         description: document.getElementById("description").value,
         image: mainImg,
@@ -285,7 +284,8 @@ document.getElementById("recipeForm").addEventListener("submit", async function(
         difficulty: document.querySelector('input[name="difficulty"]:checked').value,
         rating: 0, 
         reviews: 0,
-        reviewList: [], // ★ 빈 후기 리스트 초기화
+        scrap: 0,
+        reviewList: [], 
         icons: icons,
         ingredients: ["veg"], 
         hashtags: hashtags,
