@@ -34,12 +34,70 @@ const searchInput = document.querySelector(".map_search_box input");
 const regionSelect = document.querySelector(".map_select select");
 
 // ============================================
-// HTML에 이미 있는 공유 팝업 요소 가져오기
+// 공유 팝업 요소
 // ============================================
 const sharePopup = document.getElementById("share_popup");
 const shareLinkInput = document.getElementById("share_link_input");
 const shareCopyBtn = document.getElementById("share_copy_btn");
 const shareCloseBtn = document.getElementById("share_close_btn");
+
+// ============================================
+// GPS 버튼
+// ============================================
+const gpsButton = document.getElementById("gps_button");
+
+let gpsActive = false;
+let userMarker = null;
+let lastUserLatLng = null;
+
+function toggleGPS() {
+    gpsActive = !gpsActive;
+
+    if (gpsActive) {
+        // 클릭하면 활성화 이미지로 변경
+        gpsButton.src = "map_image/gps_act.png";
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    lastUserLatLng = new kakao.maps.LatLng(lat, lng);
+
+                    if (userMarker) userMarker.setMap(null);
+
+                    const userMarkerImage = new kakao.maps.MarkerImage(
+                        "../../assets/images/map_pin.png",
+                        new kakao.maps.Size(40, 40),
+                        { offset: new kakao.maps.Point(20, 40) }
+                    );
+
+                    userMarker = new kakao.maps.Marker({
+                        map: map,
+                        position: lastUserLatLng,
+                        image: userMarkerImage
+                    });
+
+                    map.setCenter(lastUserLatLng);
+                    map.setLevel(defaultLevel);
+                },
+                () => {
+                    gpsActive = false;
+                    gpsButton.src = "map_image/gps.png";
+                    alert("위치 정보를 가져올 수 없습니다.");
+                }
+            );
+        }
+    } else {
+        // 비활성 이미지로 변경
+        gpsButton.src = "map_image/gps.png";
+
+        if (userMarker) userMarker.setMap(null);
+    }
+}
+
+gpsButton.addEventListener("click", toggleGPS);
+
 
 // ============================================
 // 공유 팝업 열기
@@ -68,15 +126,15 @@ function openSharePopup(restaurant) {
 // 마커 클릭 시 화면 중앙 + 카드 표시
 // ============================================
 function focusMarker(restaurant) {
-    // 지도 클래스 전환
     map_container.classList.remove("fullscreen");
     map_container.classList.add("with_card");
 
-    // 맵 카드 표시
     const cardContainer = document.querySelector(".map_card_outer_container");
     cardContainer.style.display = "block";
 
     update_restaurant_card(restaurant);
+
+    cardContainer.scrollTop = 0;
 
     const position = new kakao.maps.LatLng(
         restaurant.marker_position.lat,
@@ -259,11 +317,19 @@ fetch("restaurant_data.json")
         checkboxes.forEach(cb => cb.addEventListener("change", filterAndRenderMarkers));
         searchInput.addEventListener("input", filterAndRenderMarkers);
         regionSelect.addEventListener("change", filterAndRenderMarkers);
+
+        regionSelect.addEventListener("change", () => {
+            if (regionSelect.value === "지역 선택") {
+                map.setLevel(13); 
+                map.setCenter(new kakao.maps.LatLng(36.5, 127.8));
+            }
+        });
     })
     .catch(err => console.error("restaurant_data.json 불러오기 실패:", err));
 
+
 // ============================================
-// 페이지 최초 로드 시 현재 위치
+// 페이지 최초 로드 시 위치
 // ============================================
 let initialPositionSet = false;
 
@@ -276,25 +342,11 @@ if (navigator.geolocation) {
 
                 const userPosition = new kakao.maps.LatLng(userLat, userLng);
 
+                // 지도만 이동 (마커 X)
                 map.setCenter(userPosition);
                 map.setLevel(defaultLevel);
 
-                const userMarkerImage = new kakao.maps.MarkerImage(
-                    "../../assets/images/map_pin.png",
-                    new kakao.maps.Size(40, 40),
-                    { offset: new kakao.maps.Point(20, 40) }
-                );
-
-                const userMarker = new kakao.maps.Marker({
-                    position: userPosition,
-                    map: map,
-                    image: userMarkerImage
-                });
-
-                kakao.maps.event.addListener(userMarker, "click", () => {
-                    map.setLevel(defaultLevel, { animate: true });
-                    map.setCenter(userPosition);
-                });
+                lastUserLatLng = userPosition;
 
                 initialPositionSet = true;
             }

@@ -234,7 +234,6 @@ ul {
     min-width: 200px;
     min-height: 0;
     overflow-y: scroll; 
-
 }
 
 /* 스크롤바 */
@@ -705,4 +704,14 @@ ul {
 
 .close_btn {
     background: #666;
+}
+
+.gps_button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 20;
 }
