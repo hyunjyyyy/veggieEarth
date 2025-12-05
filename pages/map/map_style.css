@@ -321,7 +321,14 @@ ul {
     padding: 0;
 }
 
-.map_card_action_button img {
+.favorite_btn img {
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 0 0 6px 0;
+}
+
+.share_btn img {
     display: block;
     width: 22px;
     height: 22px;
@@ -706,12 +713,17 @@ ul {
     background: #666;
 }
 
-.gps_button {
+.map_button {
     position: absolute;
-    bottom: 20px;
+    top: 20px;
     right: 20px;
     width: 40px;
     height: 40px;
     cursor: pointer;
     z-index: 20;
+}
+
+.gps_button {
+    top: 75px;
+    right: 20px;
 }

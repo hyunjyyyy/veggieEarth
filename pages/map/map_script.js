@@ -1,4 +1,19 @@
 // ============================================
+// 저장된 식당 리스트 (localStorage)
+// ============================================
+function loadSavedRestaurants() {
+    const data = localStorage.getItem("saved_restaurants");
+    return data ? JSON.parse(data) : [];
+}
+
+function saveSavedRestaurants(list) {
+    localStorage.setItem("saved_restaurants", JSON.stringify(list));
+}
+
+let savedRestaurants = loadSavedRestaurants();
+
+
+// ============================================
 // 지도 초기 설정
 // ============================================
 const map_container = document.getElementById("map");
@@ -14,6 +29,7 @@ const map_option = {
 };
 
 const map = new kakao.maps.Map(map_container, map_option);
+
 
 // ============================================
 // 레스토랑 데이터
@@ -42,6 +58,12 @@ const shareCopyBtn = document.getElementById("share_copy_btn");
 const shareCloseBtn = document.getElementById("share_close_btn");
 
 // ============================================
+// 저장한 식당 보기 버튼
+// ============================================
+const favButton = document.getElementById("fav_button");
+
+
+// ============================================
 // GPS 버튼
 // ============================================
 const gpsButton = document.getElementById("gps_button");
@@ -54,7 +76,6 @@ function toggleGPS() {
     gpsActive = !gpsActive;
 
     if (gpsActive) {
-        // 클릭하면 활성화 이미지로 변경
         gpsButton.src = "map_image/gps_act.png";
 
         if (navigator.geolocation) {
@@ -89,7 +110,6 @@ function toggleGPS() {
             );
         }
     } else {
-        // 비활성 이미지로 변경
         gpsButton.src = "map_image/gps.png";
 
         if (userMarker) userMarker.setMap(null);
@@ -122,6 +142,36 @@ function openSharePopup(restaurant) {
     };
 }
 
+
+// ============================================
+// 식당 저장 버튼 상태 설정 함수
+// ============================================
+function applyFavoriteButtonLogic(restaurant) {
+    const favBtn = document.querySelector(".favorite_btn img");
+
+    function updateIcon() {
+        if (savedRestaurants.includes(restaurant.id)) {
+            favBtn.src = "../../assets/images/map_favorite_act.png";
+        } else {
+            favBtn.src = "../../assets/images/map_favorite.png";
+        }
+    }
+
+    updateIcon();
+
+    document.querySelector(".favorite_btn").onclick = () => {
+        if (savedRestaurants.includes(restaurant.id)) {
+            savedRestaurants = savedRestaurants.filter(id => id !== restaurant.id);
+        } else {
+            savedRestaurants.push(restaurant.id);
+        }
+
+        saveSavedRestaurants(savedRestaurants);
+        updateIcon();
+    };
+}
+
+
 // ============================================
 // 마커 클릭 시 화면 중앙 + 카드 표시
 // ============================================
@@ -133,6 +183,7 @@ function focusMarker(restaurant) {
     cardContainer.style.display = "block";
 
     update_restaurant_card(restaurant);
+    applyFavoriteButtonLogic(restaurant);   // ★ 저장 버튼 적용
 
     cardContainer.scrollTop = 0;
 
@@ -148,6 +199,7 @@ function focusMarker(restaurant) {
     const shareBtn = document.getElementById("share_button");
     shareBtn.onclick = () => openSharePopup(restaurant);
 }
+
 
 // ============================================
 // 카드 업데이트
@@ -231,6 +283,7 @@ function update_restaurant_card(restaurant) {
     }
 }
 
+
 // ============================================
 // 필터링 + 마커 렌더링
 // ============================================
@@ -307,6 +360,93 @@ function filterAndRenderMarkers() {
 }
 
 // ============================================
+// 즐겨찾기 버튼 토글 상태 + 동작
+// ============================================
+let favActive = false;
+
+function toggleFavoriteMode() {
+    const saved = loadSavedRestaurants();
+
+    if (!favActive) {
+        if (saved.length === 0) {
+            alert("저장한 식당이 없습니다.");
+            favButton.src = "map_image/fav.png";
+            return;
+        }
+    }
+
+    favActive = !favActive;
+
+    favButton.src = favActive
+        ? "map_image/fav_act.png"
+        : "map_image/fav.png";
+
+    if (favActive) {
+        showSavedMarkers();
+    }
+}
+
+
+favButton.addEventListener("click", toggleFavoriteMode);
+
+
+// ============================================
+// 저장된 식당 마커 표시 기능
+// ============================================
+function showSavedMarkers() {
+    // 기존 마커 제거
+    markers.forEach(m => m.setMap(null));
+    overlays.forEach(o => o.setMap(null));
+    markers = [];
+    overlays = [];
+
+    // 저장된 식당의 ID 배열
+    const savedIds = savedRestaurants;
+
+    // ID로 레스토랑 객체 필터링
+    const savedData = restaurant_list.filter(r => savedIds.includes(r.id));
+
+    if (savedData.length === 0) {
+        alert("저장한 식당이 없습니다.");
+        return;
+    }
+
+    const bounds = new kakao.maps.LatLngBounds();
+
+    savedData.forEach(restaurant => {
+        // ★ 반드시 restaurant.marker_position 사용해야 함
+        const pos = new kakao.maps.LatLng(
+            restaurant.marker_position.lat,
+            restaurant.marker_position.lng
+        );
+
+        const marker = new kakao.maps.Marker({
+            map: map,
+            position: pos
+        });
+
+        const overlay = new kakao.maps.CustomOverlay({
+            map: map,
+            position: pos,
+            content: '<div class="map_pin"></div>',
+            yAnchor: 1
+        });
+
+        kakao.maps.event.addListener(marker, "click", () => focusMarker(restaurant));
+        kakao.maps.event.addListener(overlay, "click", () => focusMarker(restaurant));
+
+        markers.push(marker);
+        overlays.push(overlay);
+
+        bounds.extend(pos);
+    });
+
+    if (!bounds.isEmpty()) {
+        map.setBounds(bounds);
+    }
+}
+
+// ============================================
 // JSON 로드
 // ============================================
 fetch("restaurant_data.json")
@@ -320,7 +460,7 @@ fetch("restaurant_data.json")
 
         regionSelect.addEventListener("change", () => {
             if (regionSelect.value === "지역 선택") {
-                map.setLevel(13); 
+                map.setLevel(13);
                 map.setCenter(new kakao.maps.LatLng(36.5, 127.8));
             }
         });
@@ -342,7 +482,6 @@ if (navigator.geolocation) {
 
                 const userPosition = new kakao.maps.LatLng(userLat, userLng);
 
-                // 지도만 이동 (마커 X)
                 map.setCenter(userPosition);
                 map.setLevel(defaultLevel);
 
