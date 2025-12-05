@@ -3,12 +3,14 @@
     "id": 1,
     "title": "가지 피자",
     "image": "../../assets/images/가지피자.jpg",
+    "author": "pxibvaw",
     "icons": ["veggie", "milk"],
     "servings": "2인분",
     "time": "30분 이내",
     "difficulty": "쉬움",
-    "rating": 4.5,
-    "reviews": 0,
+    "rating": 4.8,
+    "reviews": 8,
+    "scrap": 0,
     "date": "2025-10-20",
     "category": "western",
     "ingredients": ["veg", "dairy"],
@@ -16,7 +18,7 @@
     "description": "가지를 이용하여 간단하면서 맛있게 만들 수 있는 편식 방지 레시피!",
     "ingredientGroups": [
       {
-        "category": "[주재료]",
+        "category": "주재료",
         "items": [
           { "name": "가지", "amount": "2개" },
           { "name": "양파", "amount": "1/2개" },
@@ -25,97 +27,430 @@
         ]
       },
       {
-        "category": "[양념]",
+        "category": "양념",
         "items": [
           { "name": "스파게티 소스", "amount": "200g" },
-          { "name": "허브솔트", "amount": "조금" },
           { "name": "피자치즈", "amount": "6~8큰술" },
-          { "name": "파마산", "amount": "1큰술" },
           { "name": "올리브오일", "amount": "1큰술" }
         ]
       }
     ],
     "steps": [
-      { "img": "", "desc": "가지를 반으로 가른 뒤 껍질을 감자칼로 한번씩만 벗기고 속을 파내줍니다." },
-      { "img": "", "desc": "가지의 앞뒤로 올리브 오일을 발라줍니다." },
-      { "img": "", "desc": "허브솔트를 이용하여 밑간을 해주시고, 200도로 예열된 오븐 혹은 에어프라이어에 15분간 구워주세요" },
-      { "img": "", "desc": "구워지는 동안 파낸 가지 속을 다져주세요." },
-      { "img": "", "desc": "노란 파프리카, 빨간 파프리카, 양파를 다져주세요." },
-      { "img": "", "desc": "다져준 야채들을 스파게티 소스 200g을 부어 볶아줍니다." },
-      { "img": "", "desc": "오븐에서 꺼내 가지에 볶아둔 야채소스를 채워주세요" },
-      { "img": "", "desc": "피자 치즈를 올리고 파슬리를 뿌린 후 오븐에서 5분간 더 조리합니다." }
+      { "img": "", "desc": "가지를 반으로 가른 뒤 속을 파내줍니다." },
+      { "img": "", "desc": "가지에 올리브 오일을 바르고 구워줍니다." },
+      { "img": "", "desc": "파낸 속과 야채를 다져 소스와 볶아줍니다." },
+      { "img": "", "desc": "가지를 채우고 치즈를 올려 마무리 굽기를 합니다." }
+    ],
+    "reviewList": [
+      { "user": "happy_eat", "text": "가지 싫어하는 아이도 잘 먹어요! 최고입니다.", "rating": 5, "date": "2025-10-21" },
+      { "user": "pizza_king", "text": "생각보다 간편하고 맛있네요. 치즈 많이 넣으니 더 좋아요.", "rating": 4, "date": "2025-10-25" },
+      { "user": "daily_cook", "text": "에어프라이어로 하니 설거지도 적고 딱 좋아요.", "rating": 5, "date": "2025-11-02" },
+      { "user": "healthy_mom", "text": "아이들이 가지인지 모르고 먹어요 ㅋㅋ", "rating": 5, "date": "2025-11-05" },
+      { "user": "cheese_lover", "text": "치즈 듬뿍 넣으니 꿀맛입니다. 강추!", "rating": 5, "date": "2025-11-06" },
+      { "user": "simple_cook", "text": "속 파내는 게 조금 귀찮긴 하지만 맛은 보장하네요.", "rating": 4, "date": "2025-11-08" },
+      { "user": "vegan_try", "text": "비건 치즈로 대체해서 만들었는데도 맛있어요.", "rating": 5, "date": "2025-11-10" },
+      { "user": "night_snack", "text": "맥주 안주로 딱임.", "rating": 5, "date": "2025-11-12" }
     ]
   },
   {
     "id": 2,
     "title": "감자 된장국",
     "image": "../../assets/images/감자된장국.jpg",
+    "author": "potatozang",
     "icons": ["veggie"],
     "servings": "3~4인분",
     "time": "30분 이내",
     "difficulty": "중간",
-    "rating": 4.0,
-    "reviews": 15,
+    "rating": 4.5,
+    "reviews": 2,
+    "scrap": 1,
     "date": "2025-09-15",
     "category": "korean",
     "ingredients": ["veg"],
-    "hashtags": ["#한식", "#국물요리"],
-    "description": "구수한 맛이 일품인 감자 된장국입니다.",
-    "ingredientGroups": [],
-    "steps": []
+    "hashtags": ["#한식", "#국물요리", "#아침식사", "#비건"],
+    "description": "구수한 맛이 일품인 감자 된장국입니다. 아침 식사로 부담 없이 즐기세요.",
+    "ingredientGroups": [
+       {
+        "category": "재료",
+        "items": [
+          { "name": "감자", "amount": "2개" },
+          { "name": "양파", "amount": "1/2개" },
+          { "name": "대파", "amount": "1대" },
+          { "name": "두부", "amount": "1/2모" }
+        ]
+      },
+      {
+        "category": "육수 및 양념",
+        "items": [
+          { "name": "된장", "amount": "3큰술" },
+          { "name": "다진마늘", "amount": "1/2큰술" },
+          { "name": "채수", "amount": "1L" }
+        ]
+      }
+    ],
+    "steps": [
+       { "img": "", "desc": "감자는 먹기 좋은 크기로 썰고 물에 담가 전분을 뺍니다." },
+       { "img": "", "desc": "냄비에 채수를 붓고 된장을 잘 풀어줍니다." },
+       { "img": "", "desc": "감자를 넣고 끓이다가 투명해지면 양파와 두부를 넣습니다." }
+    ],
+    "reviewList": [
+       { "user": "morning_person", "text": "아침에 후루룩 먹기 너무 좋네요. 속이 편안해요.", "rating": 5, "date": "2025-09-16" },
+       { "user": "cook_beginner", "text": "된장 양 조절 실패해서 짰지만 레시피는 쉬웠어요.", "rating": 4, "date": "2025-09-20" }
+    ]
   },
   {
     "id": 3,
     "title": "감자 크래커",
     "image": "../../assets/images/감자크래커.jpg",
+    "author": "potatozang",
     "icons": ["veggie"],
     "servings": "2인분",
     "time": "1시간",
     "difficulty": "쉬움",
-    "rating": 3.5,
-    "reviews": 5,
+    "rating": 3.0,
+    "reviews": 1,
+    "scrap": 1,
     "date": "2025-11-01",
     "category": "dessert",
     "ingredients": ["veg"],
-    "hashtags": ["#간식", "#비건"],
-    "description": "바삭한 감자 간식",
-    "ingredientGroups": [],
-    "steps": []
+    "hashtags": ["#간식", "#비건", "#노오븐", "#전자레인지"],
+    "description": "기름 없이 전자레인지로 만드는 바삭한 감자 간식",
+    "ingredientGroups": [
+       { "category": "재료", "items": [{ "name": "감자", "amount": "2개" }, { "name": "소금", "amount": "약간" }, { "name": "파슬리", "amount": "약간" }] }
+    ],
+    "steps": [
+       { "img": "", "desc": "감자를 최대한 얇게 슬라이스합니다." },
+       { "img": "", "desc": "물기를 완전히 제거한 후 꼬치에 끼우거나 접시에 펴 담습니다." },
+       { "img": "", "desc": "전자레인지에 5분 정도 돌려 바삭하게 만듭니다." }
+    ],
+    "reviewList": [
+       { "user": "crispy_lover", "text": "생각보다 바삭하게 만들기 어렵네요 ㅠㅠ 눅눅했어요.", "rating": 3, "date": "2025-11-02" }
+    ]
   },
   {
     "id": 4,
     "title": "두부 스테이크",
     "image": "../../assets/images/두부스테이크.png",
+    "author": "pxibvaw",
     "icons": ["veggie"],
     "servings": "3~4인분",
     "time": "30분 이내",
     "difficulty": "중간",
     "rating": 4.8,
-    "reviews": 22,
+    "reviews": 6,
+    "scrap": 0,
     "date": "2025-08-20",
     "category": "western",
     "ingredients": ["veg"],
-    "hashtags": ["#비건", "#스테이크"],
-    "description": "고기 없이 즐기는 스테이크",
-    "ingredientGroups": [],
-    "steps": []
+    "hashtags": ["#비건", "#스테이크", "#단백질", "#다이어트"],
+    "description": "고기 없이 즐기는 쫄깃하고 담백한 두부 스테이크",
+    "ingredientGroups": [
+        { "category": "반죽", "items": [{ "name": "두부", "amount": "1모" }, { "name": "빵가루", "amount": "1컵" }, { "name": "다진 야채", "amount": "1컵" }] },
+        { "category": "소스", "items": [{ "name": "스테이크 소스", "amount": "3큰술" }, { "name": "케첩", "amount": "2큰술" }] }
+    ],
+    "steps": [
+        { "img": "", "desc": "두부의 물기를 꽉 짭니다." },
+        { "img": "", "desc": "으깬 두부와 야채, 빵가루를 섞어 반죽을 만듭니다." },
+        { "img": "", "desc": "동그랗게 빚어 팬에 노릇하게 굽습니다." }
+    ],
+    "reviewList": [
+        { "user": "diet_pro", "text": "다이어트 중인데 고기 생각 안 날 정도로 맛있어요!", "rating": 5, "date": "2025-08-22" },
+        { "user": "vegan_life", "text": "소스랑 궁합이 찰떡입니다.", "rating": 5, "date": "2025-09-01" },
+        { "user": "muscle_man", "text": "운동 후 단백질 보충용으로 최고입니다.", "rating": 5, "date": "2025-09-05" },
+        { "user": "texture_king", "text": "식감이 고기랑 진짜 비슷해요. 신기하네요.", "rating": 5, "date": "2025-09-10" },
+        { "user": "sauce_master", "text": "소스가 좀 달아서 저는 고춧가루 추가했어요.", "rating": 4, "date": "2025-09-12" },
+        { "user": "dinner_menu", "text": "부모님 해드렸는데 좋아하시네요. 건강식으로 딱입니다.", "rating": 5, "date": "2025-09-20" }
+    ]
   },
   {
     "id": 5,
     "title": "버섯 크림 리조또",
     "image": "../../assets/images/버섯크림리조또.png",
+    "author": "pxibvaw",
     "icons": ["veggie", "milk", "egg"],
     "servings": "2인분",
     "time": "1시간",
     "difficulty": "보통",
-    "rating": 5.0,
-    "reviews": 11,
+    "rating": 4.5,
+    "reviews": 2,
+    "scrap": 0,
     "date": "2025-10-05",
     "category": "western",
     "ingredients": ["veg", "dairy", "egg"],
-    "hashtags": ["#양식", "#크림"],
-    "description": "부드러운 크림 리조또",
-    "ingredientGroups": [],
-    "steps": []
+    "hashtags": ["#양식", "#크림", "#브런치", "#손님초대"],
+    "description": "풍미 가득한 버섯과 부드러운 크림의 조화, 레스토랑 못지않은 리조또",
+    "ingredientGroups": [
+        { "category": "주재료", "items": [{ "name": "쌀", "amount": "1컵" }, { "name": "모듬 버섯", "amount": "200g" }, { "name": "양파", "amount": "1/2개" }] },
+        { "category": "소스", "items": [{ "name": "생크림", "amount": "200ml" }, { "name": "우유", "amount": "100ml" }, { "name": "파마산 치즈", "amount": "2큰술" }] }
+    ],
+    "steps": [
+        { "img": "", "desc": "팬에 버섯과 양파를 볶아 향을 냅니다." },
+        { "img": "", "desc": "불린 쌀을 넣고 투명해질 때까지 볶습니다." },
+        { "img": "", "desc": "우유와 생크림을 조금씩 부어가며 쌀을 익혀줍니다." }
+    ],
+    "reviewList": [
+        { "user": "creamy", "text": "진짜 꾸덕하고 맛있어요. 남편이 좋아해요.", "rating": 5, "date": "2025-10-06" },
+        { "user": "home_cook", "text": "계속 저어줘야 해서 팔은 아프지만 맛은 보장!", "rating": 4, "date": "2025-10-10" }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "단호박 에그슬럿",
+    "image": "",
+    "author": "sweet_pumpkin",
+    "icons": ["veggie", "egg", "milk"],
+    "servings": "1인분",
+    "time": "15분 이내",
+    "difficulty": "쉬움",
+    "rating": 5.0,
+    "reviews": 1,
+    "scrap": 1,
+    "date": "2025-12-01",
+    "category": "dessert",
+    "ingredients": ["veg", "egg", "dairy"],
+    "hashtags": ["#디저트", "#간단요리", "#전자레인지", "#달걀", "#단호박"],
+    "description": "미니 단호박 속에 치즈와 계란을 넣어 든든한 한 끼",
+    "ingredientGroups": [
+        { "category": "재료", "items": [{ "name": "미니 단호박", "amount": "1개" }, { "name": "달걀", "amount": "1개" }, { "name": "모짜렐라 치즈", "amount": "한줌" }, { "name": "소금/후추", "amount": "약간" }] }
+    ],
+    "steps": [
+        { "img": "", "desc": "단호박 윗부분을 자르고 속을 파냅니다." },
+        { "img": "", "desc": "계란을 깨뜨려 넣고 노른자를 포크로 콕 찔러줍니다." },
+        { "img": "", "desc": "치즈를 듬뿍 올린 뒤 전자레인지에 5분간 돌려줍니다." }
+    ],
+    "reviewList": [
+        { "user": "cheese_lover", "text": "비주얼도 좋고 맛도 좋아요! 아침 대용으로 딱입니다.", "rating": 5, "date": "2025-12-02" }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "매콤 두부조림",
+    "image": "",
+    "author": "pxibvaw",
+    "icons": ["veggie"],
+    "servings": "2인분",
+    "time": "30분 이내",
+    "difficulty": "보통",
+    "rating": 0,
+    "reviews": 0,
+    "scrap": 0,
+    "date": "2025-12-03",
+    "category": "korean",
+    "ingredients": ["veg"],
+    "hashtags": ["#한식", "#밥도둑", "#매운맛", "#두부요리"],
+    "description": "밥 한 공기 뚝딱! 매콤달콤한 양념이 배어든 두부조림",
+    "ingredientGroups": [
+        { "category": "주재료", "items": [{ "name": "두부", "amount": "1모" }, { "name": "대파", "amount": "1/2대" }, { "name": "청양고추", "amount": "1개" }] },
+        { "category": "양념장", "items": [{ "name": "고춧가루", "amount": "2큰술" }, { "name": "간장", "amount": "3큰술" }, { "name": "설탕", "amount": "1큰술" }, { "name": "다진마늘", "amount": "1큰술" }] }
+    ],
+    "steps": [
+        { "img": "", "desc": "두부는 도톰하게 썰어 키친타월로 물기를 제거합니다." },
+        { "img": "", "desc": "팬에 기름을 두르고 두부를 노릇하게 굽습니다." },
+        { "img": "", "desc": "양념장과 물을 약간 넣고 자박하게 조려줍니다." }
+    ],
+    "reviewList": []
+  },
+  {
+    "id": 8,
+    "title": "비건 초코 머핀",
+    "image": "",
+    "author": "pxibvaw",
+    "icons": ["veggie"],
+    "servings": "3~4인분",
+    "time": "1시간",
+    "difficulty": "어려움",
+    "rating": 4.0,
+    "reviews": 1,
+    "scrap": 0,
+    "date": "2025-11-20",
+    "category": "baking",
+    "ingredients": ["veg"],
+    "hashtags": ["#베이킹", "#비건", "#디저트", "#초코"],
+    "description": "우유와 버터 없이 만드는 진한 초콜릿 풍미의 머핀",
+    "ingredientGroups": [
+        { "category": "가루류", "items": [{ "name": "통밀가루", "amount": "150g" }, { "name": "코코아파우더", "amount": "30g" }, { "name": "베이킹파우더", "amount": "1ts" }] },
+        { "category": "액체류", "items": [{ "name": "두유", "amount": "120ml" }, { "name": "식물성 오일", "amount": "60ml" }, { "name": "설탕", "amount": "80g" }] }
+    ],
+    "steps": [
+        { "img": "", "desc": "가루 재료를 체에 쳐서 준비합니다." },
+        { "img": "", "desc": "액체 재료를 섞어 설탕을 녹인 뒤 가루 재료와 섞습니다." },
+        { "img": "", "desc": "머핀 틀에 반죽을 붓고 180도 오븐에서 25분간 굽습니다." }
+    ],
+    "reviewList": [
+        { "user": "choco_duck", "text": "버터 없이도 이렇게 촉촉할 수 있다니 놀라워요.", "rating": 4, "date": "2025-11-25" }
+    ]
+  },
+  {
+    "id": 9,
+    "title": "아보카도 오픈 샌드위치",
+    "image": "",
+    "author": "brunch_lover",
+    "icons": ["veggie", "fruit", "egg"],
+    "servings": "1인분",
+    "time": "15분 이내",
+    "difficulty": "쉬움",
+    "rating": 4.8,
+    "reviews": 3,
+    "scrap": 0,
+    "date": "2025-11-10",
+    "category": "western",
+    "ingredients": ["veg", "fruit", "egg"],
+    "hashtags": ["#브런치", "#아보카도", "#다이어트", "#간단요리"],
+    "description": "숲속의 버터 아보카도와 수란의 환상적인 조화",
+    "ingredientGroups": [
+      {
+        "category": "재료",
+        "items": [
+          { "name": "호밀빵", "amount": "1장" },
+          { "name": "아보카도", "amount": "1/2개" },
+          { "name": "달걀", "amount": "1개" },
+          { "name": "크러쉬드 레드페퍼", "amount": "약간" }
+        ]
+      }
+    ],
+    "steps": [
+      { "img": "", "desc": "호밀빵을 토스터기에 바삭하게 굽습니다." },
+      { "img": "", "desc": "아보카도를 얇게 썰어 빵 위에 올립니다." },
+      { "img": "", "desc": "수란을 만들어 올리고 소금, 후추, 레드페퍼를 뿌립니다." }
+    ],
+    "reviewList": [
+      { "user": "morning_vibe", "text": "카페에서 파는 것보다 맛있어요!", "rating": 5, "date": "2025-11-11" },
+      { "user": "diet_gogo", "text": "간단하고 든든해서 아침마다 먹어요.", "rating": 5, "date": "2025-11-15" },
+      { "user": "avocado_fan", "text": "레몬즙 살짝 뿌리니 더 맛있네요.", "rating": 4, "date": "2025-11-20" }
+    ]
+  },
+  {
+    "id": 10,
+    "title": "콩나물 비빔밥",
+    "image": "",
+    "author": "mom_cook",
+    "icons": ["veggie"],
+    "servings": "2인분",
+    "time": "30분 이내",
+    "difficulty": "쉬움",
+    "rating": 4.7,
+    "reviews": 7,
+    "scrap": 0,
+    "date": "2025-10-30",
+    "category": "korean",
+    "ingredients": ["veg"],
+    "hashtags": ["#한식", "#비건", "#가성비", "#한그릇요리"],
+    "description": "아삭한 콩나물 식감이 살아있는 든든한 한 끼",
+    "ingredientGroups": [
+      {
+        "category": "주재료",
+        "items": [
+          { "name": "콩나물", "amount": "200g" },
+          { "name": "쌀", "amount": "2컵" },
+          { "name": "쪽파", "amount": "약간" }
+        ]
+      },
+      {
+        "category": "양념장",
+        "items": [
+          { "name": "간장", "amount": "4큰술" },
+          { "name": "참기름", "amount": "1큰술" },
+          { "name": "고춧가루", "amount": "1/2큰술" },
+          { "name": "통깨", "amount": "1큰술" }
+        ]
+      }
+    ],
+    "steps": [
+      { "img": "", "desc": "콩나물을 깨끗이 씻어 준비합니다." },
+      { "img": "", "desc": "밥을 지을 때 물을 평소보다 적게 잡고 콩나물을 올려 취사합니다." },
+      { "img": "", "desc": "양념장 재료를 섞어 갓 지은 밥에 비벼 먹습니다." }
+    ],
+    "reviewList": [
+      { "user": "korean_foodie", "text": "양념장이 진짜 킥이네요. 맛있습니다.", "rating": 4, "date": "2025-11-01" },
+      { "user": "simple_life", "text": "반찬 없을 때 최고예요.", "rating": 5, "date": "2025-11-05" },
+      { "user": "save_money", "text": "자취생 필수 레시피 등극. 너무 싸고 맛있어요.", "rating": 5, "date": "2025-11-06" },
+      { "user": "spicy_lover", "text": "청양고추 팍팍 넣으니 더 맛있어요.", "rating": 5, "date": "2025-11-08" },
+      { "user": "busy_mom", "text": "다른 반찬 필요 없어서 편해요. 아이들도 잘 먹네요.", "rating": 5, "date": "2025-11-09" },
+      { "user": "rice_cooker", "text": "물 조절 실패해서 좀 질게 됐지만 맛나요.", "rating": 4, "date": "2025-11-15" },
+      { "user": "weekend_lunch", "text": "주말 점심으로 딱입니다.", "rating": 5, "date": "2025-11-20" }
+    ]
+  },
+  {
+    "id": 11,
+    "title": "방울토마토 마리네이드",
+    "image": "",
+    "author": "salad_master",
+    "icons": ["veggie", "fruit"],
+    "servings": "4인분",
+    "time": "30분 이내",
+    "difficulty": "쉬움",
+    "rating": 5.0,
+    "reviews": 1,
+    "scrap": 0,
+    "date": "2025-07-15",
+    "category": "western",
+    "ingredients": ["veg", "fruit"],
+    "hashtags": ["#샐러드", "#에피타이저", "#상큼", "#여름요리"],
+    "description": "새콤달콤 입맛을 돋우는 여름철 별미 반찬",
+    "ingredientGroups": [
+      {
+        "category": "재료",
+        "items": [
+          { "name": "방울토마토", "amount": "500g" },
+          { "name": "양파", "amount": "1/4개" },
+          { "name": "바질", "amount": "10장" }
+        ]
+      },
+      {
+        "category": "소스",
+        "items": [
+          { "name": "올리브오일", "amount": "3큰술" },
+          { "name": "발사믹식초", "amount": "2큰술" },
+          { "name": "꿀", "amount": "1큰술" },
+          { "name": "레몬즙", "amount": "1큰술" }
+        ]
+      }
+    ],
+    "steps": [
+      { "img": "", "desc": "방울토마토에 칼집을 내고 데쳐서 껍질을 벗깁니다." },
+      { "img": "", "desc": "양파와 바질을 잘게 다져 소스 재료와 섞습니다." },
+      { "img": "", "desc": "토마토와 소스를 버무려 냉장고에서 1시간 숙성합니다." }
+    ],
+    "reviewList": [
+      { "user": "summer_breeze", "text": "파스타랑 같이 먹으니 꿀맛이에요! 손님 대접용으로 딱입니다.", "rating": 5, "date": "2025-07-20" }
+    ]
+  },
+  {
+    "id": 12,
+    "title": "오트밀 레이즌 쿠키",
+    "image": "",
+    "author": "healthy_baker",
+    "icons": ["veggie"],
+    "servings": "2인분",
+    "time": "1시간",
+    "difficulty": "보통",
+    "rating": 3.8,
+    "reviews": 2,
+    "scrap": 0,
+    "date": "2025-12-05",
+    "category": "baking",
+    "ingredients": ["veg"],
+    "hashtags": ["#베이킹", "#건강간식", "#오트밀", "#비건"],
+    "description": "밀가루 없이 만드는 고소하고 쫀득한 건강 쿠키",
+    "ingredientGroups": [
+      {
+        "category": "재료",
+        "items": [
+          { "name": "오트밀", "amount": "150g" },
+          { "name": "바나나", "amount": "2개" },
+          { "name": "건포도", "amount": "30g" },
+          { "name": "시나몬가루", "amount": "1ts" }
+        ]
+      }
+    ],
+    "steps": [
+      { "img": "", "desc": "바나나를 포크로 곱게 으깹니다." },
+      { "img": "", "desc": "으깬 바나나에 오트밀, 건포도, 시나몬가루를 넣고 섞습니다." },
+      { "img": "", "desc": "동그랗게 모양을 잡아 170도 오븐에서 15분간 굽습니다." }
+    ],
+    "reviewList": [
+      { "user": "gym_rat", "text": "운동 전 간식으로 좋아요. 단맛이 적어서 건강한 맛.", "rating": 4, "date": "2025-12-06" },
+      { "user": "sweet_tooth", "text": "생각보다 너무 안 달아서 제 입맛엔 좀 심심했어요.", "rating": 3, "date": "2025-12-07" }
+    ]
   }
 ]

@@ -1,8 +1,3 @@
-/**
- * [파일명: 7_베지어스_mypage.js]
- * 마이페이지 메인 로직
- * 역할: 데이터 로드, 프로필 표시/수정, 배지 모달 제어, 차트 렌더링 함수 호출
- */
 
 // ===== 전역 변수 =====
 let userData = null;
@@ -12,74 +7,142 @@ let isEditMode = false;
 let nameTag = null;
 let veganTypeTag = null;
 
+const CURRENT_USER_ID = "user01"; // 현재 로그인한 사용자 ID
+
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('페이지 로드 시작');
+    console.log('페이지 로드 및 초기화 시작');
     try {
-        await loadAllData();
-        initializeProfile();    // 프로필 초기화 (+ 차트 그리기 호출)
-        initializeBadgeGuide(); // 뱃지 가이드 모달 초기화
-        setupEventListeners();  // 버튼 이벤트 연결
+        await loadAllData();    
+        initializeProfile();     
+        initializeBadgeGuide();  
+        setupEventListeners();   
         console.log('초기화 완료');
     } catch (e) {
-        console.error('초기화 중 치명적 오류 발생:', e);
+        console.error('초기화 중 오류 발생:', e);
     }
 });
 
+
 async function loadAllData() {
     try {
-        // 1. 유저 데이터 로드 (로컬스토리지 우선)
+
+        const userResponse = await fetch('7_베지어스_mypage_user_profile.json');
+        const defaultUserData = await userResponse.json();
+        
         const storedUserData = localStorage.getItem('vegetus_user_profile');
         if (storedUserData) {
             userData = JSON.parse(storedUserData);
+
+            if(!userData.statistics) userData.statistics = defaultUserData.statistics;
         } else {
-            const userResponse = await fetch('7_베지어스_mypage_user_profile.json');
-            if (!userResponse.ok) throw new Error('user_profile.json 로드 실패');
-            userData = await userResponse.json();
-            localStorage.setItem('vegetus_user_profile', JSON.stringify(userData));
+            userData = defaultUserData;
         }
+
+        const [badgesRes, veganTypesRes] = await Promise.all([
+            fetch('7_베지어스_mypage_badges.json'),
+            fetch('7_베지어스_mypage_vegan_types.json')
+        ]);
         
-        // 2. 뱃지 데이터 로드
-        const badgesResponse = await fetch('7_베지어스_mypage_badges.json');
-        if (!badgesResponse.ok) throw new Error('badges.json 로드 실패');
-        badgesData = await badgesResponse.json();
-        
-        // 3. 비건 타입 데이터 로드
-        const veganTypesResponse = await fetch('7_베지어스_mypage_vegan_types.json');
-        if (!veganTypesResponse.ok) throw new Error('vegan_types.json 로드 실패');
-        veganTypesData = await veganTypesResponse.json();
-        
+        badgesData = await badgesRes.json();
+        veganTypesData = await veganTypesRes.json();
+
+
+        await updateRealTimeStats();
+
     } catch (error) {
         console.error('데이터 로드 실패:', error);
     }
 }
 
-// 현재 내 활동량에 맞는 뱃지 계산
-function calculateMyBadge() {
-    if (!userData || !badgesData) return null;
+// 실제 데이터 파일들을 읽어서 통계 숫자를 최신화하는 함수
+async function updateRealTimeStats() {
+    if (!userData || !badgesData) return;
 
-    const myStats = {
-        recipe: userData.statistics.recipes?.successful || 0,
-        community: userData.statistics.community?.successful || 0,
-        scrap: userData.statistics.scraps?.successful || 0
-    };
-
-    // 레벨 높은 순으로 정렬 후 조건 체크
-    const sortedBadges = [...badgesData.badges].sort((a, b) => b.level - a.level);
-
-    for (const badge of sortedBadges) {
-        const cond = badge.condition;
-        if (!cond) continue;
-
-        if (
-            myStats.recipe >= cond.recipe &&
-            myStats.community >= cond.community &&
-            myStats.scrap >= cond.scrap
-        ) {
-            return badge;
+    try {
+        let myPostCount = 0;
+        try {
+            const communityRes = await fetch('../community/community_posts.json');
+            const communityData = await communityRes.json();
+            const posts = communityData.posts || [];
+            
+            myPostCount = posts.filter(p => p.id === CURRENT_USER_ID).length;
+        } catch (e) { 
+            console.warn('커뮤니티 데이터 로드 실패', e); 
         }
+
+        // (2) 레시피 & 스크랩 수 계산
+        let myRecipeCount = 0;
+        let myScrapCount = 0;
+        try {
+
+            const recipeRes = await fetch('../recipe/recipes.json');
+            const allRecipes = await recipeRes.json(); 
+
+            if (Array.isArray(allRecipes)) {
+                myRecipeCount = allRecipes.filter(r => r.author === CURRENT_USER_ID).length;
+                myScrapCount = allRecipes.filter(r => r.scrap === 1).length;
+            } else {
+                console.warn('레시피 데이터가 배열 형식이 아닙니다.');
+            }
+        } catch (e) { 
+            console.warn('레시피 데이터 로드 실패', e); 
+        }
+
+        const sortedBadges = [...badgesData.badges].sort((a, b) => b.level - a.level); 
+        
+        let newBadge = null;
+
+        for (const badge of sortedBadges) {
+            const c = badge.condition;
+            if (!c) continue;
+
+            if (myRecipeCount >= c.recipe && myPostCount >= c.community && myScrapCount >= c.scrap) {
+                newBadge = badge;
+                break; 
+            }
+        }
+
+
+        if (!newBadge) {
+            newBadge = sortedBadges.find(b => b.level === 1);
+        }
+        const nextBadgeCandidate = [...badgesData.badges]
+            .sort((a, b) => a.level - b.level)
+            .find(b => b.level === newBadge.level + 1);
+
+        const targetCondition = nextBadgeCandidate ? nextBadgeCandidate.condition : {
+            recipe: myRecipeCount,
+            community: myPostCount,
+            scrap: myScrapCount
+        };
+
+        function calculateStat(current, target) {
+            if (target === 0) return { successful: current, unsuccessful: 0, percentage: 100 };
+            const percent = Math.min(100, Math.floor((current / target) * 100)); // 최대 100%
+            return {
+                successful: current,
+                unsuccessful: Math.max(0, target - current),
+                percentage: percent
+            };
+        }
+
+        userData.statistics = {
+            recipes: calculateStat(myRecipeCount, targetCondition.recipe),
+            community: calculateStat(myPostCount, targetCondition.community),
+            scraps: calculateStat(myScrapCount, targetCondition.scrap)
+        };
+        
+        userData.profile.badge = newBadge;
+
+        localStorage.setItem('vegetus_user_profile', JSON.stringify(userData));
+
+        console.log(`[통계 업데이트 완료]`);
+        console.log(`   - 획득 뱃지: ${newBadge.name}`);
+        console.log(`   - 내 활동: 레시피(${myRecipeCount}), 게시글(${myPostCount}), 스크랩(${myScrapCount})`);
+
+    } catch (e) {
+        console.error('통계 업데이트 중 오류:', e);
     }
-    // 조건 맞는게 없으면 레벨 1 리턴
-    return badgesData.badges.find(b => b.level === 1);
 }
 
 function initializeProfile() {
@@ -91,11 +154,8 @@ function initializeProfile() {
     if (nameTag) nameTag.textContent = userData.profile.name;
     if (veganTypeTag) veganTypeTag.textContent = userData.profile.veganType;
 
-    const currentBadge = calculateMyBadge();
-    
+    const currentBadge = userData.profile.badge;
     if (currentBadge) {
-        userData.profile.badge = currentBadge;
-
         const badgeTag = document.getElementById('profileBadge');
         if (badgeTag) {
             badgeTag.innerHTML = `
@@ -110,11 +170,8 @@ function initializeProfile() {
         avatar.src = userData.profile.avatar;
     }
 
-    // ★ 차트 파일(7_베지어스_mypage_charts.js)에 있는 함수 호출
     if (typeof renderMyPageCharts === 'function') {
         renderMyPageCharts(userData, badgesData);
-    } else {
-        console.warn('차트 스크립트(charts.js)가 로드되지 않아 차트를 그릴 수 없습니다.');
     }
 }
 
@@ -125,9 +182,12 @@ function initializeBadgeGuide() {
     
     badgeList.innerHTML = '';
     
-    badgesData.badges.forEach((badge) => {
+    const sortedForDisplay = [...badgesData.badges].sort((a, b) => a.level - b.level);
+
+    sortedForDisplay.forEach((badge) => {
         const badgeItem = document.createElement('div');
         badgeItem.className = 'mypage_badge_item';
+
         badgeItem.innerHTML = `
             <div class="mypage_badge_icon_box">
                 <img src="${badge.icon}" alt="${badge.name}">
@@ -146,7 +206,6 @@ function initializeBadgeGuide() {
 }
 
 function setupEventListeners() {
-    // 1. 프로필 수정/가이드 버튼
     const btns = document.querySelectorAll('.mypage_btn');
     if (btns.length > 0) btns[0].addEventListener('click', toggleEditMode);
     if (btns.length > 1) {
@@ -156,7 +215,6 @@ function setupEventListeners() {
         });
     }
 
-    // 2. 모달 닫기
     const closeModalBtn = document.querySelector('.mypage_badge_modal_close');
     const modalOverlay = document.querySelector('.mypage_badge_modal_overlay');
     const badgeModal = document.getElementById('mypage_badgeGuideModal');
@@ -168,7 +226,6 @@ function setupEventListeners() {
         modalOverlay.addEventListener('click', () => badgeModal.classList.remove('active'));
     }
 
-    // 3. 이미지 업로드
     const avatar = document.getElementById('profileAvatar');
     const fileInput = document.getElementById('profileImageInput');
     if (avatar && fileInput) {
@@ -185,11 +242,10 @@ function setupEventListeners() {
         });
     }
     
-    // 4. 키보드 이벤트 (ESC, Enter)
     document.addEventListener('keydown', handleKeyPress);
 }
 
-// ===== Edit Mode Functions (수정 모드 관련) =====
+
 function toggleEditMode() {
     const editBtn = document.querySelectorAll('.mypage_btn')[0];
     if (!editBtn) return;
@@ -198,10 +254,7 @@ function toggleEditMode() {
 }
 
 function enterEditMode(editBtn) {
-    if (!userData || !veganTypesData) {
-        alert('데이터를 불러오는 중입니다.');
-        return;
-    }
+    if (!userData || !veganTypesData) return;
     isEditMode = true;
     editBtn.textContent = 'Complete';
     
@@ -210,16 +263,13 @@ function enterEditMode(editBtn) {
 
     const currentNameTag = document.getElementById('profileName') || nameTag;
     const currentVeganTag = document.getElementById('profileType') || veganTypeTag;
-    if (!currentNameTag || !currentVeganTag) return;
-
-    // 이름 -> input 변환
+    
     const nameInput = document.createElement('input');
     nameInput.type = 'text';
     nameInput.value = userData.profile.name;
     nameInput.className = 'mypage_tag mypage_edit_input';
     currentNameTag.replaceWith(nameInput);
     
-    // 비건 타입 -> select 변환
     const veganSelect = document.createElement('select');
     veganSelect.className = 'mypage_tag mypage_edit_select';
     
@@ -244,28 +294,22 @@ function exitEditMode(editBtn) {
     const veganSelect = document.querySelector('.mypage_edit_select');
     if (!nameInput || !veganSelect) return;
     
-    // 값 저장
-    const newName = nameInput.value.trim() || userData.profile.name;
-    const newVeganType = veganSelect.value;
-    const newAvatar = avatar ? avatar.src : userData.profile.avatar;
-    
-    userData.profile.name = newName;
-    userData.profile.veganType = newVeganType;
-    userData.profile.avatar = newAvatar;
+    userData.profile.name = nameInput.value.trim() || userData.profile.name;
+    userData.profile.veganType = veganSelect.value;
+    userData.profile.avatar = avatar ? avatar.src : userData.profile.avatar;
     
     localStorage.setItem('vegetus_user_profile', JSON.stringify(userData));
     
-    // UI 원복
     const newNameTag = document.createElement('span');
     newNameTag.className = 'mypage_tag';
     newNameTag.id = 'profileName';
-    newNameTag.textContent = newName;
+    newNameTag.textContent = userData.profile.name;
     nameInput.replaceWith(newNameTag);
     
     const newVeganTypeTag = document.createElement('span');
     newVeganTypeTag.className = 'mypage_tag';
     newVeganTypeTag.id = 'profileType';
-    newVeganTypeTag.textContent = newVeganType;
+    newVeganTypeTag.textContent = userData.profile.veganType;
     veganSelect.replaceWith(newVeganTypeTag);
     
     nameTag = newNameTag;
@@ -274,12 +318,10 @@ function exitEditMode(editBtn) {
 
 function handleKeyPress(e) {
     const badgeModal = document.getElementById('mypage_badgeGuideModal');
-    // 모달 닫기
     if (e.key === 'Escape' && badgeModal && badgeModal.classList.contains('active')) {
         badgeModal.classList.remove('active');
         return;
     }
-    // 수정 모드 제어
     if (isEditMode) {
         if (e.key === 'Enter') {
             const editBtn = document.querySelectorAll('.mypage_btn')[0];
@@ -303,21 +345,21 @@ function cancelEdit() {
     
     const nameInput = document.querySelector('.mypage_edit_input');
     const veganSelect = document.querySelector('.mypage_edit_select');
-    if (!nameInput || !veganSelect) return;
     
-    // 원래 값으로 복구
-    const newNameTag = document.createElement('span');
-    newNameTag.className = 'mypage_tag';
-    newNameTag.id = 'profileName';
-    newNameTag.textContent = userData.profile.name;
-    nameInput.replaceWith(newNameTag);
-    
-    const newVeganTypeTag = document.createElement('span');
-    newVeganTypeTag.className = 'mypage_tag';
-    newVeganTypeTag.id = 'profileType';
-    newVeganTypeTag.textContent = userData.profile.veganType;
-    veganSelect.replaceWith(newVeganTypeTag);
-    
-    nameTag = newNameTag;
-    veganTypeTag = newVeganTypeTag;
+    if (nameInput && veganSelect) {
+        const newNameTag = document.createElement('span');
+        newNameTag.className = 'mypage_tag';
+        newNameTag.id = 'profileName';
+        newNameTag.textContent = userData.profile.name;
+        nameInput.replaceWith(newNameTag);
+        
+        const newVeganTypeTag = document.createElement('span');
+        newVeganTypeTag.className = 'mypage_tag';
+        newVeganTypeTag.id = 'profileType';
+        newVeganTypeTag.textContent = userData.profile.veganType;
+        veganSelect.replaceWith(newVeganTypeTag);
+        
+        nameTag = newNameTag;
+        veganTypeTag = newVeganTypeTag;
+    }
 }

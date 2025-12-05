@@ -794,3 +794,115 @@ ul {
     gap: 8px;
     width: 100%;
 }
+
+/* --- 상세 페이지: 작성자 및 후기 스타일 --- */
+
+/* 작성자 정보 */
+.author_info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
+}
+.author_badge {
+    background-color: #B1D182;
+    color: #2B463C;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* 후기 입력 폼 */
+.review_input_container {
+    background-color: #F9F9F9;
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    border: 1px solid #e2e0db;
+}
+.review_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.star_rating_select {
+    display: flex;
+    gap: 5px;
+}
+.star_btn {
+    font-size: 24px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.star_btn.selected {
+    color: #FFD200;
+}
+
+.review_textarea {
+    width: 100%;
+    border: 1px solid #e2e0db;
+    border-radius: 10px;
+    padding: 10px;
+    font-family: 'memomentKkukkkuk';
+    resize: none;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.btn_review_submit {
+    background-color: #688F4E;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: 'memomentKkukkkuk';
+    cursor: pointer;
+    float: right;
+}
+.btn_review_submit:hover {
+    background-color: #2B463C;
+}
+
+.review_item {
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+    text-align: left;
+}
+.review_item:last-child { border-bottom: none; }
+
+.review_user_row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+.review_user_id { font-weight: bold; color: #2B463C; }
+.review_date { color: #aaa; font-size: 12px; }
+.review_stars { color: #FFD200; letter-spacing: 2px; }
+.review_text { color: #555; line-height: 1.5; }
+
+.btn_modify, .btn_delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+.btn_modify img, .btn_delete img {
+    width: 18px; 
+    height: 18px;
+    opacity: 0.5; 
+    transition: opacity 0.2s;
+}
+
+.btn_modify:hover img, .btn_delete:hover img {
+    opacity: 1; 
+}

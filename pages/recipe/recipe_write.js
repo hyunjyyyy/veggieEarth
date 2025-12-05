@@ -237,7 +237,7 @@ document.getElementById("recipeForm").addEventListener("submit", async function(
         const a = row.querySelector(".ing_amount").value;
         if(n) mainItems.push({ name: n, amount: a });
     });
-    if(mainItems.length > 0) ingredientGroups.push({ category: "[주재료]", items: mainItems });
+    if(mainItems.length > 0) ingredientGroups.push({ category: "주재료", items: mainItems });
 
     // 양념
     const seasonItems = [];
@@ -246,7 +246,7 @@ document.getElementById("recipeForm").addEventListener("submit", async function(
         const a = row.querySelector(".ing_amount").value;
         if(n) seasonItems.push({ name: n, amount: a });
     });
-    if(seasonItems.length > 0) ingredientGroups.push({ category: "[양념]", items: seasonItems });
+    if(seasonItems.length > 0) ingredientGroups.push({ category: "양념", items: seasonItems });
 
     const steps = [];
     const stepDivs = document.querySelectorAll(".step_item");
@@ -268,10 +268,12 @@ document.getElementById("recipeForm").addEventListener("submit", async function(
     const newId = allRecipes.length > 0 ? Math.max(...allRecipes.map(r => r.id)) + 1 : 1;
 
     const today = new Date().toISOString().split('T')[0];
-    
+
+
     const newRecipe = {
         id: newId,
         title: title,
+        author: "pxibvaw",
         date: today,
         description: document.getElementById("description").value,
         image: mainImg,
@@ -279,14 +281,17 @@ document.getElementById("recipeForm").addEventListener("submit", async function(
         servings: document.querySelector('input[name="servings"]:checked').value,
         time: document.querySelector('input[name="time"]:checked').value,
         difficulty: document.querySelector('input[name="difficulty"]:checked').value,
-        rating: 0, reviews: 0,
+        rating: 0, 
+        reviews: 0,
+        scrap: 0,
+        reviewList: [], 
         icons: icons,
-        ingredients: ["veg"], // 필터 로직용
+        ingredients: ["veg"], 
         hashtags: hashtags,
         ingredientGroups: ingredientGroups,
         steps: steps
     };
-    
+
     allRecipes.unshift(newRecipe);
     localStorage.setItem("allRecipes", JSON.stringify(allRecipes));
     
