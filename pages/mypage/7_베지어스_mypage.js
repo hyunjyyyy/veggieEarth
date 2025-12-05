@@ -79,7 +79,7 @@ async function updateRealTimeStats() {
             const allRecipes = await recipeRes.json(); 
 
             if (Array.isArray(allRecipes)) {
-                myRecipeCount = allRecipes.filter(r => r.author === CURRENT_USER_ID).length;
+                myRecipeCount = allRecipes.filter(r => r.author === "pxibvaw").length;
                 myScrapCount = allRecipes.filter(r => r.scrap === 1).length;
             } else {
                 console.warn('레시피 데이터가 배열 형식이 아닙니다.');

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const CURRENT_USER_ID = "user01"; 
+    const CURRENT_USER_ID = "pxibvaw"; 
     const JSON_PATH = "../recipe/recipes.json"; 
 
     const recipeListContainer = document.getElementById("recipe-list");
