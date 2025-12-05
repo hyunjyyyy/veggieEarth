@@ -427,10 +427,7 @@ function filterAndRenderMarkers() {
     if (!bounds.isEmpty()) map.setBounds(bounds);
 }
 
-
-// ============================================
 // JSON 로드
-// ============================================
 fetch("restaurant_data.json")
     .then(res => res.json())
     .then(data => {
@@ -446,8 +443,14 @@ fetch("restaurant_data.json")
                 map.setCenter(new kakao.maps.LatLng(36.5, 127.8));
             }
         });
+
+        const closeBtn = document.querySelector(".map_card_close_btn");
+        if (closeBtn) {
+            closeBtn.addEventListener("click", closeRestaurantCard);
+        }
     })
     .catch(err => console.error("restaurant_data.json 불러오기 실패:", err));
+
 
 
 // ============================================
@@ -483,4 +486,20 @@ if (navigator.geolocation) {
     map.setCenter(defaultPosition);
     map.setLevel(defaultLevel);
     initialPositionSet = true;
+}
+
+function closeRestaurantCard() {
+    const cardContainer = document.querySelector(".map_card_outer_container");
+
+    cardContainer.style.display = "none";
+
+    map_container.classList.remove("with_card");
+    map_container.classList.add("fullscreen");
+
+    const currentCenter = map.getCenter();
+
+    setTimeout(() => {
+        map.relayout();
+        map.setCenter(currentCenter);
+    }, 50);
 }
