@@ -20,7 +20,6 @@ const map_container = document.getElementById("map");
 const defaultPosition = new kakao.maps.LatLng(37.5665, 126.9780);
 const defaultLevel = 5;
 
-// 초기 로드 시 지도 전체 화면
 map_container.classList.add("fullscreen");
 
 const map_option = {
@@ -36,31 +35,36 @@ const map = new kakao.maps.Map(map_container, map_option);
 // ============================================
 let restaurant_list = [];
 
+
 // ============================================
 // 전역 마커 & 오버레이
 // ============================================
 let markers = [];
 let overlays = [];
 
+
 // ============================================
-// 체크박스, 검색어, 지역 select
+// 체크박스, 검색, 지역 select
 // ============================================
 const checkboxes = document.querySelectorAll(".map_filter_item input[type='checkbox']");
 const searchInput = document.querySelector(".map_search_box input");
 const regionSelect = document.querySelector(".map_select select");
 
+
 // ============================================
-// 공유 팝업 요소
+// 공유 팝업
 // ============================================
 const sharePopup = document.getElementById("share_popup");
 const shareLinkInput = document.getElementById("share_link_input");
 const shareCopyBtn = document.getElementById("share_copy_btn");
 const shareCloseBtn = document.getElementById("share_close_btn");
 
+
 // ============================================
 // 저장한 식당 보기 버튼
 // ============================================
 const favButton = document.getElementById("fav_button");
+let favActive = false;
 
 
 // ============================================
@@ -144,7 +148,7 @@ function openSharePopup(restaurant) {
 
 
 // ============================================
-// 식당 저장 버튼 상태 설정 함수
+// 식당 저장 버튼 상태
 // ============================================
 function applyFavoriteButtonLogic(restaurant) {
     const favBtn = document.querySelector(".favorite_btn img");
@@ -168,12 +172,17 @@ function applyFavoriteButtonLogic(restaurant) {
 
         saveSavedRestaurants(savedRestaurants);
         updateIcon();
+
+        if (savedRestaurants.length === 0 && favActive) {
+            favActive = false;
+            favButton.src = "map_image/fav.png";
+        }
     };
 }
 
 
 // ============================================
-// 마커 클릭 시 화면 중앙 + 카드 표시
+// 마커 클릭 시 포커스 + 카드
 // ============================================
 function focusMarker(restaurant) {
     map_container.classList.remove("fullscreen");
@@ -183,7 +192,7 @@ function focusMarker(restaurant) {
     cardContainer.style.display = "block";
 
     update_restaurant_card(restaurant);
-    applyFavoriteButtonLogic(restaurant);   // ★ 저장 버튼 적용
+    applyFavoriteButtonLogic(restaurant);
 
     cardContainer.scrollTop = 0;
 
@@ -196,8 +205,7 @@ function focusMarker(restaurant) {
     map.relayout();
     map.setCenter(position);
 
-    const shareBtn = document.getElementById("share_button");
-    shareBtn.onclick = () => openSharePopup(restaurant);
+    document.getElementById("share_button").onclick = () => openSharePopup(restaurant);
 }
 
 
@@ -234,7 +242,7 @@ function update_restaurant_card(restaurant) {
     document.querySelector("#tab_home_link .tab_info:nth-child(4) p").textContent = restaurant.info ?? "";
 
     const cardImage = document.querySelector(".map_card img");
-    cardImage.src = restaurant.restaurant_images && restaurant.restaurant_images.length > 0
+    cardImage.src = (restaurant.restaurant_images && restaurant.restaurant_images.length > 0)
         ? restaurant.restaurant_images[0]
         : "";
 
@@ -245,32 +253,25 @@ function update_restaurant_card(restaurant) {
             const item = document.createElement("div");
             item.className = "map_menu_item";
 
-            let menuHTML = `<div class="map_menu_info">
-                                <h4>${menu.name}</h4>`;
+            let html = `<div class="map_menu_info"><h4>${menu.name}</h4>`;
 
-            if (menu.description) menuHTML += `<p>${menu.description}</p>`;
+            if (menu.description) html += `<p>${menu.description}</p>`;
 
             if (menu.price !== undefined && menu.price !== null) {
-                let priceHTML = "";
-
-                if (!isNaN(Number(menu.price))) {
-                    priceHTML = `${Number(menu.price).toLocaleString()}원`;
-                } else {
-                    priceHTML = menu.price;
-                }
-
-                menuHTML += `<div class="map_menu_price">${priceHTML}</div>`;
+                let p = "";
+                p = isNaN(Number(menu.price))
+                    ? menu.price
+                    : `${Number(menu.price).toLocaleString()}원`;
+                html += `<div class="map_menu_price">${p}</div>`;
             }
 
-            menuHTML += `</div>`;
+            html += `</div>`;
 
             if (menu.image) {
-                menuHTML += `<div class="map_menu_image_container">
-                                <img src="${menu.image}" alt="${menu.name}" class="map_menu_image">
-                            </div>`;
+                html += `<div class="map_menu_image_container"><img src="${menu.image}" alt="${menu.name}" class="map_menu_image"></div>`;
             }
 
-            item.innerHTML = menuHTML;
+            item.innerHTML = html;
             menuTab.appendChild(item);
         });
     }
@@ -285,140 +286,45 @@ function update_restaurant_card(restaurant) {
 
 
 // ============================================
-// 필터링 + 마커 렌더링
+// 즐겨찾기 모드 토글
 // ============================================
-function filterAndRenderMarkers() {
-    const selectedTags = Array.from(checkboxes)
-        .filter(cb => cb.checked)
-        .map(cb => cb.nextElementSibling.textContent);
-
-    const searchText = searchInput.value.trim();
-    const selectedRegion = regionSelect.value;
-
-    markers.forEach(marker => marker.setMap(null));
-    overlays.forEach(overlay => overlay.setMap(null));
-    markers = [];
-    overlays = [];
-
-    const filteredRestaurants = restaurant_list.filter(r => {
-        const matchTag =
-            selectedTags.length === 0 ||
-            selectedTags.every(tag => r.tags.includes(tag));
-
-        const matchSearch =
-            searchText === "" ||
-            r.name.includes(searchText) ||
-            r.address.includes(searchText);
-
-        const matchRegion =
-            selectedRegion === "지역 선택" || r.region === selectedRegion;
-
-        return matchTag && matchSearch && matchRegion;
-    });
-
-    const noFilterApplied =
-        selectedTags.length === 0 &&
-        searchText === "" &&
-        (selectedRegion === "지역 선택" || !selectedRegion);
-
-    if (noFilterApplied) return;
-
-    const bounds = new kakao.maps.LatLngBounds();
-
-    filteredRestaurants.forEach(restaurant => {
-        if (!restaurant.marker_position) return;
-
-        const position = new kakao.maps.LatLng(
-            restaurant.marker_position.lat,
-            restaurant.marker_position.lng
-        );
-
-        const marker = new kakao.maps.Marker({
-            map: map,
-            position: position
-        });
-
-        const overlay = new kakao.maps.CustomOverlay({
-            position: position,
-            content: '<div class="map_pin"></div>',
-            yAnchor: 1
-        });
-        overlay.setMap(map);
-
-        kakao.maps.event.addListener(marker, "click", () => focusMarker(restaurant));
-        kakao.maps.event.addListener(overlay, "click", () => focusMarker(restaurant));
-
-        markers.push(marker);
-        overlays.push(overlay);
-
-        bounds.extend(position);
-    });
-
-    if (!bounds.isEmpty()) {
-        map.setBounds(bounds);
-    }
-}
-
-// ============================================
-// 즐겨찾기 버튼 토글 상태 + 동작
-// ============================================
-let favActive = false;
-
 function toggleFavoriteMode() {
-    const saved = loadSavedRestaurants();
-
-    if (!favActive) {
-        if (saved.length === 0) {
-            alert("저장한 식당이 없습니다.");
-            favButton.src = "map_image/fav.png";
-            return;
-        }
-    }
-
     favActive = !favActive;
 
-    favButton.src = favActive
-        ? "map_image/fav_act.png"
-        : "map_image/fav.png";
-
     if (favActive) {
+        favButton.src = "map_image/fav_act.png";
         showSavedMarkers();
+    } else {
+        favButton.src = "map_image/fav.png";
+        // 끄면 아무 변화 없음
     }
 }
-
 
 favButton.addEventListener("click", toggleFavoriteMode);
 
 
 // ============================================
-// 저장된 식당 마커 표시 기능
+// 저장된 식당 마커 표시
 // ============================================
 function showSavedMarkers() {
-    // 기존 마커 제거
     markers.forEach(m => m.setMap(null));
     overlays.forEach(o => o.setMap(null));
     markers = [];
     overlays = [];
 
-    // 저장된 식당의 ID 배열
-    const savedIds = savedRestaurants;
-
-    // ID로 레스토랑 객체 필터링
-    const savedData = restaurant_list.filter(r => savedIds.includes(r.id));
+    const savedData = restaurant_list.filter(r => savedRestaurants.includes(r.id));
 
     if (savedData.length === 0) {
         alert("저장한 식당이 없습니다.");
+        favActive = false;
+        favButton.src = "map_image/fav.png";
         return;
     }
 
     const bounds = new kakao.maps.LatLngBounds();
 
-    savedData.forEach(restaurant => {
-        // ★ 반드시 restaurant.marker_position 사용해야 함
-        const pos = new kakao.maps.LatLng(
-            restaurant.marker_position.lat,
-            restaurant.marker_position.lng
-        );
+    savedData.forEach(r => {
+        const pos = new kakao.maps.LatLng(r.marker_position.lat, r.marker_position.lng);
 
         const marker = new kakao.maps.Marker({
             map: map,
@@ -432,8 +338,8 @@ function showSavedMarkers() {
             yAnchor: 1
         });
 
-        kakao.maps.event.addListener(marker, "click", () => focusMarker(restaurant));
-        kakao.maps.event.addListener(overlay, "click", () => focusMarker(restaurant));
+        kakao.maps.event.addListener(marker, "click", () => focusMarker(r));
+        kakao.maps.event.addListener(overlay, "click", () => focusMarker(r));
 
         markers.push(marker);
         overlays.push(overlay);
@@ -441,10 +347,86 @@ function showSavedMarkers() {
         bounds.extend(pos);
     });
 
-    if (!bounds.isEmpty()) {
-        map.setBounds(bounds);
-    }
+    if (!bounds.isEmpty()) map.setBounds(bounds);
 }
+
+
+// ============================================
+// 필터 + 마커 렌더링
+// ============================================
+function filterAndRenderMarkers() {
+    const selectedTags = Array.from(checkboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.nextElementSibling.textContent);
+
+    const searchText = searchInput.value.trim();
+    const selectedRegion = regionSelect.value;
+
+    let targetList = favActive
+        ? restaurant_list.filter(r => savedRestaurants.includes(r.id))
+        : restaurant_list;
+
+    markers.forEach(m => m.setMap(null));
+    overlays.forEach(o => o.setMap(null));
+    markers = [];
+    overlays = [];
+
+    const filtered = targetList.filter(r => {
+        const matchTag =
+            selectedTags.length === 0 ||
+            (r.tags && selectedTags.every(tag => r.tags.includes(tag)));
+
+        const matchSearch =
+            searchText === "" ||
+            (r.name && r.name.includes(searchText)) ||
+            (r.address && r.address.includes(searchText));
+
+        const matchRegion =
+            selectedRegion === "지역 선택" || r.region === selectedRegion;
+
+        return matchTag && matchSearch && matchRegion;
+    });
+
+    const noFilter =
+        selectedTags.length === 0 &&
+        searchText === "" &&
+        (selectedRegion === "지역 선택" || !selectedRegion);
+
+    if (noFilter) {
+        if (favActive) {
+            showSavedMarkers();
+        }
+        return;
+    }
+
+    const bounds = new kakao.maps.LatLngBounds();
+
+    filtered.forEach(r => {
+        if (!r.marker_position) return;
+
+        const pos = new kakao.maps.LatLng(r.marker_position.lat, r.marker_position.lng);
+
+        const marker = new kakao.maps.Marker({ map, position: pos });
+
+        const overlay = new kakao.maps.CustomOverlay({
+            map,
+            position: pos,
+            content: '<div class="map_pin"></div>',
+            yAnchor: 1
+        });
+
+        kakao.maps.event.addListener(marker, "click", () => focusMarker(r));
+        kakao.maps.event.addListener(overlay, "click", () => focusMarker(r));
+
+        markers.push(marker);
+        overlays.push(overlay);
+
+        bounds.extend(pos);
+    });
+
+    if (!bounds.isEmpty()) map.setBounds(bounds);
+}
+
 
 // ============================================
 // JSON 로드
@@ -469,24 +451,23 @@ fetch("restaurant_data.json")
 
 
 // ============================================
-// 페이지 최초 로드 시 위치
+// 페이지 최초 위치 설정
 // ============================================
 let initialPositionSet = false;
 
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
-        (position) => {
+        (pos) => {
             if (!initialPositionSet) {
-                const userLat = position.coords.latitude;
-                const userLng = position.coords.longitude;
+                const lat = pos.coords.latitude;
+                const lng = pos.coords.longitude;
 
-                const userPosition = new kakao.maps.LatLng(userLat, userLng);
+                const userPos = new kakao.maps.LatLng(lat, lng);
 
-                map.setCenter(userPosition);
+                map.setCenter(userPos);
                 map.setLevel(defaultLevel);
 
-                lastUserLatLng = userPosition;
-
+                lastUserLatLng = userPos;
                 initialPositionSet = true;
             }
         },
