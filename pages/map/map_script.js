@@ -230,8 +230,6 @@ function focusMarker(restaurant) {
     }
 
     document.getElementById("share_button").onclick = () => openSharePopup(restaurant);
-
-    showCard();
 }
 
 
@@ -352,7 +350,10 @@ function showSavedMarkers() {
     savedData.forEach(r => {
         const pos = new kakao.maps.LatLng(r.marker_position.lat, r.marker_position.lng);
 
-        const marker = new kakao.maps.Marker({ map: map, position: pos });
+        const marker = new kakao.maps.Marker({
+            map: map,
+            position: pos
+        });
 
         const overlay = new kakao.maps.CustomOverlay({
             map: map,
@@ -370,10 +371,20 @@ function showSavedMarkers() {
         bounds.extend(pos);
     });
 
-    if (!bounds.isEmpty()) {
+    if (!gpsActive && !bounds.isEmpty()) {
         map.setBounds(bounds);
+    } else {
+        if (gpsActive && lastUserLatLng) {
+            setTimeout(() => {
+                if (gpsActive && lastUserLatLng) {
+                    try { map.relayout(); } catch (e) { /* ignore */ }
+                    map.setCenter(lastUserLatLng);
+                }
+            }, 50);
+        }
     }
 }
+
 
 // ============================================
 // 필터 + 마커 렌더링
@@ -390,10 +401,10 @@ function filterAndRenderMarkers() {
         ? restaurant_list.filter(r => savedRestaurants.includes(r.id))
         : restaurant_list;
 
-   markers.forEach(m => m.setMap(null));
-   overlays.forEach(o => o.setMap(null));
-   markers = [];
-   overlays = [];
+    markers.forEach(m => m.setMap(null));
+    overlays.forEach(o => o.setMap(null));
+    markers = [];
+    overlays = [];
 
     const filtered = targetList.filter(r => {
         const matchTag =
@@ -417,13 +428,17 @@ function filterAndRenderMarkers() {
         (selectedRegion === "지역 선택" || !selectedRegion);
 
     if (noFilter) {
-        if (favActive) showSavedMarkers();
+        if (favActive) {
+            showSavedMarkers();
+        }
         return;
     }
 
     const bounds = new kakao.maps.LatLngBounds();
 
     filtered.forEach(r => {
+        if (!r.marker_position) return;
+
         const pos = new kakao.maps.LatLng(r.marker_position.lat, r.marker_position.lng);
 
         const marker = new kakao.maps.Marker({ map, position: pos });
@@ -444,10 +459,18 @@ function filterAndRenderMarkers() {
         bounds.extend(pos);
     });
 
-    if (!bounds.isEmpty()) {
+    if (!gpsActive && !bounds.isEmpty()) {
         map.setBounds(bounds);
+    } else if (gpsActive && lastUserLatLng) {
+        setTimeout(() => {
+            if (gpsActive && lastUserLatLng) {
+                try { map.relayout(); } catch (e) { /* ignore */ }
+                map.setCenter(lastUserLatLng);
+            }
+        }, 50);
     }
 }
+
 
 // ============================================
 // JSON 로드
@@ -463,7 +486,7 @@ fetch("restaurant_data.json")
 
         regionSelect.addEventListener("change", () => {
             if (!gpsActive && regionSelect.value === "지역 선택") {
-                map.setLevel(14);
+                map.setLevel(13);
                 map.setCenter(new kakao.maps.LatLng(36.5, 127.8));
             }
         });
@@ -512,48 +535,35 @@ if (navigator.geolocation) {
 }
 
 
-const cardContainer = document.querySelector(".map_card_outer_container");
-const closeBtn = cardContainer.querySelector(".map_card_close_btn");
-
-function showCard() {
-    const cardContainer = document.querySelector(".map_card_outer_container");
-    const closeBtn = cardContainer.querySelector(".map_card_close_btn");
-
-    if (!cardContainer || !closeBtn) return;
-
-    closeBtn.style.display = "block";
-
-    const rect = cardContainer.getBoundingClientRect();
-    closeBtn.style.top = rect.top + 10 + "px";
-    closeBtn.style.left = rect.right - closeBtn.offsetWidth - 14 + "px";
-}
-
-
+// ============================================
+// 카드 닫기
+// ============================================
 function closeRestaurantCard() {
+    const cardContainer = document.querySelector(".map_card_outer_container");
+
     cardContainer.style.display = "none";
-    closeBtn.style.display = "none";
 
     map_container.classList.remove("with_card");
     map_container.classList.add("fullscreen");
 
     if (!gpsActive) {
         const currentCenter = map.getCenter();
+
         setTimeout(() => {
             map.relayout();
             map.setCenter(currentCenter);
         }, 50);
-    } else if (lastUserLatLng) {
-        setTimeout(() => {
-            try { map.relayout(); } catch(e) {}
-            if (gpsActive && lastUserLatLng) {
-                map.setCenter(lastUserLatLng);
-            }
-        }, 50);
+    } else {
+        if (lastUserLatLng) {
+            setTimeout(() => {
+                try { map.relayout(); } catch (e) { /* ignore */ }
+                if (gpsActive && lastUserLatLng) {
+                    map.setCenter(lastUserLatLng);
+                }
+            }, 50);
+        }
     }
 }
-
-closeBtn.addEventListener("click", closeRestaurantCard);
-
 
 
 // ============================================
@@ -614,7 +624,6 @@ function renderCommunityReviews(restaurantId) {
 
         const div = document.createElement("div");
         div.className = "map_review_item";
-        div.dataset.postId = r.postId;
         div.style.cursor = "pointer";
 
         div.innerHTML = `
@@ -640,61 +649,6 @@ function renderCommunityReviews(restaurantId) {
 
         reviewArea.appendChild(div);
     });
-
-    // ============================================
-    // 사진 탭 렌더링
-    // ============================================
-    const photoContainer = document.querySelector("#tab_image_link .tab_image_row");
-    if (photoContainer) {
-        photoContainer.innerHTML = "";
-
-        const reviewImages = reviews
-            .filter(r => r.imageData || r.image)
-            .map(r => ({
-                src: r.imageData || r.image,
-                postId: r.postId
-            }));
-
-        if (reviewImages.length === 0) {
-            const emptyMsg = document.createElement("p");
-            emptyMsg.style.padding = "10px";
-            emptyMsg.style.color = "#777";
-            emptyMsg.style.width = "100%";
-            emptyMsg.textContent = "등록된 사진이 없습니다.";
-            photoContainer.appendChild(emptyMsg);
-        } else {
-            reviewImages.forEach(obj => {
-                const img = document.createElement("img");
-                img.className = "tab_image";
-                img.src = obj.src;
-
-                img.addEventListener("click", () => {
-
-                    // 1) 리뷰 탭 활성화
-                    document.getElementById("tab_review").checked = true;
-
-                    const cardOuter = document.querySelector(".map_card_outer_container");
-                    const reviewPanel = document.getElementById("tab_review_link");
-
-                    // 2) 리뷰 탭 가장 위로 이동
-                    reviewPanel.scrollIntoView({ block: "start" });
-
-                    // 3) 이미지가 포함된 리뷰 아이템으로 추가 스크롤
-                    const targetReview = document.querySelector(
-                        `.map_review_item[data-post-id="${obj.postId}"]`
-                    );
-
-                    if (targetReview) {
-                        setTimeout(() => {
-                            targetReview.scrollIntoView({ block: "start", behavior: "smooth" });
-                        }, 150);
-                    }
-                });
-
-                photoContainer.appendChild(img);
-            });
-        }
-    }
 }
 
 // ============================================
