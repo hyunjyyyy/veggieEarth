@@ -106,8 +106,6 @@ ul {
   cursor: pointer;
   transition: all 0.3s ease; 
   box-shadow: 0 4px 12px rgba(43, 70, 60, 0.06);
-  position: relative;
-  z-index: 1000;
 }
 
 .mypage_sidebar_item:hover {
@@ -428,32 +426,28 @@ ul {
 
 /* 마이페이지 나의 레시피 검색 박스 */
 .mypage_myrecipe_search_box {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  border-radius: 30px;
-  padding: 8px 20px;
-  box-shadow: 0 4px 12px rgba(43, 70, 60, 0.08);
-  transition: all 0.3s ease;
-}
-
-.mypage_myrecipe_search_box:focus-within {
-  box-shadow: 0 6px 16px rgba(43, 70, 60, 0.12);
+    width: 300px;
+    height: 42px;
+    border-radius: 21px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(43, 70, 60, 0.08);
+    display: flex;
+    align-items: center;
 }
 
 .mypage_myrecipe_search_input {
-  border: none;
-  outline: none;
-  background: transparent;
-  font-size: 14px;
-  font-family: "memomentKkukkkuk";
-  color: #2b463c;
-  width: 250px;
-  padding: 4px 8px;
-}
-
-.mypage_myrecipe_search_input::placeholder {
-  color: #b1d182;
+    width: 100%;
+    height: 100%;
+    padding: 10px 15px;
+    border: 1px solid #e2e0db;
+    border-radius: 21px;
+    background-color: #ffffff;
+    font-size: 15px;
+    color: #b0b0b0;
+    font-family: 'memomentKkukkkuk', sans-serif;
+    box-sizing: border-box;
+    line-height: normal;
+    border-style: solid;
 }
 
 .mypage_myrecipe_search_btn {
