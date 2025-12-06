@@ -220,6 +220,13 @@ function readFileAsync(file) {
 /* Submit 로직 */
 document.getElementById("recipeForm").addEventListener("submit", async function(e) {
     e.preventDefault();
+
+    const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) {
+        alert("로그인이 필요한 서비스입니다.");
+        window.location.href = "../login/login.html"; 
+        return;
+    }
     
     const title = document.getElementById("title").value;
     const mainFile = document.getElementById("imageFile").files[0];
@@ -273,7 +280,7 @@ document.getElementById("recipeForm").addEventListener("submit", async function(
     const newRecipe = {
         id: newId,
         title: title,
-        author: "pxibvaw",
+        author: currentUser,
         date: today,
         description: document.getElementById("description").value,
         image: mainImg,

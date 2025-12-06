@@ -8,8 +8,7 @@ loginForm.addEventListener('submit', function (event) {
     const username = document.getElementById('username').value;
 
     // 로컬스토리지에 로그인 상태 저장
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('username', username);
+    localStorage.setItem('currentUser', username);
 
     loginContainer.innerHTML = `
         <div class="login_success">

@@ -32,6 +32,26 @@ document.addEventListener("DOMContentLoaded", () => {
             filterRecipes();
         });
     });
+    const writeBtn = document.querySelector(".recipe_write_btn");
+    
+    if (writeBtn) {
+        writeBtn.addEventListener("click", function(e) {
+            const currentUser = localStorage.getItem('currentUser');
+            
+            // 로그인을 안 했으면
+            if (!currentUser) {
+                e.preventDefault(); // 1. 페이지 이동(링크) 막기
+                
+                alert("로그인이 필요한 서비스입니다.");
+                
+                // 2. 로그인 페이지로 이동할지 물어보기 (선택사항)
+                if(confirm("로그인 페이지로 이동하시겠습니까?")) {
+                    window.location.href = "../login/login.html"; 
+                }
+            }
+        });
+    }
+
 });
 
 async function loadRecipeData() {

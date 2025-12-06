@@ -2,9 +2,6 @@
 let currentRatingInput = 5;
 let currentRecipeId = null; 
 
-// ★ 현재 로그인한 사용자 ID
-const CURRENT_USER = "pxibvaw"; 
-
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     currentRecipeId = parseInt(params.get("id"));
@@ -19,10 +16,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll(".star_btn").forEach(star => {
         star.addEventListener("click", function() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                alert("로그인 후 별점을 남길 수 있습니다.");
+                if(confirm("로그인 하시겠습니까?")) {
+                     window.location.href = "../login/login.html";
+                }
+                return;
+            }
             currentRatingInput = parseInt(this.dataset.value);
             updateStarUI(currentRatingInput);
         });
     });
+
+    const reviewInput = document.getElementById("reviewText");
+    
+    if (reviewInput) {
+        reviewInput.addEventListener("focus", function() {
+            const currentUser = localStorage.getItem('currentUser');
+            
+            if (!currentUser) {
+                alert("로그인 후 후기를 작성할 수 있습니다.");
+                this.blur();
+                
+                if(confirm("로그인 하시겠습니까?")) {
+                     window.location.href = "../login/login.html";
+                }
+            }
+        });
+    }
 });
 
 function updateStarUI(score) {
@@ -65,16 +87,17 @@ function renderDetail(recipe) {
     const authorName = recipe.author || "익명";
     document.getElementById("recipeAuthor").textContent = authorName;
     
-    // ★ [수정됨] 수정/삭제 버튼 컨테이너 처리
     const authorContainer = document.querySelector(".author_info");
     
-    // 중복 방지를 위해 기존 버튼들 제거 (재렌더링 시)
     const oldModBtn = document.getElementById("btnRecipeModify");
     const oldDelBtn = document.getElementById("btnRecipeDelete");
     if(oldModBtn) oldModBtn.remove();
     if(oldDelBtn) oldDelBtn.remove();
 
-    if (recipe.author === CURRENT_USER) {
+    // 현재 사용자 가져오기
+    const currentUser = localStorage.getItem('currentUser');
+
+    if (recipe.author && currentUser === currentUser) {
         // 1. 수정 버튼
         const modBtn = document.createElement("button");
         modBtn.className = "btn_modify";
@@ -185,20 +208,20 @@ function renderReviews(recipe) {
         return;
     }
 
-    // ★ 중요: 역순 정렬 시 인덱스가 꼬이지 않도록, 원본 인덱스를 포함한 객체로 매핑 후 정렬
+    const currentUser = localStorage.getItem('currentUser');
+    
     const reviewsWithIndex = recipe.reviewList.map((review, index) => ({
         ...review,
         originalIndex: index // 원래 배열에서의 위치 저장
     }));
 
-    // 최신순(역순) 정렬
     const sortedReviews = reviewsWithIndex.reverse();
 
     container.innerHTML = sortedReviews.map(item => {
         let actionBtns = "";
         
         // 본인 댓글일 경우 수정/삭제 버튼 표시
-        if (item.user === CURRENT_USER) {
+        if (currentUser && item.user === currentUser) {
             actionBtns = `
                 <button class="btn_modify" onclick="alert('댓글 수정은 준비중입니다.')" title="수정">
                     <img src="../../assets/images/modify.png" alt="수정">
@@ -253,8 +276,14 @@ window.deleteReview = function(index) {
 };
 
 function submitReview() {
+
+    const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) {
+        alert("로그인 후 이용해주세요.");
+        return;
+    }
+
     const text = document.getElementById("reviewText").value;
-    
     if (!text.trim()) {
         alert("후기 내용을 입력해주세요!");
         return;
@@ -268,7 +297,7 @@ function submitReview() {
     const recipe = allRecipes[recipeIndex];
 
     const newReview = {
-        user: CURRENT_USER, 
+        user: currentUser, 
         text: text,
         rating: currentRatingInput,
         date: new Date().toISOString().split('T')[0]

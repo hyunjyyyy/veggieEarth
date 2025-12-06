@@ -50,6 +50,7 @@ ul { list-style: none; padding: 0; margin: 0; }
 }
 .navbar_container {
     width: 100%;
+    height: 40px;
     max-width: 1200px;
     display: flex;
     align-items: center;
@@ -64,32 +65,27 @@ ul { list-style: none; padding: 0; margin: 0; }
     transition: color 0.3s;
 }
 .nav_item:hover { color: var(--secondary-color); }
-.navbar_icons { display: flex; gap: 15px; }
+.navbar_icons { display: flex; gap: 15px; align-items: center;}
 .navbar_icons img { width: 25px; }
-
-.standard_search_box {
+.navbar_icons a {
     display: flex;
     align-items: center;
-    background: #fff;
-    border: 1px solid #e2e0db;
-    border-radius: 20px;
-    padding: 10px 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    width: 100%;
-    max-width: 400px;
-}
-.standard_search_box input {
-    border: none;
-    outline: none;
-    font-size: 16px;
-    width: 100%;
-    background: transparent;
-    font-family: var(--font-main);
-    color: var(--secondary-color);
+    height: 100%;
 }
 
-.page_wrapper {
+/* 네비게이션 바 - 로그인한 사용자 표시 */
+.navbar_icons a:first-child {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.content_wrapper {
     width: 90%;
     max-width: 1200px;
     margin: 100px auto 40px auto;
+}
+
+.content_wrapper h2 {
+    margin-bottom: 50px;
 }
