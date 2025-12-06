@@ -461,7 +461,7 @@ fetch("restaurant_data.json")
 
         regionSelect.addEventListener("change", () => {
             if (!gpsActive && regionSelect.value === "지역 선택") {
-                map.setLevel(1);
+                map.setLevel(14);
                 map.setCenter(new kakao.maps.LatLng(36.5, 127.8));
             }
         });

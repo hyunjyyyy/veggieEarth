@@ -86,6 +86,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    let restaurantData = [];
+
+    async function loadRestaurantData() {
+        try {
+            const res = await fetch("../../data/restaurant_data.json");
+            restaurantData = await res.json();
+        } catch (e) {
+            restaurantData = [];
+            console.error("식당 데이터 로드 실패:", e);
+        }
+    }
+
+    function findRestaurantInfo(id) {
+        return restaurantData.find(r => r.id === id);
+    }
+    //---------------------------------------------------------
+
     function matchesSearch(post, keyword) {
         if (!keyword) return true;
         const k = keyword.toLowerCase();
@@ -115,6 +132,15 @@ document.addEventListener("DOMContentLoaded", () => {
             item.className = "community_post_item community_post_box";
             item.dataset.id = post.postId || post.id;
 
+            const linkedHtml =
+                post.restaurantId
+                    ? (() => {
+                        const r = findRestaurantInfo(post.restaurantId);
+                        return r ? `<p class="linked_restaurant_name">📍 ${r.name}</p>` : "";
+                    })()
+                    : "";
+            //---------------------------------------------------------
+
             item.innerHTML = `
                 <div class="community_post_main_wrapper">
                     <div class="community_post_text_wrap">
@@ -127,6 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div class="community_post_content">
                             <p class="community_post_title">${post.title}</p>
                             <p class="community_post_text">${post.text}</p>
+                            ${linkedHtml}
                         </div>
 
                         <div class="community_post_meta">
@@ -365,7 +392,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (params.get("mode") === "write") {
             currentTab = "review";
-            incomingRestaurantId = Number(params.get("restaurantId")) || null;
+
+            const rawId = params.get("restaurantId");
+            incomingRestaurantId = rawId !== null ? Number(rawId) : null;
 
             saveTab();
             updateTabButtons();
@@ -382,6 +411,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function init() {
         loadStateFromStorage();
+        await loadRestaurantData();
         await loadPostsFromJson();
         renderAll();
         checkIncomingFromMap();
