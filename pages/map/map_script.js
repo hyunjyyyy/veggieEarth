@@ -350,10 +350,7 @@ function showSavedMarkers() {
     savedData.forEach(r => {
         const pos = new kakao.maps.LatLng(r.marker_position.lat, r.marker_position.lng);
 
-        const marker = new kakao.maps.Marker({
-            map: map,
-            position: pos
-        });
+        const marker = new kakao.maps.Marker({ map: map, position: pos });
 
         const overlay = new kakao.maps.CustomOverlay({
             map: map,
@@ -371,20 +368,10 @@ function showSavedMarkers() {
         bounds.extend(pos);
     });
 
-    if (!gpsActive && !bounds.isEmpty()) {
+    if (!bounds.isEmpty()) {
         map.setBounds(bounds);
-    } else {
-        if (gpsActive && lastUserLatLng) {
-            setTimeout(() => {
-                if (gpsActive && lastUserLatLng) {
-                    try { map.relayout(); } catch (e) { /* ignore */ }
-                    map.setCenter(lastUserLatLng);
-                }
-            }, 50);
-        }
     }
 }
-
 
 // ============================================
 // 필터 + 마커 렌더링
@@ -401,10 +388,10 @@ function filterAndRenderMarkers() {
         ? restaurant_list.filter(r => savedRestaurants.includes(r.id))
         : restaurant_list;
 
-    markers.forEach(m => m.setMap(null));
-    overlays.forEach(o => o.setMap(null));
-    markers = [];
-    overlays = [];
+   markers.forEach(m => m.setMap(null));
+   overlays.forEach(o => o.setMap(null));
+   markers = [];
+   overlays = [];
 
     const filtered = targetList.filter(r => {
         const matchTag =
@@ -428,17 +415,13 @@ function filterAndRenderMarkers() {
         (selectedRegion === "지역 선택" || !selectedRegion);
 
     if (noFilter) {
-        if (favActive) {
-            showSavedMarkers();
-        }
+        if (favActive) showSavedMarkers();
         return;
     }
 
     const bounds = new kakao.maps.LatLngBounds();
 
     filtered.forEach(r => {
-        if (!r.marker_position) return;
-
         const pos = new kakao.maps.LatLng(r.marker_position.lat, r.marker_position.lng);
 
         const marker = new kakao.maps.Marker({ map, position: pos });
@@ -459,18 +442,10 @@ function filterAndRenderMarkers() {
         bounds.extend(pos);
     });
 
-    if (!gpsActive && !bounds.isEmpty()) {
+    if (!bounds.isEmpty()) {
         map.setBounds(bounds);
-    } else if (gpsActive && lastUserLatLng) {
-        setTimeout(() => {
-            if (gpsActive && lastUserLatLng) {
-                try { map.relayout(); } catch (e) { /* ignore */ }
-                map.setCenter(lastUserLatLng);
-            }
-        }, 50);
     }
 }
-
 
 // ============================================
 // JSON 로드
