@@ -482,6 +482,9 @@
 .map_review_image_container {
     width: 100%;
     height: auto;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
     margin-bottom: 10px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -493,7 +496,7 @@
     height: auto;
     object-fit: cover;
     display: block;
-    border-radius: 8px;
+    object-position: center;
 }
 
 .map_review p {
@@ -516,11 +519,11 @@
 }
 
 .tab_image {
-    width: 48%; 
-    height: auto; 
-    object-fit: cover; 
+    width: 48%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
     border-radius: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     cursor: pointer;
 }
 
