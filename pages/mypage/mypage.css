@@ -106,6 +106,8 @@ ul {
   cursor: pointer;
   transition: all 0.3s ease; 
   box-shadow: 0 4px 12px rgba(43, 70, 60, 0.06);
+  position: relative;
+  z-index: 1000;
 }
 
 .mypage_sidebar_item:hover {

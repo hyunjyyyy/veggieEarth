@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const text = descInput.value.trim();
 
         if (!title || !text) {
-            alert("제목/내용 입력해주세요.");
+            alert("제목과 내용을 입력해주세요.");
             return;
         }
 
@@ -346,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const text = modalDesc.value.trim();
 
         if (!title || !text) {
-            alert("제목/내용 입력해주세요.");
+            alert("제목과 내용을 입력해주세요.");
             return;
         }
 
