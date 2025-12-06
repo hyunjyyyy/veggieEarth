@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const currentUserId = "user01";
+    const currentUserId = localStorage.getItem('currentUser');
+
+    if (!currentUserId) {
+        alert("로그인이 필요합니다.");
+        window.location.href = "../../pages/login/login.html";
+        return;
+    }
+    
     const jsonPath = '../community/community_posts.json'; 
     const STORAGE_KEY = "community_posts";
 

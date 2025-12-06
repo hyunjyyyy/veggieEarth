@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. 경로 계산
     const isRoot = window.location.pathname.endsWith("index.html") || window.location.pathname.endsWith("/");
     const pathPrefix = isRoot ? "." : "../.."; 
 
@@ -30,11 +29,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.insertAdjacentHTML("afterbegin", headerHTML);
 
-    // ★ 수정 1: 함수를 호출할 때 pathPrefix를 괄호 안에 넣어 전달합니다.
     updateLoginState(pathPrefix);
+
+    const navItems = document.querySelectorAll('.nav_item');
+
+    navItems.forEach(item => {
+        if (item.textContent.trim() === 'MYPAGE') {
+            item.addEventListener('click', function(e) {
+                const currentUser = localStorage.getItem('currentUser');
+                
+                if (!currentUser) {
+                    e.preventDefault();
+                    alert("로그인이 필요한 서비스입니다.");
+                    
+                    if(confirm("로그인 페이지로 이동하시겠습니까?")) {
+                        window.location.href = "../../pages/login/login.html"; 
+                    }
+                }
+            });
+        }
+    });
 });
 
-// ★ 수정 2: 함수가 pathPrefix를 받을 수 있게 괄호 안에 변수명을 적어줍니다.
 function updateLoginState(pathPrefix) {
     const currentUser = localStorage.getItem('currentUser');
     const loginLink = document.getElementById('loginLink');
@@ -42,18 +58,16 @@ function updateLoginState(pathPrefix) {
     if (currentUser && loginLink) {
         loginLink.href = "#"; 
         
-        // 이제 여기서 pathPrefix를 정상적으로 사용할 수 있습니다.
         loginLink.innerHTML = `
             <span style="font-weight:bold; color:#688F4E; margin-right:5px;">${currentUser}님</span>
             <img id="btnLogout" src="${pathPrefix}/assets/images/logout.png" alt="로그아웃" style="cursor:pointer; vertical-align:middle;">
         `;
 
-        // 로그아웃 클릭 이벤트
         const btnLogout = document.getElementById('btnLogout');
         if (btnLogout) {
             btnLogout.addEventListener('click', (e) => {
-                e.preventDefault(); // a태그 이동 막기
-                e.stopPropagation(); // 이벤트 버블링 막기 (안전장치)
+                e.preventDefault();
+                e.stopPropagation();
                 
                 if(confirm("로그아웃 하시겠습니까?")) {
                     localStorage.removeItem('currentUser');
