@@ -5,7 +5,12 @@ let isEditMode = false;
 let nameTag = null;
 let veganTypeTag = null;
 
-const CURRENT_USER_ID = "user01";
+const CURRENT_USER_ID = localStorage.getItem('currentUser');
+
+if (!CURRENT_USER_ID) {
+    alert("로그인이 필요합니다.");
+    window.location.href = "../../pages/login/login.html";
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('페이지 로드 및 초기화 시작');
@@ -35,6 +40,7 @@ async function loadAllData() {
         } else {
             userData = defaultUserData;
         }
+        userData.profile.name = CURRENT_USER_ID;
 
         const [badgesRes, veganTypesRes] = await Promise.all([
             fetch('7_베지어스_mypage_badges.json'),
@@ -63,7 +69,7 @@ async function updateRealTimeStats() {
             const communityData = await communityRes.json();
             const posts = communityData.posts || [];
             
-            myPostCount = posts.filter(p => p.id === CURRENT_USER_ID).length;
+            myPostCount = posts.filter(p => p.id === CURRENT_USER_ID || p.authorName === CURRENT_USER_ID).length;
         } catch (e) { 
             console.warn('커뮤니티 데이터 로드 실패', e); 
         }
@@ -77,7 +83,7 @@ async function updateRealTimeStats() {
             const allRecipes = await recipeRes.json(); 
 
             if (Array.isArray(allRecipes)) {
-                myRecipeCount = allRecipes.filter(r => r.author === "pxibvaw").length;
+                myRecipeCount = allRecipes.filter(r => r.author === CURRENT_USER_ID).length;
                 myScrapCount = allRecipes.filter(r => r.scrap === 1).length;
             } else {
                 console.warn('레시피 데이터가 배열 형식이 아닙니다.');

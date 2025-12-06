@@ -1,5 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const CURRENT_USER_ID = "pxibvaw"; 
+    const CURRENT_USER_ID = localStorage.getItem('currentUser');
+    
+    if (!CURRENT_USER_ID) {
+        alert("로그인이 필요합니다.");
+        window.location.href = "../../pages/login/login.html";
+        return;
+    }
+    
     const JSON_PATH = "../recipe/recipes.json"; 
 
     const recipeListContainer = document.getElementById("recipe-list");
