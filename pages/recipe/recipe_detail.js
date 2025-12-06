@@ -184,20 +184,43 @@ function deleteRecipe(id) {
 
 function handleScrap(recipe) {
     const bookmarkBtn = document.getElementById("recipeBookmark");
-    bookmarkBtn.checked = (recipe.scrap === 1);
+    const currentUser = localStorage.getItem('currentUser');
+
+    let scrapData = JSON.parse(localStorage.getItem('scrappedRecipes')) || {};
+    let myScraps = scrapData[currentUser] || [];
+
+    const isScrapped = myScraps.includes(recipe.id);
+    
+    bookmarkBtn.checked = isScrapped;
 
     bookmarkBtn.onclick = function(e) {
-        const isChecked = e.target.checked;
-        const newScrapStatus = isChecked ? 1 : 0; 
+        e.preventDefault();
 
-        const allRecipes = JSON.parse(localStorage.getItem("allRecipes"));
-        const index = allRecipes.findIndex(r => r.id === recipe.id);
-        
-        if (index !== -1) {
-            allRecipes[index].scrap = newScrapStatus;
-            localStorage.setItem("allRecipes", JSON.stringify(allRecipes));
-            recipe.scrap = newScrapStatus;
+        if (!currentUser) {
+            alert("로그인 후 이용 가능합니다.");
+            if(confirm("로그인 하시겠습니까?")) {
+                 window.location.href = "../login/login.html";
+            }
+            return;
         }
+
+        scrapData = JSON.parse(localStorage.getItem('scrappedRecipes')) || {};
+        myScraps = scrapData[currentUser] || [];
+
+        const currentChecked = myScraps.includes(recipe.id);
+
+        if (!currentChecked) {
+            myScraps.push(recipe.id);
+            alert("나의 레시피(스크랩)에 저장되었습니다.");
+            bookmarkBtn.checked = true;
+        } else {
+            myScraps = myScraps.filter(id => id !== recipe.id);
+            alert("스크랩이 취소되었습니다.");
+            bookmarkBtn.checked = false;
+        }
+
+        scrapData[currentUser] = myScraps;
+        localStorage.setItem('scrappedRecipes', JSON.stringify(scrapData));
     };
 }
 
