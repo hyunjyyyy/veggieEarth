@@ -78,13 +78,17 @@ async function updateRealTimeStats() {
         let myRecipeCount = 0;
         let myScrapCount = 0;
         try {
-
             const recipeRes = await fetch('../recipe/recipes.json');
             const allRecipes = await recipeRes.json(); 
 
             if (Array.isArray(allRecipes)) {
                 myRecipeCount = allRecipes.filter(r => r.author === CURRENT_USER_ID).length;
-                myScrapCount = allRecipes.filter(r => r.scrap === 1).length;
+                
+                const scrapData = JSON.parse(localStorage.getItem('scrappedRecipes')) || {};
+                const myScraps = scrapData[CURRENT_USER_ID] || []; 
+                
+                myScrapCount = myScraps.length; 
+                
             } else {
                 console.warn('레시피 데이터가 배열 형식이 아닙니다.');
             }
