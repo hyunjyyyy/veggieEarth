@@ -303,8 +303,8 @@ ul {
 /* 저장, 공유 */
 .map_card_action {
     display: flex;
-    border-top: 1px solid #ddd;        /* 칸 위 선 */
-    border-bottom: 1px solid #ddd;     /* 칸 아래 선 */
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     margin: 20px 0 0;
     height: 70px;
     align-items: center;
@@ -312,7 +312,6 @@ ul {
     position: relative;
 }
 
-/* 칸 사이 선 */
 .divider {
     position: absolute;
     top: 50%;
@@ -426,7 +425,7 @@ ul {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid #ddd;       /* 칸 아래 선 */
+    border-bottom: 1px solid #ddd;
     height: 45px;
     cursor: pointer;
     text-decoration: none;
@@ -664,7 +663,7 @@ ul {
     border-radius: inherit;
 }
 
-/* 핀(커스텀 이미지) – 지도 위에 오버레이 */
+/* 핀 */
 .map_pin {
     position: absolute;
     top: 50%;
@@ -672,7 +671,7 @@ ul {
     width: 50px;
     height: 50px;
     transform: translate(-50%, -100%);
-    pointer-events: none;   /* 지도 클릭을 방해하지 않도록 */
+    pointer-events: none;
 }
 
 .share_popup {
@@ -742,4 +741,34 @@ ul {
 .gps_button {
     top: 75px;
     right: 20px;
+}
+
+
+
+.map_review_write_btn {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 15px;
+    background-color: #688F4E;
+    color: white;
+    font-family: 'memomentKkukkkuk';
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.map_review_write_btn:hover {
+    background-color: #4b6d39;
+}
+
+#tab_review_link {
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    max-height: 350px;
 }

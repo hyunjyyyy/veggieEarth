@@ -33,6 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentTab = "free";
     let currentSearch = "";
 
+    let incomingRestaurantId = null;
+
     function formatTimeLabel(iso) {
         const diff = Date.now() - new Date(iso).getTime();
         const min = Math.floor(diff / 60000);
@@ -253,6 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
             authorImage: "../../assets/images/user-profile1.jpg",
             badgeImage: "../../assets/images/badge-icon1.png",
             imageData: selectedImageDataUrl || "",
+            restaurantId: incomingRestaurantId || null,
             likes: 0,
             createdAt: new Date().toISOString(),
             comments: []
@@ -332,6 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
             authorImage: "../../assets/images/user-profile1.jpg",
             badgeImage: "../../assets/images/badge-icon1.png",
             imageData: modalImageData || "",
+            restaurantId: incomingRestaurantId || null,
             likes: 0,
             createdAt: new Date().toISOString(),
             comments: []
@@ -353,19 +357,34 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!card) return;
 
         const id = card.dataset.id;
-        if (!id) return;
-
         window.location.href = `community_post_wide.html?id=${id}`;
     });
 
+    function checkIncomingFromMap() {
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.get("mode") === "write") {
+            currentTab = "review";
+            incomingRestaurantId = Number(params.get("restaurantId")) || null;
+
+            saveTab();
+            updateTabButtons();
+            renderAll();
+
+            const openModalBtn = document.querySelector(".open_modal_button");
+            if (openModalBtn) {
+                setTimeout(() => {
+                    openModalBtn.click();
+                }, 300);
+            }
+        }
+    }
+
     async function init() {
         loadStateFromStorage();
-        if (allPosts.length > 0) {
-            renderAll();
-        } else {
-            await loadPostsFromJson();
-            renderAll();
-        }
+        await loadPostsFromJson();
+        renderAll();
+        checkIncomingFromMap();
     }
 
     init();

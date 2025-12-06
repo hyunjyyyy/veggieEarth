@@ -35,6 +35,9 @@ const map = new kakao.maps.Map(map_container, map_option);
 // ============================================
 let restaurant_list = [];
 
+// ⭐ 현재 카드에 떠있는 식당 id (리뷰 작성 시 사용)
+let currentRestaurantForReview = null;
+
 
 // ============================================
 // 전역 마커 & 오버레이
@@ -192,6 +195,13 @@ function focusMarker(restaurant) {
     cardContainer.style.display = "block";
 
     update_restaurant_card(restaurant);
+
+    // ⭐ 현재 선택된 식당 ID 저장 (리뷰 작성 시 사용)
+    currentRestaurantForReview = restaurant.id;
+
+    // ⭐ restaurant.id 기준 community 후기 렌더링
+    renderCommunityReviews(restaurant.id);
+
     applyFavoriteButtonLogic(restaurant);
 
     cardContainer.scrollTop = 0;
@@ -285,6 +295,7 @@ function update_restaurant_card(restaurant) {
 }
 
 
+
 // ============================================
 // 즐겨찾기 모드 토글
 // ============================================
@@ -296,7 +307,6 @@ function toggleFavoriteMode() {
         showSavedMarkers();
     } else {
         favButton.src = "map_image/fav.png";
-        // 끄면 아무 변화 없음
     }
 }
 
@@ -339,7 +349,7 @@ function showSavedMarkers() {
         });
 
         kakao.maps.event.addListener(marker, "click", () => focusMarker(r));
-        kakao.maps.event.addListener(overlay, "click", () => focusMarker(r));
+        kakao.maps.event.addListener(overlay, () => focusMarker(r));
 
         markers.push(marker);
         overlays.push(overlay);
@@ -416,7 +426,7 @@ function filterAndRenderMarkers() {
         });
 
         kakao.maps.event.addListener(marker, "click", () => focusMarker(r));
-        kakao.maps.event.addListener(overlay, "click", () => focusMarker(r));
+        kakao.maps.event.addListener(overlay, () => focusMarker(r));
 
         markers.push(marker);
         overlays.push(overlay);
@@ -427,7 +437,10 @@ function filterAndRenderMarkers() {
     if (!bounds.isEmpty()) map.setBounds(bounds);
 }
 
+
+// ============================================
 // JSON 로드
+// ============================================
 fetch("restaurant_data.json")
     .then(res => res.json())
     .then(data => {
@@ -450,7 +463,6 @@ fetch("restaurant_data.json")
         }
     })
     .catch(err => console.error("restaurant_data.json 불러오기 실패:", err));
-
 
 
 // ============================================
@@ -488,6 +500,10 @@ if (navigator.geolocation) {
     initialPositionSet = true;
 }
 
+
+// ============================================
+// 카드 닫기
+// ============================================
 function closeRestaurantCard() {
     const cardContainer = document.querySelector(".map_card_outer_container");
 
@@ -502,4 +518,91 @@ function closeRestaurantCard() {
         map.relayout();
         map.setCenter(currentCenter);
     }, 50);
+}
+
+
+
+// ============================================
+//  community 후기 렌더링 (restaurant.id 기준)
+// ============================================
+function renderCommunityReviews(restaurantId) {
+    const reviewArea = document.getElementById("tab_review_link");
+    if (!reviewArea) return;
+
+    let writeBtn = document.getElementById("map_review_write_btn");
+    const hadExistingButton = !!writeBtn;
+
+    if (!writeBtn) {
+        writeBtn = document.createElement("button");
+        writeBtn.id = "map_review_write_btn";
+        writeBtn.className = "map_review_write_btn";
+        writeBtn.textContent = "리뷰 작성";
+    }
+
+    reviewArea.innerHTML = "";
+    reviewArea.appendChild(writeBtn);
+
+    writeBtn.onclick = () => {
+        if (!currentRestaurantForReview) {
+            alert("먼저 지도에서 식당을 선택해주세요.");
+            return;
+        }
+
+        const url = new URL("../community/community.html", window.location.href);
+        url.searchParams.set("mode", "write");
+        url.searchParams.set("restaurantId", currentRestaurantForReview);
+        url.searchParams.set("fromMap", "1");
+        window.location.href = url.toString();
+    };
+
+    const posts = JSON.parse(localStorage.getItem("community_posts")) || [];
+
+    const reviews = posts.filter(
+        p => p.category === "review" && p.restaurantId === restaurantId
+    );
+
+    const reviewLink = document.querySelector(".review_link");
+    if (reviewLink) {
+        reviewLink.textContent = `리뷰 ${reviews.length}`;
+    }
+
+    if (reviews.length === 0) {
+        const emptyMsg = document.createElement("p");
+        emptyMsg.style.padding = "10px";
+        emptyMsg.style.color = "#777";
+        emptyMsg.textContent = "등록된 후기가 없습니다.";
+        reviewArea.appendChild(emptyMsg);
+        return;
+    }
+
+    reviews.forEach(r => {
+        const imageUrl = r.imageData || r.image || "";
+
+        const div = document.createElement("div");
+        div.className = "map_review_item";
+        div.style.cursor = "pointer";
+
+        div.innerHTML = `
+            <div class="map_review">
+                <div class="map_review_user_info">
+                    <img src="${r.authorImage}" class="map_user_image">
+                    <h4>${r.authorName}</h4>
+                </div>
+
+                ${imageUrl ? `
+                    <div class="map_review_image_container">
+                        <img src="${imageUrl}" class="map_review_image">
+                    </div>
+                ` : ""}
+
+                <p>${r.text}</p>
+            </div>
+        `;
+
+        div.addEventListener("click", () => {
+            window.location.href = `../community/community_post_wide.html?id=${r.postId}`;
+        });
+
+        reviewArea.appendChild(div);
+    });
 }
