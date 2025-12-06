@@ -297,7 +297,6 @@ ul {
 }
 
 .mypage_chart_uploads {
-  /* uploads: ~66% */
   background: conic-gradient(
     #2b463c 0deg,#2b463c 237deg,#f4f1e9 237deg,#f4f1e9 360deg
   );
@@ -371,8 +370,6 @@ ul {
   text-align: center;
 }
 
-/* 화면 비율 조정 */
-/* 화면 너비가 1300px 이하일 때 적용 */
 @media (max-width: 1350px) {
   .mypage_content_wrapper {
     margin: 165px auto 40px; 
@@ -385,7 +382,6 @@ ul {
     flex-direction: row;  
     justify-content: center;
     width: 100%;
-    /* 기존 스타일 초기화 */
     gap: 30px;
     padding: 8px 12px;
     margin: 12px auto;   
@@ -524,7 +520,7 @@ ul {
   height: 100%;
   z-index: 9999;
   animation: fadeIn 0.3s ease;
-  overflow: hidden; /* 추가: 모달 밖으로 스크롤바 나가지 않게 */
+  overflow: hidden; 
 }
 
 .mypage_badge_modal.active {
@@ -595,7 +591,7 @@ ul {
   line-height: 0;
   transform: none;
   transition: all 0.2s ease;
-  z-index: 1; /* 추가: 닫기 버튼이 스크롤 영역 위에 오도록 */
+  z-index: 1; 
 }
 
 .mypage_badge_modal_close:hover {
