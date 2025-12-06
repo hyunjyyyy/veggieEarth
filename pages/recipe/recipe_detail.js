@@ -1,4 +1,3 @@
-// 전역 변수
 let currentRatingInput = 5;
 let currentRecipeId = null; 
 
@@ -83,7 +82,6 @@ function renderDetail(recipe) {
     document.title = `${recipe.title} - 베지어스`;
     document.getElementById("recipeTitle").textContent = recipe.title;
     
-    // 작성자 표시
     const authorName = recipe.author || "익명";
     document.getElementById("recipeAuthor").textContent = authorName;
     
@@ -94,11 +92,9 @@ function renderDetail(recipe) {
     if(oldModBtn) oldModBtn.remove();
     if(oldDelBtn) oldDelBtn.remove();
 
-    // 현재 사용자 가져오기
     const currentUser = localStorage.getItem('currentUser');
 
-    if (recipe.author && currentUser === currentUser) {
-        // 1. 수정 버튼
+    if (currentUser && recipe.author === currentUser) {
         const modBtn = document.createElement("button");
         modBtn.className = "btn_modify";
         modBtn.id = "btnRecipeModify";
@@ -166,15 +162,24 @@ function renderDetail(recipe) {
     renderReviews(recipe);
 }
 
-// ★ [추가됨] 레시피 삭제 함수
 function deleteRecipe(id) {
+    const currentUser = localStorage.getItem('currentUser');
     let allRecipes = JSON.parse(localStorage.getItem("allRecipes"));
-    // 해당 ID를 제외한 나머지로 배열 필터링
+    
+    const targetRecipe = allRecipes.find(r => r.id === id);
+    
+    if (!targetRecipe) return;
+
+    if (targetRecipe.author !== currentUser) {
+        alert("삭제 권한이 없습니다.");
+        return;
+    }
+
     const newRecipes = allRecipes.filter(r => r.id !== id);
     
     localStorage.setItem("allRecipes", JSON.stringify(newRecipes));
     alert("삭제되었습니다.");
-    window.location.href = "recipe_main.html"; // 메인으로 이동
+    window.location.href = "recipe_main.html"; 
 }
 
 function handleScrap(recipe) {
@@ -212,7 +217,7 @@ function renderReviews(recipe) {
     
     const reviewsWithIndex = recipe.reviewList.map((review, index) => ({
         ...review,
-        originalIndex: index // 원래 배열에서의 위치 저장
+        originalIndex: index
     }));
 
     const sortedReviews = reviewsWithIndex.reverse();
@@ -220,7 +225,6 @@ function renderReviews(recipe) {
     container.innerHTML = sortedReviews.map(item => {
         let actionBtns = "";
         
-        // 본인 댓글일 경우 수정/삭제 버튼 표시
         if (currentUser && item.user === currentUser) {
             actionBtns = `
                 <button class="btn_modify" onclick="alert('댓글 수정은 준비중입니다.')" title="수정">
@@ -247,7 +251,6 @@ function renderReviews(recipe) {
     }).join('');
 }
 
-// ★ [추가됨] 댓글 삭제 함수 (전역 접근 가능해야 HTML onclick에서 호출됨)
 window.deleteReview = function(index) {
     if(!confirm("이 후기를 삭제하시겠습니까?")) return;
 
@@ -257,10 +260,8 @@ window.deleteReview = function(index) {
     if (recipeIndex !== -1) {
         const recipe = allRecipes[recipeIndex];
         
-        // 해당 인덱스의 댓글 삭제
         recipe.reviewList.splice(index, 1);
 
-        // 평점 및 개수 재계산
         recipe.reviews = recipe.reviewList.length;
         if (recipe.reviews > 0) {
             const sum = recipe.reviewList.reduce((acc, cur) => acc + cur.rating, 0);
@@ -269,9 +270,8 @@ window.deleteReview = function(index) {
             recipe.rating = 0;
         }
 
-        // 저장 및 화면 갱신
         localStorage.setItem("allRecipes", JSON.stringify(allRecipes));
-        renderDetail(recipe); // 전체 다시 렌더링
+        renderDetail(recipe);
     }
 };
 
