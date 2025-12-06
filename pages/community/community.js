@@ -74,17 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    async function loadPostsFromJson() {
-        try {
-            const res = await fetch("community_posts.json");
-            const data = await res.json();
-            allPosts = data.posts;
-            savePosts();
-        } catch {
-            allPosts = DEFAULT_POSTS;
-            savePosts();
-        }
+    // community.js 내부의 loadPostsFromJson 함수 수정
+
+async function loadPostsFromJson() {
+    if (allPosts.length > 0) return;
+
+    try {
+        const res = await fetch("community_posts.json");
+        const data = await res.json();
+        allPosts = data.posts;
+        savePosts();
+    } catch {
+        allPosts = DEFAULT_POSTS;
+        savePosts();
     }
+}
 
     let restaurantData = [];
 
@@ -262,6 +266,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     createBtn.addEventListener("click", () => {
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            alert("로그인 후 이용 가능합니다.");
+            if(confirm("로그인 하시겠습니까?")) window.location.href = "../login/login.html";
+            return;
+        }
         const title = titleInput.value.trim();
         const text = descInput.value.trim();
 
@@ -274,11 +284,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         allPosts.unshift({
             postId: newPostId,
-            id: "user00",
+            id: currentUser,
             category: currentTab,
             title,
             text,
-            authorName: "베지어스 회원",
+            authorName: currentUser,
             authorImage: "../../assets/images/user-profile1.jpg",
             badgeImage: "../../assets/images/badge_icon1.png",
             imageData: selectedImageDataUrl || "",
@@ -342,6 +352,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     modalSubmit.addEventListener("click", () => {
+        
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            alert("로그인 후 이용 가능합니다.");
+            if(confirm("로그인 하시겠습니까?")) window.location.href = "../login/login.html";
+            return;
+        }
         const title = modalTitle.value.trim();
         const text = modalDesc.value.trim();
 
@@ -354,11 +371,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         allPosts.unshift({
             postId: newPostId,
-            id: "user00",
+            id: currentUser,
             category: currentTab,
             title,
             text,
-            authorName: "베지어스 회원",
+            authorName: currentUser,
             authorImage: "../../assets/images/user-profile1.jpg",
             badgeImage: "../../assets/images/badge_icon1.png",
             imageData: modalImageData || "",

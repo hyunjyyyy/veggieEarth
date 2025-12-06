@@ -1,17 +1,25 @@
 // ============================================
 // 저장된 식당 리스트
 // ============================================
+
 function loadSavedRestaurants() {
-    const data = localStorage.getItem("saved_restaurants");
-    return data ? JSON.parse(data) : [];
+    const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) return [];
+
+    const allSaved = JSON.parse(localStorage.getItem("savedRestaurants_Map")) || {};
+    return allSaved[currentUser] || [];
 }
 
 function saveSavedRestaurants(list) {
-    localStorage.setItem("saved_restaurants", JSON.stringify(list));
+    const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) return;
+
+    const allSaved = JSON.parse(localStorage.getItem("savedRestaurants_Map")) || {};
+    allSaved[currentUser] = list;
+    localStorage.setItem("savedRestaurants_Map", JSON.stringify(allSaved));
 }
 
 let savedRestaurants = loadSavedRestaurants();
-
 
 // ============================================
 // 지도 초기 설정
@@ -158,36 +166,103 @@ function openSharePopup(restaurant) {
 // ============================================
 // 식당 저장 버튼 상태
 // ============================================
+document.querySelector(".favorite_btn").onclick = () => {
+    // 1. 로그인 체크
+    const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) {
+        alert("로그인이 필요한 서비스입니다.");
+        if(confirm("로그인 하시겠습니까?")) window.location.href = "../login/login.html";
+        return;
+    }
+
+    // 2. 최신 데이터 불러오기 (중요: 다른 탭 등에서 변경되었을 수 있으므로)
+    savedRestaurants = loadSavedRestaurants();
+
+    if (savedRestaurants.includes(restaurant.id)) {
+        savedRestaurants = savedRestaurants.filter(id => id !== restaurant.id);
+        alert("저장이 취소되었습니다.");
+    } else {
+        savedRestaurants.push(restaurant.id);
+        alert("식당이 저장되었습니다.");
+    }
+
+    // 3. 저장 및 아이콘 업데이트
+    saveSavedRestaurants(savedRestaurants);
+    updateIcon();
+
+    if (savedRestaurants.length === 0 && favActive) {
+        favActive = false;
+        favButton.src = "map_image/fav.png";
+        filterAndRenderMarkers(); 
+    }
+};
+
+// ============================================
+// 식당 저장 버튼 로직
+// ============================================
 function applyFavoriteButtonLogic(restaurant) {
-    const favBtn = document.querySelector(".favorite_btn img");
+    const btnDiv = document.querySelector(".favorite_btn");
+    const btnImg = document.querySelector(".favorite_btn img");
+
+    if (!btnDiv || !btnImg) {
+        console.error("저장 버튼 요소를 찾을 수 없습니다.");
+        return;
+    }
+
+    const currentId = Number(restaurant.id);
 
     function updateIcon() {
-        if (savedRestaurants.includes(restaurant.id)) {
-            favBtn.src = "../../assets/images/map_favorite_act.png";
+        const latestList = loadSavedRestaurants().map(id => Number(id)); // 저장된 것도 숫자로 변환
+        
+        if (latestList.includes(currentId)) {
+            btnImg.src = "../../assets/images/map_favorite_act.png";
         } else {
-            favBtn.src = "../../assets/images/map_favorite.png";
+            btnImg.src = "../../assets/images/map_favorite.png";
         }
     }
 
     updateIcon();
 
-    document.querySelector(".favorite_btn").onclick = () => {
-        if (savedRestaurants.includes(restaurant.id)) {
-            savedRestaurants = savedRestaurants.filter(id => id !== restaurant.id);
-        } else {
-            savedRestaurants.push(restaurant.id);
+    btnDiv.onclick = function(e) {
+        e.preventDefault();
+        console.log("저장 버튼 클릭됨!");
+
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            alert("로그인이 필요한 서비스입니다.");
+            if(confirm("로그인 하시겠습니까?")) {
+                 window.location.href = "../login/login.html";
+            }
+            return;
         }
 
-        saveSavedRestaurants(savedRestaurants);
+        let mySavedList = loadSavedRestaurants().map(id => Number(id));
+
+        if (mySavedList.includes(currentId)) {
+            mySavedList = mySavedList.filter(id => id !== currentId);
+            alert("저장이 취소되었습니다.");
+        } else {
+            mySavedList.push(currentId);
+            alert("식당이 저장되었습니다.");
+        }
+
+        saveSavedRestaurants(mySavedList);
         updateIcon();
 
-        if (savedRestaurants.length === 0 && favActive) {
-            favActive = false;
-            favButton.src = "map_image/fav.png";
+        if (typeof favActive !== 'undefined' && favActive) {
+            if (mySavedList.length === 0) {
+                favActive = false;
+                const fb = document.getElementById("fav_button");
+                if(fb) fb.src = "map_image/fav.png";
+            }
+            if (typeof filterAndRenderMarkers === 'function') {
+                filterAndRenderMarkers();
+            } else if (typeof showSavedMarkers === 'function') {
+                showSavedMarkers();
+            }
         }
     };
 }
-
 
 // ============================================
 // 마커 클릭 시 포커스 + 카드
@@ -587,6 +662,14 @@ function renderCommunityReviews(restaurantId) {
     reviewArea.appendChild(writeBtn);
 
     writeBtn.onclick = () => {
+        // 1. 로그인 체크 추가
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            alert("로그인이 필요한 서비스입니다.");
+            if(confirm("로그인 하시겠습니까?")) window.location.href = "../login/login.html";
+            return;
+        }
+
         if (!currentRestaurantForReview) {
             alert("먼저 지도에서 식당을 선택해주세요.");
             return;
