@@ -60,6 +60,15 @@
                     </div> 
 
                     <div class="community_form_group">
+                        <label for="community_task_category">Category</label>
+                        <select id="community_task_category" class="community_input_field">
+                            <option value="free_board">자유 게시판</option>
+                            <option value="qna_board">질문 게시판</option>
+                            <option value="review_board">후기 게시판</option>
+                        </select>
+                    </div>
+
+                    <div class="community_form_group">
                         <label for="community_task_title">Title</label>
                         <input type="text" id="community_task_title" class="community_input_field">
                     </div>
@@ -92,13 +101,22 @@
             <h2>New Post</h2>
 
             <div class="modal_form_group">
+                <label for="community_task_category">Category</label>
+                <select id="community_task_category" class="community_input_field">
+                    <option value="free_board">자유 게시판</option>
+                    <option value="qna_board">질문 게시판</option>
+                    <option value="review_board">후기 게시판</option>
+                </select>
+            </div>
+
+            <div class="modal_form_group">
                 <label>Title</label>
-                <input type="text" id="modal_title" class="modal_input">
+                <input type="text" id="modal_title" class="community_input_field">
             </div>
 
             <div class="modal_form_group">
                 <label>Description</label>
-                <textarea id="modal_desc" class="modal_textarea"></textarea>
+                <textarea id="modal_desc" class="community_input_field"></textarea>
             </div>
 
             <div class="modal_form_group">
