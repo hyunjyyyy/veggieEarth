@@ -1,10 +1,3 @@
-/**
- * 마이페이지 하단 통계(도넛 차트)를 그리는 함수
- * main.js에서 데이터 로드가 완료되면 호출됩니다.
- * @param {Object} userData - 사용자 정보 객체
- * @param {Object} badgesData - 배지 기준 정보 객체
- */
-
 function renderMyPageCharts(userData, badgesData) {
     const statsContainer = document.getElementById('statsContainer');
     

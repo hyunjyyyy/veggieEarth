@@ -1,5 +1,3 @@
-
-// ===== 전역 변수 =====
 let userData = null;
 let badgesData = null;
 let veganTypesData = null;
@@ -7,7 +5,7 @@ let isEditMode = false;
 let nameTag = null;
 let veganTypeTag = null;
 
-const CURRENT_USER_ID = "user01"; // 현재 로그인한 사용자 ID
+const CURRENT_USER_ID = "user01";
 
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('페이지 로드 및 초기화 시작');
