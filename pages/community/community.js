@@ -272,8 +272,11 @@ async function loadPostsFromJson() {
             if(confirm("로그인 하시겠습니까?")) window.location.href = "../login/login.html";
             return;
         }
+
         const title = titleInput.value.trim();
         const text = descInput.value.trim();
+        const categorySelect = document.getElementById("community_task_category");
+        const selectedCategory = categorySelect.value;
 
         if (!title || !text) {
             alert("제목과 내용을 입력해주세요.");
@@ -285,7 +288,7 @@ async function loadPostsFromJson() {
         allPosts.unshift({
             postId: newPostId,
             id: currentUser,
-            category: currentTab,
+            category: selectedCategory,
             title,
             text,
             authorName: currentUser,
