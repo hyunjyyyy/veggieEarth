@@ -1,6 +1,8 @@
 /* register.css */
-
-/* 배경 및 폰트 설정 (login.css와 동일) */
+@font-face {
+    font-family:'memomentKkukkkuk';
+    src:url(../../assets/fonts/memomentKkukkkuk.otf) format('opentype');
+}
 body {
     margin: 0;
     background-color: #F4F1E9;
@@ -9,22 +11,21 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* 화면 중앙 정렬을 위해 최소 높이 지정 */
+    min-height: 100vh;
 }
 
 a { text-decoration: none; color: inherit; }
 
-/* ========== 회원가입 컨테이너 ========== */
 .register_container {
     background-color: #FFFFFF;
-    padding: 50px 60px; /* 로그인보다 위아래 여백을 조금 더 줌 */
+    padding: 50px 60px;
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(43, 70, 60, 0.1);
     text-align: center;
-    max-width: 450px; /* 로그인(400px)보다 조금 더 넓게 */
+    max-width: 450px;
     width: 100%;
     margin-top: 100px;
-    margin-bottom: 50px; /* 스크롤 여유 */
+    margin-bottom: 50px;
     box-sizing: border-box;
 }
 
@@ -34,7 +35,6 @@ a { text-decoration: none; color: inherit; }
     margin-bottom: 30px;
 }
 
-/* 폼 스타일 */
 .register_form {
     display: flex;
     flex-direction: column;
@@ -45,7 +45,7 @@ a { text-decoration: none; color: inherit; }
     font-size: 16px;
     color: #33483E;
     text-align: left;
-    margin-bottom: -5px; /* 라벨과 인풋 사이 간격 좁힘 */
+    margin-bottom: -5px;
     margin-left: 5px;
 }
 
@@ -53,10 +53,11 @@ a { text-decoration: none; color: inherit; }
     padding: 12px;
     border: 1px solid #B1D182;
     border-radius: 10px;
+    font-family:'memomentKkukkkuk';
     font-size: 15px;
     outline: none;
     transition: border-color 0.3s ease;
-    background-color: #FAFAFA; /* 아주 연한 회색 배경 추가하여 입력창 강조 */
+    background-color: #FAFAFA;
 }
 
 .register_form input:focus {
@@ -64,7 +65,6 @@ a { text-decoration: none; color: inherit; }
     background-color: #FFFFFF;
 }
 
-/* 버튼 스타일 */
 .register_button {
     background-color: #688F4E;
     color: white;
@@ -86,7 +86,6 @@ a { text-decoration: none; color: inherit; }
     transform: scale(0.98);
 }
 
-/* 하단 로그인 링크 */
 .login_prompt {
     margin-top: 25px;
     color: #626262;
@@ -102,7 +101,6 @@ a { text-decoration: none; color: inherit; }
     text-decoration: underline;
 }
 
-/* 에러 메시지 */
 .error_text {
     color: #e74c3c;
     font-size: 13px;
@@ -111,7 +109,6 @@ a { text-decoration: none; color: inherit; }
     height: 15px; /* 공간 확보 */
 }
 
-/* ========== 가입 성공 애니메이션 (login.js와 통일) ========== */
 .register_success {
     display: flex;
     flex-direction: column;
