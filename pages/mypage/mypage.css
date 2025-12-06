@@ -396,18 +396,17 @@ body {
 .mypage_mycommunity_board_filter {
   display: flex;
   gap: 10px;
-  background-color: white;
-  padding: 6px;
-  border-radius: 30px;
-  box-shadow: 0 4px 12px rgba(43, 70, 60, 0.08);
+  background-color: #e2e0db;
+  padding: 5px;
+  border-radius: 12px;
 }
 
 .mypage_mycommunity_filter_btn {
   background: transparent;
   border: none;
   padding: 8px 20px;
-  border-radius: 24px;
-  font-size: 14px;
+  border-radius: 12px;
+  font-size: 16px;
   font-family: "memomentKkukkkuk";
   color: #688f4e;
   cursor: pointer;
@@ -421,8 +420,9 @@ body {
 }
 
 .mypage_mycommunity_filter_btn.active {
-  background-color: #688f4e;
-  color: white;
+  background-color: white;
+  color: #2b463c;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 /* 반응형 */
