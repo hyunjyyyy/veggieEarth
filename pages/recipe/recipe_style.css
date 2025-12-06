@@ -847,3 +847,36 @@
 .btn_modify:hover img, .btn_delete:hover img {
     opacity: 1; 
 }
+
+.recipe_admin_actions {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.recipe_admin_btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid #e2e0db;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+}
+
+.recipe_admin_btn:hover {
+    background-color: #f4f4f4;
+    transform: translateY(-2px);
+}
+
+.recipe_admin_btn img {
+    width: 20px;
+    height: 20px;
+}

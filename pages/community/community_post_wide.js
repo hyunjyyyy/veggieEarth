@@ -59,6 +59,26 @@ function renderPostDetail() {
     document.querySelector(".post_title").textContent = post.title || "(제목 없음)";
     document.querySelector(".post_text").textContent = post.text;
 
+    const currentUser = localStorage.getItem('currentUser');
+    const headerEl = document.querySelector(".post_user_header");
+    
+    const oldBtns = headerEl.querySelector(".post_action_buttons");
+    if (oldBtns) oldBtns.remove();
+
+    if (currentUser && (postId === currentUser || post.authorName === currentUser)) {
+        const btnGroup = document.createElement("div");
+        btnGroup.className = "post_action_buttons";
+        
+        btnGroup.innerHTML = `
+            <button class="post_action_btn" title="수정" onclick="alert('수정 기능 준비중')">
+                <img src="../../assets/images/modify.png" alt="수정">
+            </button>
+            <button class="post_action_btn" title="삭제" onclick="deleteCurrentPost('${postId}')">
+                <img src="../../assets/images/delete.png" alt="삭제">
+            </button>
+        `;
+        headerEl.appendChild(btnGroup);
+    }
     const imgArea = document.querySelector(".post_image_area");
     if (post.imageData || post.image) {
         imgArea.innerHTML = `
@@ -191,9 +211,10 @@ function renderComments(post) {
 }
 
 function addComment(post, text) {
+    const currentUser = localStorage.getItem('currentUser') || "익명";
     post.comments.push({
         id: Date.now(),
-        user: "user1",
+        user: currentUser,
         userImg: "../../assets/images/Profile3.png",
         text,
         time: new Date().toISOString()
@@ -225,17 +246,40 @@ function deleteComment(post, commentId) {
 document.addEventListener("DOMContentLoaded", () => {
     renderPostDetail();
 
-    const input = document.querySelector(".comment_input");
-    const btn = document.querySelector(".comment_submit_btn");
+    // [수정] 바뀐 ID에 맞춰 이벤트 연결
+    const input = document.getElementById("commentInput"); // textarea
+    const btn = document.getElementById("btnCommentSubmit"); // button
 
-    btn.addEventListener("click", () => {
-        const text = input.value.trim();
-        if (!text) return;
+    if(btn && input) {
+        btn.addEventListener("click", () => {
+            // 로그인 체크
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                alert("로그인 후 댓글을 작성할 수 있습니다.");
+                return;
+            }
 
-        const post = getPostById(getPostId());
-        if (!post) return;
+            const text = input.value.trim();
+            if (!text) {
+                alert("댓글 내용을 입력해주세요.");
+                return;
+            }
 
-        addComment(post, text);
-        input.value = "";
-    });
+            const post = getPostById(getPostId());
+            if (!post) return;
+            addComment(post, text); 
+            input.value = "";
+        });
+    }
 });
+
+function deleteCurrentPost(postId) {
+    if (!confirm("정말 이 게시글을 삭제하시겠습니까?")) return;
+
+    let posts = getAllPosts();
+    posts = posts.filter(p => (p.postId || p.id) != postId);
+    saveAllPosts(posts);
+
+    alert("게시글이 삭제되었습니다.");
+    window.location.href = "community.html";
+}

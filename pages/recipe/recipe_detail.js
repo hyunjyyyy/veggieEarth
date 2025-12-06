@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadRecipeDetail(currentRecipeId);
 
+    // 별점 클릭 이벤트
     document.querySelectorAll(".star_btn").forEach(star => {
         star.addEventListener("click", function() {
             const currentUser = localStorage.getItem('currentUser');
@@ -28,8 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // 리뷰 입력창 포커스 이벤트
     const reviewInput = document.getElementById("reviewText");
-    
     if (reviewInput) {
         reviewInput.addEventListener("focus", function() {
             const currentUser = localStorage.getItem('currentUser');
@@ -84,43 +85,52 @@ function renderDetail(recipe) {
     
     const authorName = recipe.author || "익명";
     document.getElementById("recipeAuthor").textContent = authorName;
+
+    const heroInfoContainer = document.querySelector(".recipe_hero_info");
+    const bookmarkContainer = document.querySelector(".recipe_bookmark_container"); // 북마크 버튼 컨테이너
     
-    const authorContainer = document.querySelector(".author_info");
+    const oldAdminGroup = document.querySelector(".recipe_admin_actions");
+    if(oldAdminGroup) oldAdminGroup.remove();
     
-    const oldModBtn = document.getElementById("btnRecipeModify");
-    const oldDelBtn = document.getElementById("btnRecipeDelete");
-    if(oldModBtn) oldModBtn.remove();
-    if(oldDelBtn) oldDelBtn.remove();
+    if(bookmarkContainer) bookmarkContainer.style.display = "block"; // 기본적으로는 보임
 
     const currentUser = localStorage.getItem('currentUser');
 
     if (currentUser && recipe.author === currentUser) {
+        
+        if(bookmarkContainer) bookmarkContainer.style.display = "none";
+
+        const btnGroup = document.createElement("div");
+        btnGroup.className = "recipe_admin_actions"; 
+
         const modBtn = document.createElement("button");
-        modBtn.className = "btn_modify";
-        modBtn.id = "btnRecipeModify";
+        modBtn.className = "recipe_admin_btn";
         modBtn.title = "수정";
         modBtn.innerHTML = `<img src="../../assets/images/modify.png" alt="수정">`;
         modBtn.onclick = function() {
             alert("레시피 수정 페이지로 이동합니다. (기능 준비중)");
         };
-        authorContainer.appendChild(modBtn);
-
-        // 2. 삭제 버튼 (★추가됨)
+        
         const delBtn = document.createElement("button");
-        delBtn.className = "btn_delete";
-        delBtn.id = "btnRecipeDelete";
+        delBtn.className = "recipe_admin_btn";
         delBtn.title = "삭제";
-        delBtn.innerHTML = `<img src="../../assets/images/delete.png" alt="삭제">`; // 아이콘 필요
+        delBtn.innerHTML = `<img src="../../assets/images/delete.png" alt="삭제">`;
         delBtn.onclick = function() {
             if(confirm("정말 이 레시피를 삭제하시겠습니까?")) {
                 deleteRecipe(recipe.id);
             }
         };
-        authorContainer.appendChild(delBtn);
+
+        btnGroup.appendChild(modBtn);
+        btnGroup.appendChild(delBtn);
+        
+        heroInfoContainer.appendChild(btnGroup);
     }
 
     document.getElementById("recipeDescription").textContent = recipe.description;
-    document.getElementById("recipeHeroImage").style.backgroundImage = `url('${recipe.image}')`;
+    
+    const imgUrl = recipe.image ? recipe.image : '../../assets/images/default_food.png';
+    document.getElementById("recipeHeroImage").style.backgroundImage = `url('${imgUrl}')`;
 
     document.getElementById("metaServings").innerHTML = `<img src="../../assets/images/served.png"> ${recipe.servings}`;
     document.getElementById("metaTime").innerHTML = `<img src="../../assets/images/time.png"> ${recipe.time}`;
@@ -186,18 +196,14 @@ function handleScrap(recipe) {
     const bookmarkBtn = document.getElementById("recipeBookmark");
     const currentUser = localStorage.getItem('currentUser');
 
-    // 1. 화면 로드 시 초기 상태 확인 (기존과 동일)
     let scrapData = JSON.parse(localStorage.getItem('scrappedRecipes')) || {};
     let myScraps = scrapData[currentUser] || [];
     
-    // 내 스크랩 목록에 현재 레시피 ID가 있으면 체크된 상태로 시작
     bookmarkBtn.checked = myScraps.includes(recipe.id);
 
-    // 2. 클릭 이벤트 리스너 수정
     bookmarkBtn.onclick = function(e) {
-        // (1) 로그인을 안 했다면? -> 클릭을 막고(preventDefault) 경고창 띄움
         if (!currentUser) {
-            e.preventDefault(); // 체크박스가 변하지 않게 막음
+            e.preventDefault(); 
             alert("로그인 후 이용 가능합니다.");
             if(confirm("로그인 하시겠습니까?")) {
                  window.location.href = "../login/login.html";
@@ -205,24 +211,16 @@ function handleScrap(recipe) {
             return;
         }
 
-        // (2) 로그인을 했다면? -> e.preventDefault()를 쓰지 않음!
-        // 브라우저가 알아서 체크박스를 V 표시하거나 해제하도록 놔둡니다.
-        // 우리는 바뀐 결과(checked 여부)만 확인해서 저장하면 됩니다.
+        const isNowChecked = bookmarkBtn.checked; 
 
-        const isNowChecked = bookmarkBtn.checked; // 클릭 후의 상태
-
-        // 최신 데이터 다시 로드
         scrapData = JSON.parse(localStorage.getItem('scrappedRecipes')) || {};
         myScraps = scrapData[currentUser] || [];
 
         if (isNowChecked) {
-            // 체크됨 -> 목록에 추가
             if (!myScraps.includes(recipe.id)) {
                 myScraps.push(recipe.id);
             }
-            
             setTimeout(() => alert("나의 레시피(스크랩)에 저장되었습니다."), 10);
-            
         } else {
             myScraps = myScraps.filter(id => id !== recipe.id);
             setTimeout(() => alert("스크랩이 취소되었습니다."), 10);
@@ -308,7 +306,6 @@ window.deleteReview = function(index) {
 };
 
 function submitReview() {
-
     const currentUser = localStorage.getItem('currentUser');
     if (!currentUser) {
         alert("로그인 후 이용해주세요.");
