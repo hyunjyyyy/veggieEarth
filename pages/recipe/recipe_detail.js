@@ -184,20 +184,52 @@ function deleteRecipe(id) {
 
 function handleScrap(recipe) {
     const bookmarkBtn = document.getElementById("recipeBookmark");
-    bookmarkBtn.checked = (recipe.scrap === 1);
+    const currentUser = localStorage.getItem('currentUser');
 
+    // 1. 화면 로드 시 초기 상태 확인 (기존과 동일)
+    let scrapData = JSON.parse(localStorage.getItem('scrappedRecipes')) || {};
+    let myScraps = scrapData[currentUser] || [];
+    
+    // 내 스크랩 목록에 현재 레시피 ID가 있으면 체크된 상태로 시작
+    bookmarkBtn.checked = myScraps.includes(recipe.id);
+
+    // 2. 클릭 이벤트 리스너 수정
     bookmarkBtn.onclick = function(e) {
-        const isChecked = e.target.checked;
-        const newScrapStatus = isChecked ? 1 : 0; 
-
-        const allRecipes = JSON.parse(localStorage.getItem("allRecipes"));
-        const index = allRecipes.findIndex(r => r.id === recipe.id);
-        
-        if (index !== -1) {
-            allRecipes[index].scrap = newScrapStatus;
-            localStorage.setItem("allRecipes", JSON.stringify(allRecipes));
-            recipe.scrap = newScrapStatus;
+        // (1) 로그인을 안 했다면? -> 클릭을 막고(preventDefault) 경고창 띄움
+        if (!currentUser) {
+            e.preventDefault(); // 체크박스가 변하지 않게 막음
+            alert("로그인 후 이용 가능합니다.");
+            if(confirm("로그인 하시겠습니까?")) {
+                 window.location.href = "../login/login.html";
+            }
+            return;
         }
+
+        // (2) 로그인을 했다면? -> e.preventDefault()를 쓰지 않음!
+        // 브라우저가 알아서 체크박스를 V 표시하거나 해제하도록 놔둡니다.
+        // 우리는 바뀐 결과(checked 여부)만 확인해서 저장하면 됩니다.
+
+        const isNowChecked = bookmarkBtn.checked; // 클릭 후의 상태
+
+        // 최신 데이터 다시 로드
+        scrapData = JSON.parse(localStorage.getItem('scrappedRecipes')) || {};
+        myScraps = scrapData[currentUser] || [];
+
+        if (isNowChecked) {
+            // 체크됨 -> 목록에 추가
+            if (!myScraps.includes(recipe.id)) {
+                myScraps.push(recipe.id);
+            }
+            
+            setTimeout(() => alert("나의 레시피(스크랩)에 저장되었습니다."), 10);
+            
+        } else {
+            myScraps = myScraps.filter(id => id !== recipe.id);
+            setTimeout(() => alert("스크랩이 취소되었습니다."), 10);
+        }
+
+        scrapData[currentUser] = myScraps;
+        localStorage.setItem('scrappedRecipes', JSON.stringify(scrapData));
     };
 }
 

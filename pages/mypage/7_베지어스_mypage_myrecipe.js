@@ -57,27 +57,35 @@ document.addEventListener("DOMContentLoaded", () => {
         filterAndRender();
     }
 
+    /* 7_베지어스_mypage_myrecipe.js 수정 */
+
     function filterAndRender() {
         const searchText = searchInput.value.toLowerCase().trim();
         
+        // ★ [수정 1] 내 스크랩 목록 가져오기 (새로운 방식)
+        // 저장 구조: { "user1": [1, 2], "user2": [3] }
+        const scrapData = JSON.parse(localStorage.getItem('scrappedRecipes')) || {};
+        const myScraps = scrapData[CURRENT_USER_ID] || []; // 로그인한 유저의 스크랩 ID 배열 (예: [1, 5, 8])
+
         const filtered = allRecipesData.filter(recipe => {
             // 1. 탭 필터링
             let matchTab = false;
             if (currentTab === 'upload') {
+                // 업로드 탭: 내가 쓴 글인지 확인
                 matchTab = (recipe.author === CURRENT_USER_ID);
             } else {
-                matchTab = (recipe.scrap === 1);
+                // ★ [수정 2] 스크랩 탭: 'myScraps' 배열에 이 레시피 ID가 들어있는지 확인
+                // (기존 코드: recipe.scrap === 1  <-- 이거 삭제됨)
+                matchTab = myScraps.includes(recipe.id);
             }
 
-            // 2. 검색 필터링 (# 유무에 따른 분기)
+            // 2. 검색 필터링 (# 유무에 따른 분기 - 기존 동일)
             let matchSearch = true;
             if (searchText) {
                 if (searchText.startsWith('#')) {
-                    // #으로 시작하면 -> 해시태그 검색 (# 제거 후 비교)
                     const keyword = searchText.substring(1); 
                     matchSearch = recipe.hashtags && recipe.hashtags.some(tag => tag.toLowerCase().includes(keyword));
                 } else {
-                    // #이 없으면 -> 제목 검색
                     matchSearch = recipe.title.toLowerCase().includes(searchText);
                 }
             }
