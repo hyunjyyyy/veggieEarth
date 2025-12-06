@@ -1,18 +1,26 @@
+/* ========== 레시피 필터 영역 ========== */
 .recipe_filter_container {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: flex-start;
     padding: 25px;
     background-color: white;
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(43, 70, 60, 0.05);
     margin-bottom: 40px;
+    box-sizing: border-box;
+    gap: 1.5%;
+    flex-wrap: nowrap;
 }
 
-.recipe_filter_box {
+/* 왼쪽: 필터 */
+.recipe_filter_left {
+    flex: 0 0 20%;
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    align-items: center;
+    gap: 10px;
+    min-width: 120px;
+    box-sizing: border-box;
 }
 
 .recipe_filter_row {
@@ -21,6 +29,42 @@
     gap: 10px;
 }
 
+.recipe_filter_box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 중앙: 비어 있는 공간 */
+.recipe_filter_center {
+    flex: 1 1 auto;
+}
+
+/* 오른쪽: 검색창 */
+.recipe_search_box {
+    flex: 0 0 25%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 56px;
+    box-sizing: border-box;
+    min-width: 150px;
+}
+
+.recipe_search_box input {
+    width: 100%;
+    height: 40px;
+    padding: 10px 15px;
+    border: 1px solid #e2e0db;
+    border-radius: 20px;
+    background-color: #F4F1E9;
+    font-size: 15px;
+    color: #3C3C3C;
+    font-family: 'memomentKkukkkuk';
+    box-sizing: border-box;
+}
+
+/* 기존 버튼 스타일 유지 */
 .recipe_filter_item {
     display: inline-block;
 }
@@ -52,16 +96,6 @@
 .recipe_filter_item input:checked + .recipe_filter_button {
     background-color: #688F4E;
     color: white;
-}
-
-.recipe_search_box input {
-    width: 200px;
-    padding: 10px 15px;
-    border: 1px solid #e2e0db;
-    border-radius: 20px;
-    background-color: #F4F1E9;
-    font-size: 15px;
-    font-family: 'memomentKkukkkuk';
 }
 
 .recipe_list_header {
