@@ -461,7 +461,7 @@ fetch("restaurant_data.json")
 
         regionSelect.addEventListener("change", () => {
             if (!gpsActive && regionSelect.value === "지역 선택") {
-                map.setLevel(14);
+                map.setLevel(1);
                 map.setCenter(new kakao.maps.LatLng(36.5, 127.8));
             }
         });
@@ -599,6 +599,7 @@ function renderCommunityReviews(restaurantId) {
 
         const div = document.createElement("div");
         div.className = "map_review_item";
+        div.dataset.postId = r.postId;
         div.style.cursor = "pointer";
 
         div.innerHTML = `
@@ -624,6 +625,61 @@ function renderCommunityReviews(restaurantId) {
 
         reviewArea.appendChild(div);
     });
+
+    // ============================================
+    // 사진 탭 렌더링
+    // ============================================
+    const photoContainer = document.querySelector("#tab_image_link .tab_image_row");
+    if (photoContainer) {
+        photoContainer.innerHTML = "";
+
+        const reviewImages = reviews
+            .filter(r => r.imageData || r.image)
+            .map(r => ({
+                src: r.imageData || r.image,
+                postId: r.postId
+            }));
+
+        if (reviewImages.length === 0) {
+            const emptyMsg = document.createElement("p");
+            emptyMsg.style.padding = "10px";
+            emptyMsg.style.color = "#777";
+            emptyMsg.style.width = "100%";
+            emptyMsg.textContent = "등록된 사진이 없습니다.";
+            photoContainer.appendChild(emptyMsg);
+        } else {
+            reviewImages.forEach(obj => {
+                const img = document.createElement("img");
+                img.className = "tab_image";
+                img.src = obj.src;
+
+                img.addEventListener("click", () => {
+
+                    // 1) 리뷰 탭 활성화
+                    document.getElementById("tab_review").checked = true;
+
+                    const cardOuter = document.querySelector(".map_card_outer_container");
+                    const reviewPanel = document.getElementById("tab_review_link");
+
+                    // 2) 리뷰 탭 가장 위로 이동
+                    reviewPanel.scrollIntoView({ block: "start" });
+
+                    // 3) 이미지가 포함된 리뷰 아이템으로 추가 스크롤
+                    const targetReview = document.querySelector(
+                        `.map_review_item[data-post-id="${obj.postId}"]`
+                    );
+
+                    if (targetReview) {
+                        setTimeout(() => {
+                            targetReview.scrollIntoView({ block: "start", behavior: "smooth" });
+                        }, 150);
+                    }
+                });
+
+                photoContainer.appendChild(img);
+            });
+        }
+    }
 }
 
 // ============================================
