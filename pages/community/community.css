@@ -12,20 +12,6 @@
     --community_pill_radius: 25px;
 }
 
-
-/* ==================== 폰트 정의 ==================== */
-@font-face {
-    font-family:'memomentKkukkkuk';
-    src:url('../../assets/fonts/memomentKkukkkuk.otf') format('opentype');
-}
-
-@font-face {
-    font-family: 'KofihJongwook';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/KOFIHDrLEEJWTTF-B.woff2') format('woff2');
-    font-weight: 700;
-    font-display: swap;
-}
-
 /* ==================== 메인 콘텐츠 레이아웃 ==================== */
 
 .community_container {
