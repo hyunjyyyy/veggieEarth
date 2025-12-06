@@ -230,6 +230,8 @@ function focusMarker(restaurant) {
     }
 
     document.getElementById("share_button").onclick = () => openSharePopup(restaurant);
+
+    showCard();
 }
 
 
@@ -510,35 +512,48 @@ if (navigator.geolocation) {
 }
 
 
-// ============================================
-// 카드 닫기
-// ============================================
-function closeRestaurantCard() {
-    const cardContainer = document.querySelector(".map_card_outer_container");
+const cardContainer = document.querySelector(".map_card_outer_container");
+const closeBtn = cardContainer.querySelector(".map_card_close_btn");
 
+function showCard() {
+    const cardContainer = document.querySelector(".map_card_outer_container");
+    const closeBtn = cardContainer.querySelector(".map_card_close_btn");
+
+    if (!cardContainer || !closeBtn) return;
+
+    closeBtn.style.display = "block";
+
+    const rect = cardContainer.getBoundingClientRect();
+    closeBtn.style.top = rect.top + 10 + "px";
+    closeBtn.style.left = rect.right - closeBtn.offsetWidth - 14 + "px";
+}
+
+
+function closeRestaurantCard() {
     cardContainer.style.display = "none";
+    closeBtn.style.display = "none";
 
     map_container.classList.remove("with_card");
     map_container.classList.add("fullscreen");
 
     if (!gpsActive) {
         const currentCenter = map.getCenter();
-
         setTimeout(() => {
             map.relayout();
             map.setCenter(currentCenter);
         }, 50);
-    } else {
-        if (lastUserLatLng) {
-            setTimeout(() => {
-                try { map.relayout(); } catch (e) { /* ignore */ }
-                if (gpsActive && lastUserLatLng) {
-                    map.setCenter(lastUserLatLng);
-                }
-            }, 50);
-        }
+    } else if (lastUserLatLng) {
+        setTimeout(() => {
+            try { map.relayout(); } catch(e) {}
+            if (gpsActive && lastUserLatLng) {
+                map.setCenter(lastUserLatLng);
+            }
+        }, 50);
     }
 }
+
+closeBtn.addEventListener("click", closeRestaurantCard);
+
 
 
 // ============================================
