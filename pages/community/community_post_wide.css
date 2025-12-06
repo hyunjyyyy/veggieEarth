@@ -12,19 +12,6 @@
     --community_pill_radius: 25px;
 }
 
-/* ==================== 폰트 정의 ==================== */
-@font-face {
-    font-family:'memomentKkukkkuk';
-    src:url('../../assets/fonts/memomentKkukkkuk.otf') format('opentype');
-}
-
-@font-face {
-    font-family: 'KofihJongwook';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/KOFIHDrLEEJWTTF-B.woff2') format('woff2');
-    font-weight: 700;
-    font-display: swap;
-}
-
 /* ==================== 기본 스타일 재정의 ==================== */
 body {
     margin: 0;
@@ -44,56 +31,6 @@ ul {
     list-style: none;
     padding: 0;
     margin: 0;
-}
-
-/* ==================== 네비게이션 바 ==================== */
-.navbar {
-    background-color: var(--community_light_bg);
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 10px 5vw;
-    box-sizing: border-box;
-    z-index: 1000;
-    border-bottom: 1px solid #e2e0db;
-    font-family: 'KofihJongwook', sans-serif;
-}
-
-.navbar_container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 auto;
-    max-width: 1200px;
-}
-
-.navbar_logo img {
-    height: 40px;
-}
-
-.navbar_menu {
-    display: flex;
-    gap: 50px;
-}
-
-.nav_item {
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--community_main_color);
-    transition: color 0.3s;
-}
-
-.nav_item:hover {
-    color: var(--community_dark_color);
-}
-
-.navbar_icons {
-    display: flex;
-    gap: 15px;
-}
-
-.navbar_icons img {
-    width: 25px;
 }
 
 /* ==================== 전체 레이아웃 ==================== */

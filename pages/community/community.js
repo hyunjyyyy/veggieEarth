@@ -74,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // community.js 내부의 loadPostsFromJson 함수 수정
 
 async function loadPostsFromJson() {
     if (allPosts.length > 0) return;
