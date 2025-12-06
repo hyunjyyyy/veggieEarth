@@ -1,0 +1,95 @@
+/* /assets/css/common.css */
+@font-face {
+    font-family:'memomentKkukkkuk';
+    src:url(../../assets/fonts/memomentKkukkkuk.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'KofihJongwook';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/KOFIHDrLEEJWTTF-B.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'JejuStoneWall';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
+:root {
+    --primary-color: #688F4E;
+    --secondary-color: #2B463C;
+    --bg-color: #F4F1E9;
+    --font-main: 'memomentKkukkkuk', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--secondary-color);
+    font-family: var(--font-main);
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; padding: 0; margin: 0; }
+
+.navbar {
+    background-color: var(--bg-color);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 10px 5vw;
+    box-sizing: border-box;
+    z-index: 1000;
+    border-bottom: 1px solid #e2e0db;
+    display: flex;
+    justify-content: center;
+    font-family: "KofihJongwook";
+}
+.navbar_container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.navbar_logo img { height: 40px; }
+.navbar_menu { display: flex; gap: 50px; }
+.nav_item {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--primary-color);
+    transition: color 0.3s;
+}
+.nav_item:hover { color: var(--secondary-color); }
+.navbar_icons { display: flex; gap: 15px; }
+.navbar_icons img { width: 25px; }
+
+.standard_search_box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #e2e0db;
+    border-radius: 20px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    width: 100%;
+    max-width: 400px;
+}
+.standard_search_box input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    width: 100%;
+    background: transparent;
+    font-family: var(--font-main);
+    color: var(--secondary-color);
+}
+
+.page_wrapper {
+    width: 90%;
+    max-width: 1200px;
+    margin: 100px auto 40px auto;
+}
