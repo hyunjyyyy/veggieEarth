@@ -48,14 +48,14 @@ function renderMyPageCharts(userData, badgesData) {
                             <span class="mypage_stat_indicator mypage_indicator_unsuccessful"></span>
                             <span class="mypage_stat_number">${failCount}</span>
                         </div>
-                        <div class="mypage_stat_caption">Unsuccessful</div>
+                        <div class="mypage_stat_caption">다음 뱃지까지</div>
                     </div>
                     <div class="mypage_stat_item">
                         <div class="mypage_stat_row">
                             <span class="mypage_stat_indicator ${config.successClass}"></span>
                             <span class="mypage_stat_number">${successCount}</span>
                         </div>
-                        <div class="mypage_stat_caption">Successful</div>
+                        <div class="mypage_stat_caption">현재 달성 수</div>
                     </div>
                 </div>
             </div>

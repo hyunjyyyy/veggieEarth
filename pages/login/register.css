@@ -1,3 +1,8 @@
+/* register.css */
+@font-face {
+    font-family:'memomentKkukkkuk';
+    src:url(../../assets/fonts/memomentKkukkkuk.otf) format('opentype');
+}
 body {
     margin: 0;
     background-color: #F4F1E9;
@@ -6,107 +11,115 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
+a { text-decoration: none; color: inherit; }
 
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-/* ========== 로그인 컨테이너 ========== */
-.login_container {
+.register_container {
     background-color: #FFFFFF;
-    padding: 40px 60px;
+    padding: 50px 60px;
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(43, 70, 60, 0.1);
     text-align: center;
-    max-width: 400px;
+    max-width: 450px;
     width: 100%;
-    margin-top: 120px;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    box-sizing: border-box;
 }
 
-.login_container h2 {
+.register_container h2 {
     font-size: 28px;
     color: #2B463C;
     margin-bottom: 30px;
 }
 
-.login_form {
+.register_form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.login_form label {
+.register_form label {
     font-size: 16px;
     color: #33483E;
     text-align: left;
+    margin-bottom: -5px;
+    margin-left: 5px;
 }
 
-.login_form input {
-    padding: 10px;
+.register_form input {
+    padding: 12px;
     border: 1px solid #B1D182;
     border-radius: 10px;
-    font-size: 16px;
     font-family:'memomentKkukkkuk';
+    font-size: 15px;
     outline: none;
     transition: border-color 0.3s ease;
+    background-color: #FAFAFA;
 }
 
-.login_form input:focus {
+.register_form input:focus {
     border-color: #688F4E;
+    background-color: #FFFFFF;
 }
 
-.login_button {
+.register_button {
     background-color: #688F4E;
     color: white;
     font-size: 18px;
-    padding: 12px;
+    padding: 14px;
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.1s;
+    margin-top: 20px;
     font-family: 'memomentKkukkkuk';
 }
 
-.login_button:hover {
+.register_button:hover {
     background-color: #2B463C;
 }
 
-.signup_prompt {
-    margin-top: 20px;
+.register_button:active {
+    transform: scale(0.98);
+}
+
+.login_prompt {
+    margin-top: 25px;
     color: #626262;
     font-size: 15px;
 }
 
-.signup_prompt a {
+.login_prompt a {
     color: #688F4E;
-    text-decoration: none;
     font-weight: bold;
 }
 
-.signup_prompt a:hover {
+.login_prompt a:hover {
     text-decoration: underline;
 }
 
-/* ========== 로그인 성공 시 스타일 ========== */
-.login_success {
+.error_text {
+    color: #e74c3c;
+    font-size: 13px;
+    text-align: left;
+    margin: 0 0 0 5px;
+    height: 15px; /* 공간 확보 */
+}
+
+.register_success {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     animation: fadeIn 0.5s ease-in-out;
+    padding: 20px 0;
 }
 
 .success_icon {
-    font-size: 50px;
+    font-size: 60px;
     margin-bottom: 20px;
     color: #688F4E;
 }
@@ -119,26 +132,11 @@ ul {
 }
 
 .redirect_text {
-    font-size: 20px;
+    font-size: 16px;
     color: #888;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.user_greeting {
-    font-size: 20px;
-    font-weight: bold;
-    color: #2B463C;
-    margin-right: 12px;
-    font-family: 'memomentKkukkkuk', sans-serif;
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

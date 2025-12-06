@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 - 베지어스</title>
+    <link rel="stylesheet" href="../../assets/css/common.css">
+    <link rel="stylesheet" href="register.css">
+    <link rel="icon" href="../../assets/images/logo.ico" type="image/x-icon">
+</head>
+<body>
+    <main class="register_container">
+        <h2>Join Us</h2>
+        <form class="register_form" id="registerForm">
+            <label for="reg_username">ID</label>
+            <input type="text" id="reg_username" name="username" placeholder="아이디를 입력해주세요" required>
+
+            <label for="reg_email">Email</label>
+            <input type="email" id="reg_email" name="email" placeholder="example@veggie.com" required>
+
+            <label for="reg_password">PW</label>
+            <input type="password" id="reg_password" name="password" placeholder="비밀번호" required>
+
+            <label for="reg_password_confirm">PW Confirm</label>
+            <input type="password" id="reg_password_confirm" name="password_confirm" placeholder="비밀번호 확인" required>
+            
+            <p id="pw_error_msg" class="error_text"></p>
+
+            <button type="submit" class="register_button">가입하기</button>
+        </form>
+        
+        <p class="login_prompt">이미 계정이 있으신가요? <a href="login.html">로그인</a></p>
+    </main>
+
+    <script src="../../assets/js/layout.js"></script>
+    <script src="register.js"></script>
+</body>
+</html>
