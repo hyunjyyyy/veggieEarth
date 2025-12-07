@@ -86,9 +86,9 @@ function renderRecipes(recipes) {
                     <div class="recipe_card_content">
                         <h4>${recipe.title}</h4>
                         <div class="recipe_card_meta">
-                            <span><img src="../../assets/images/served.png" alt="인분"> ${recipe.servings}</span>
-                            <span><img src="../../assets/images/time.png" alt="소요시간"> ${recipe.time}</span>
-                            <span><img src="../../assets/images/difficulty.png" alt="난이도"> ${recipe.difficulty}</span>
+                            <span><img src="../../assets/images/7_served.png" alt="인분"> ${recipe.servings}</span>
+                            <span><img src="../../assets/images/7_time.png" alt="소요시간"> ${recipe.time}</span>
+                            <span><img src="../../assets/images/7_difficulty.png" alt="난이도"> ${recipe.difficulty}</span>
                         </div>
                         <div class="recipe_card_rating">
                             <span>${stars}</span> (${recipe.reviews})

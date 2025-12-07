@@ -77,7 +77,7 @@ function updateLoginState(pathPrefix) {
 
         loginLink.innerHTML = `
             <span style="font-weight:bold; color:#688F4E; margin-right:5px;">${currentUser}님</span>
-            <img id="btnLogout" src="${pathPrefix}/assets/images/logout.png" alt="로그아웃" style="cursor:pointer; vertical-align:middle;">
+            <img id="btnLogout" src="${pathPrefix}/assets/images/7_logout.png" alt="로그아웃" style="cursor:pointer; vertical-align:middle;">
         `;
 
         const btnLogout = document.getElementById('btnLogout');

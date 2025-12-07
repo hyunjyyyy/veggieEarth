@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "가지 피자",
-    "image": "../../assets/images/가지피자.jpg",
+    "image": "../../assets/images/7_가지피자.jpg",
     "author": "pxibvaw",
     "icons": ["veggie", "milk"],
     "servings": "2인분",
@@ -54,7 +54,7 @@
   {
     "id": 2,
     "title": "감자 된장국",
-    "image": "../../assets/images/감자된장국.jpg",
+    "image": "../../assets/images/7_감자된장국.jpg",
     "author": "potatozang",
     "icons": ["veggie"],
     "servings": "3~4인분",
@@ -99,7 +99,7 @@
   {
     "id": 3,
     "title": "감자 크래커",
-    "image": "../../assets/images/감자크래커.jpg",
+    "image": "../../assets/images/7_감자크래커.jpg",
     "author": "potatozang",
     "icons": ["veggie"],
     "servings": "2인분",
@@ -127,7 +127,7 @@
   {
     "id": 4,
     "title": "두부 스테이크",
-    "image": "../../assets/images/두부스테이크.png",
+    "image": "../../assets/images/7_두부스테이크.png",
     "author": "pxibvaw",
     "icons": ["veggie"],
     "servings": "3~4인분",
@@ -161,7 +161,7 @@
   {
     "id": 5,
     "title": "버섯 크림 리조또",
-    "image": "../../assets/images/버섯크림리조또.png",
+    "image": "../../assets/images/7_버섯크림리조또.png",
     "author": "pxibvaw",
     "icons": ["veggie", "milk", "egg"],
     "servings": "2인분",
