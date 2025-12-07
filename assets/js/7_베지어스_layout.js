@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <nav class="navbar">
         <div class="navbar_container">
             <a href="${pathPrefix}/7_베지어스_index.html" class="navbar_logo">
-                <img src="${pathPrefix}/assets/images/logo.png" alt="로고">
+                <img src="${pathPrefix}/assets/images/7_logo.png" alt="로고">
             </a>
             <ul class="navbar_menu">
                 <li><a href="${pathPrefix}/7_베지어스_index.html" class="nav_item">HOME</a></li>
@@ -17,10 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
             </ul>
             <div class="navbar_icons">
                 <a href="${pathPrefix}/pages/login/7_베지어스_login.html" id="loginLink">
-                    <img src="${pathPrefix}/assets/images/login_dark.png" alt="로그인">
+                    <img src="${pathPrefix}/assets/images/7_login_dark.png" alt="로그인">
                 </a>
                 <a href="${pathPrefix}/pages/setting/7_베지어스_setting.html" id="settingLink">
-                    <img src="${pathPrefix}/assets/images/setting_dark.png" alt="설정">
+                    <img src="${pathPrefix}/assets/images/7_setting_dark.png" alt="설정">
                 </a>
             </div>
         </div>

@@ -75,9 +75,9 @@ function renderFeaturedRecipes(recipes) {
                     <div class="recipe_card_content">
                         <h4>${recipe.title}</h4>
                         <div class="recipe_card_meta">
-                            <span><img src="assets/images/served.png" alt="인분"> ${recipe.servings}</span>
-                            <span><img src="assets/images/time.png" alt="소요시간"> ${recipe.time}</span>
-                            <span><img src="assets/images/difficulty.png" alt="난이도"> ${recipe.difficulty}</span>
+                            <span><img src="assets/images/7_served.png" alt="인분"> ${recipe.servings}</span>
+                            <span><img src="assets/images/7_time.png" alt="소요시간"> ${recipe.time}</span>
+                            <span><img src="assets/images/7_difficulty.png" alt="난이도"> ${recipe.difficulty}</span>
                         </div>
                         <div class="recipe_card_rating">
                             <span>${stars}</span> (${recipe.reviews})
@@ -179,13 +179,13 @@ function renderRecommendedPosts(posts) {
     container.innerHTML = "";
 
     posts.forEach(post => {
-        const authorImg = post.authorImage ? post.authorImage.replace('../../', './') : './assets/images/Profile3.png';
-        const badgeImg = post.badgeImage ? post.badgeImage.replace('../../', './') : './assets/images/badge-icon.png';
+        const authorImg = post.authorImage ? post.authorImage.replace('../../', './') : './assets/images/7_Profile3.png';
+        const badgeImg = post.badgeImage ? post.badgeImage.replace('../../', './') : './assets/images/7_badge-icon.png';
 
         let postImg = post.image ? post.image.replace('../../', './') : '';
-        if (!postImg) postImg = './assets/images/logo.png';
+        if (!postImg) postImg = './assets/images/7_logo.png';
 
-        const heartIcon = "./assets/images/Heart.png";
+        const heartIcon = "./assets/images/7_Heart.png";
         const detailLink = `./pages/community/7_베지어스_community_post_wide.html?id=${post.postId}`;
 
         const timeLabel = timeAgo(post.createdAt);
