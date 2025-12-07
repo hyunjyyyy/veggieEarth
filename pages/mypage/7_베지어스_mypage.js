@@ -214,10 +214,15 @@ function initializeBadgeGuide() {
 }
 
 function setupEventListeners() {
-    const btns = document.querySelectorAll('.mypage_btn');
-    if (btns.length > 0) btns[0].addEventListener('click', toggleEditMode);
-    if (btns.length > 1) {
-        btns[1].addEventListener('click', () => {
+    const editBtn = document.getElementById('btnEditProfile');
+    const guideBtn = document.getElementById('btnBadgeGuide');
+
+    if (editBtn) {
+        editBtn.addEventListener('click', toggleEditMode);
+    }
+    
+    if (guideBtn) {
+        guideBtn.addEventListener('click', () => {
             const modal = document.getElementById('mypage_badgeGuideModal');
             if (modal) modal.classList.add('active');
         });
@@ -253,9 +258,8 @@ function setupEventListeners() {
     document.addEventListener('keydown', handleKeyPress);
 }
 
-
 function toggleEditMode() {
-    const editBtn = document.querySelectorAll('.mypage_btn')[0];
+    const editBtn = document.getElementById('btnEditProfile');
     if (!editBtn) return;
     if (!isEditMode) enterEditMode(editBtn);
     else exitEditMode(editBtn);
@@ -332,17 +336,16 @@ function handleKeyPress(e) {
     }
     if (isEditMode) {
         if (e.key === 'Enter') {
-            const editBtn = document.querySelectorAll('.mypage_btn')[0];
+            const editBtn = document.getElementById('btnEditProfile');
             if (editBtn) exitEditMode(editBtn);
         } else if (e.key === 'Escape') {
             cancelEdit();
         }
     }
 }
-
 function cancelEdit() {
     isEditMode = false;
-    const editBtn = document.querySelectorAll('.mypage_btn')[0];
+    const editBtn = document.getElementById('btnEditProfile');
     if (editBtn) editBtn.textContent = 'Edit';
 
     const avatar = document.getElementById('profileAvatar');

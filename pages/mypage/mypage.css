@@ -750,3 +750,10 @@ body {
     color: #2B463C;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
+
+.mypage_badge_btn_small {
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 15px;
+    min-width: auto;
+}
