@@ -13,57 +13,8 @@
 </head>
 
 <body>
-    <!-- 사이드바 -->
-    <aside class="mypage_sidebar">
-        <a href="mypage.html" class="mypage_sidebar_item active" title="홈">
-            <img src="../../assets/images/home.png" alt="Home" />
-        </a>
-        <a href="mypage_myrecipe.html" class="mypage_sidebar_item" title="나의 레시피">
-            <img src="../../assets/images/myrecipe.png" alt="Myrecipe" />
-        </a>
-        <a href="mypage_mycommunity.html" class="mypage_sidebar_item" title="커뮤니티 활동">
-            <img src="../../assets/images/community.png" alt="Mycommunity" />
-        </a>
-    </aside>
-
     <div class="mypage_content_wrapper">
-        <!-- 프로필 섹션 -->
-        <section class="mypage_profile_section">
-            <div class="mypage_avatar_container">
-                <img src="../../assets/images/Profile3.png" alt="avatar image" id="profileAvatar" />
-                <input type="file" id="profileImageInput" accept="image/*" style="display: none;" />
-            </div>
-
-            <div class="mypage_profile_info">
-                <div class="mypage_profile_row">
-                    <div class="mypage_profile_label">name</div>
-                    <div class="mypage_profile_value">
-                        <span class="mypage_tag" id="profileName">-</span>
-                    </div>
-                </div>
-                <div class="mypage_profile_row">
-                    <div class="mypage_profile_label">vegan types</div>
-                    <div class="mypage_profile_value">
-                        <span class="mypage_tag" id="profileType">-</span>
-                    </div>
-                </div>
-                <div class="mypage_profile_row">
-                    <div class="mypage_profile_label">badge</div>
-                    <div class="mypage_profile_value" style="display: flex; align-items: center; gap: 10px;">
-                        <span class="mypage_tag" id="profileBadge">
-                            Loading...
-                        </span>
-                        <button id="btnBadgeGuide" class="mypage_btn mypage_badge_btn_small">badge guide</button>
-                    </div>
-                </div>
-                <div class="mypage_action_buttons">
-                    <button id="btnEditProfile" class="mypage_btn">Edit</button>
-                </div>
-            </div>
-        </section>
-
-
-		<!-- 커뮤니티 활동 헤더 -->
+        		<!-- 커뮤니티 활동 헤더 -->
 		<section class="mypage_section_header">
 			<h2 class="mypage_section_title">커뮤니티 활동</h2>
 			<div class="mypage_mycommunity_board_filter">
@@ -80,21 +31,8 @@
 		</section>
 	</div>
 
-	<!-- 비건 가이드 -->
-	<div id="mypage_badgeGuideModal" class="mypage_badge_modal">
-        <div class="mypage_badge_modal_overlay"></div>
-        <div class="mypage_badge_modal_content">
-            <button class="mypage_badge_modal_close">&times;</button>
-
-            <h2 class="mypage_badge_modal_title">🌱 비건 뱃지 가이드</h2>
-            <p class="mypage_badge_modal_subtitle">활동하면서 뱃지를 업그레이드 해보세요!</p>
-
-            <div class="mypage_badge_list">
-            </div>
-
-        </div>
-    </div>
     <script src="../../assets/js/layout.js"></script>
+    <script src="mypage_layout.js"></script>
 	<script src="7_베지어스_mypage.js"></script>
     <script src="7_베지어스_mypage_mycommunity.js"></script>
 

@@ -1,11 +1,8 @@
-// 전역 변수: 현재 정렬 모드 (기본값: 추천순)
 let currentSortMode = "recommend"; 
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. 초기 데이터 로드
     loadRecipeData();
 
-    // 2. 검색 및 필터 이벤트 연결
     const searchInput = document.getElementById("searchInput");
     searchInput.addEventListener("input", filterRecipes);
 
@@ -14,21 +11,17 @@ document.addEventListener("DOMContentLoaded", () => {
         input.addEventListener("change", filterRecipes);
     });
 
-    // 3. ★ 정렬 버튼 이벤트 연결
     const sortButtons = document.querySelectorAll(".recipe_sort_button");
     sortButtons.forEach(btn => {
         btn.addEventListener("click", (e) => {
-            // 모든 버튼에서 active 제거 후 클릭한 것에만 추가
             sortButtons.forEach(b => b.classList.remove("active"));
             e.target.classList.add("active");
 
-            // 정렬 모드 설정 (텍스트 내용으로 구분)
             const text = e.target.textContent;
             if (text === "최신순") currentSortMode = "newest";
             else if (text === "정확순") currentSortMode = "accuracy";
-            else currentSortMode = "recommend"; // 추천순
+            else currentSortMode = "recommend";
 
-            // 필터 및 정렬 다시 실행
             filterRecipes();
         });
     });
@@ -38,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
         writeBtn.addEventListener("click", function(e) {
             const currentUser = localStorage.getItem('currentUser');
             
-            // 로그인을 안 했으면
             if (!currentUser) {
                 e.preventDefault(); // 1. 페이지 이동(링크) 막기
                 
@@ -138,10 +130,8 @@ function filterRecipes() {
             matchCategory = (recipe.category === selectedCategory);
         }
 
-        // ★ [수정됨] 재료 필터 (AND 로직: every 사용)
         let matchIcon = true;
         if (checkedIcons.length > 0) {
-            // 체크된 모든(every) 아이콘이 레시피에 포함되어 있어야 함
             matchIcon = checkedIcons.every(checkId => {
                 const jsonValue = iconMap[checkId] || checkId; 
                 return recipe.icons.includes(jsonValue);
