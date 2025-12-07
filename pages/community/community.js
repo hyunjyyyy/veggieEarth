@@ -93,7 +93,7 @@ async function loadPostsFromJson() {
 
     async function loadRestaurantData() {
         try {
-            const res = await fetch("../../data/restaurant_data.json");
+            const res = await fetch("../map/restaurant_data.json");
             restaurantData = await res.json();
         } catch (e) {
             restaurantData = [];
