@@ -593,11 +593,6 @@ body {
   z-index: 1;
 }
 
-.mypage_badge_modal_close:hover {
-  background-color: #b1d182;
-  color: white;
-}
-
 .mypage_badge_modal_title {
   font-size: 28px;
   font-weight: bold;
