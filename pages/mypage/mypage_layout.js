@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. 현재 페이지 확인 (활성화할 메뉴 찾기)
+    // 현재 페이지 확인 (활성화할 메뉴 찾기)
     const pathname = window.location.pathname;
     let activePage = 'home';
     if (pathname.includes('myrecipe')) activePage = 'recipe';
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="mypage_profile_label">badge</div>
                 <div class="mypage_profile_value" style="display: flex; align-items: center; gap: 10px;">
                     <span class="mypage_tag" id="profileBadge">Loading...</span>
-                    <button id="btnBadgeGuide" class="mypage_btn mypage_badge_btn_small">badge guide</button>
+                    <button id="btnBadgeGuide" class="mypage_btn mypage_badge_btn_small">?</button>
                 </div>
             </div>
             <div class="mypage_action_buttons">

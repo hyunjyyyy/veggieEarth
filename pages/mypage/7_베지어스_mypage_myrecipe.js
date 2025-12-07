@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let allRecipesData = [];
     let currentTab = 'upload';
 
-    // [수정 전] 무조건 파일에서 fetch 하던 코드
+    // 수정 전: 무조건 파일에서 fetch 하던 코드
     /*
     fetch(JSON_PATH)
         .then(res => res.json())
@@ -30,11 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(err => { ... });
     */
 
-    // [수정 후] localStorage에 저장된 최신 데이터가 있으면 그걸 먼저 사용
+    // 수정 후 : localStorage에 저장된 최신 데이터가 있으면 그걸 먼저 사용
     const storedRecipes = localStorage.getItem("allRecipes");
 
     if (storedRecipes) {
-        // 1. 저장된 데이터가 있으면 바로 사용 (내가 쓴 글 포함됨)
         try {
             allRecipesData = JSON.parse(storedRecipes);
             filterAndRender();
@@ -43,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
             loadFromJson();
         }
     } else {
-        // 2. 저장된 데이터가 없으면 파일에서 불러오기
         loadFromJson();
     }
 
@@ -52,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(res => res.json())
             .then(data => {
                 allRecipesData = Array.isArray(data) ? data : (data.recipes || []);
-                // 불러온 데이터를 localStorage에 동기화해둠
                 localStorage.setItem("allRecipes", JSON.stringify(allRecipesData));
                 filterAndRender();
             })
