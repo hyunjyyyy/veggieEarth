@@ -8,13 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 배너 클릭 시 이동 제한
 function initBannerLogic() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const currentUser = localStorage.getItem('currentUser');
     const bannerLink = document.getElementById('login_banner');
 
     if (bannerLink) {
         bannerLink.addEventListener('click', function (event) {
             // 로그인 상태이면 이동을 막고 알림
-            if (isLoggedIn === 'true') {
+            if (currentUser) {
                 event.preventDefault();
                 alert("이미 가입을 완료하셨습니다:D");
             }
