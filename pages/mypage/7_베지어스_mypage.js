@@ -13,13 +13,13 @@ if (!CURRENT_USER_ID) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('페이지 로드 및 초기화 시작');
+    // console.log('페이지 로드 및 초기화 시작');
     try {
         await loadAllData();    
         initializeProfile();     
         initializeBadgeGuide();  
         setupEventListeners();   
-        console.log('초기화 완료');
+        // console.log('초기화 완료');
     } catch (e) {
         console.error('초기화 중 오류 발생:', e);
     }
@@ -156,9 +156,9 @@ async function updateRealTimeStats() {
 
         localStorage.setItem('vegetus_user_profile', JSON.stringify(userData));
 
-        console.log(`[통계 업데이트 완료]`);
-        console.log(`   - 획득 뱃지: ${newBadge.name}`);
-        console.log(`   - 내 활동: 레시피(${myRecipeCount}), 게시글(${myPostCount}), 스크랩(${myScrapCount})`);
+        // console.log(`[통계 업데이트 완료]`);
+        // console.log(`   - 획득 뱃지: ${newBadge.name}`);
+        // console.log(`   - 내 활동: 레시피(${myRecipeCount}), 게시글(${myPostCount}), 스크랩(${myScrapCount})`);
 
         if (typeof renderMyPageCharts === 'function') {
             renderMyPageCharts(userData, badgesData);

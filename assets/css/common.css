@@ -80,7 +80,6 @@ ul { list-style: none; padding: 0; margin: 0; }
     height: 100%;
 }
 
-/* 네비게이션 바 - 로그인한 사용자 표시 */
 .navbar_icons a:first-child {
     display: flex;
     align-items: center;
