@@ -129,7 +129,7 @@ function renderDetail(recipe) {
 
     document.getElementById("recipeDescription").textContent = recipe.description;
     
-    const imgUrl = recipe.image ? recipe.image : '../../assets/images/7_default_food.png';
+    const imgUrl = recipe.image ? recipe.image : '../../assets/images/7_default_food.jpg';
     document.getElementById("recipeHeroImage").style.backgroundImage = `url('${imgUrl}')`;
 
     document.getElementById("metaServings").innerHTML = `<img src="../../assets/images/7_served.png"> ${recipe.servings}`;
