@@ -63,7 +63,10 @@ document.addEventListener("DOMContentLoaded", () => {
     scrapBtn.addEventListener("click", () => setTab('scrap'));
 
     searchInput.addEventListener("input", filterAndRender);
-    searchBtn.addEventListener("click", filterAndRender);
+    
+    if (searchBtn) {
+        searchBtn.addEventListener("click", filterAndRender);
+    }
     
     searchInput.addEventListener("keypress", (e) => {
         if (e.key === 'Enter') {
