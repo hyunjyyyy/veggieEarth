@@ -74,20 +74,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    async function loadPostsFromJson() {
+        if (allPosts.length > 0) return;
 
-async function loadPostsFromJson() {
-    if (allPosts.length > 0) return;
-
-    try {
-        const res = await fetch("7_베지어스_community_posts.json");
-        const data = await res.json();
-        allPosts = data.posts;
-        savePosts();
-    } catch {
-        allPosts = DEFAULT_POSTS;
-        savePosts();
+        try {
+            const res = await fetch("7_베지어스_community_posts.json");
+            const data = await res.json();
+            allPosts = data.posts;
+            savePosts();
+        } catch {
+            allPosts = DEFAULT_POSTS;
+            savePosts();
+        }
     }
-}
 
     let restaurantData = [];
 
@@ -104,7 +103,6 @@ async function loadPostsFromJson() {
     function findRestaurantInfo(id) {
         return restaurantData.find(r => r.id === id);
     }
-    //---------------------------------------------------------
 
     function matchesSearch(post, keyword) {
         if (!keyword) return true;
@@ -142,7 +140,6 @@ async function loadPostsFromJson() {
                         return r ? `<p class="linked_restaurant_name">📍 ${r.name}</p>` : "";
                     })()
                     : "";
-            //---------------------------------------------------------
 
             item.innerHTML = `
                 <div class="community_post_main_wrapper">
@@ -163,7 +160,7 @@ async function loadPostsFromJson() {
                             <span class="community_post_time">${formatTimeLabel(post.createdAt)}</span>
                             <span class="community_post_likes">
                                 ${post.likes}
-                                <img src="../../assets/images/Heart.png">
+                                <img src="../../assets/images/7_Heart.png">
                             </span>
                         </div>
                     </div>
@@ -182,7 +179,7 @@ async function loadPostsFromJson() {
         const top = [...allPosts].sort((a, b) => b.likes - a.likes).slice(0, 3);
 
         top.forEach(p => {
-            const img = p.imageData || p.image || "../../assets/images/hot_topic.JPG";
+            const img = p.imageData || p.image || "../../assets/images/7_hot_topic.JPG";
             const card = document.createElement("div");
             card.className = "community_hot_topic_card community_card";
             card.dataset.id = p.postId || p.id;
@@ -268,7 +265,7 @@ async function loadPostsFromJson() {
         const currentUser = localStorage.getItem('currentUser');
         if (!currentUser) {
             alert("로그인 후 이용 가능합니다.");
-            if(confirm("로그인 하시겠습니까?")) window.location.href = "../login/7_베지어스_login.html";
+            if (confirm("로그인 하시겠습니까?")) window.location.href = "../login/7_베지어스_login.html";
             return;
         }
 
@@ -291,8 +288,10 @@ async function loadPostsFromJson() {
             title,
             text,
             authorName: currentUser,
-            authorImage: "../../assets/images/user-profile1.jpg",
-            badgeImage: "../../assets/images/badge_icon1.png",
+            authorImage:
+                "../../assets/images/7_user-profile1.jpg",
+            badgeImage:
+                "../../assets/images/7_badge_icon1.png",
             imageData: selectedImageDataUrl || "",
             restaurantId: incomingRestaurantId || null,
             likes: 0,
@@ -307,8 +306,10 @@ async function loadPostsFromJson() {
         descInput.value = "";
         selectedImageDataUrl = null;
         uploadBox.style.backgroundImage = "none";
-        uploadBox.innerHTML = `<img src="../../assets/images/Download.png">`;
+        uploadBox.innerHTML = `<img src="../../assets/images/7_Download.png">`;
     });
+
+    // ---------------- 모달 ----------------
 
     const modalOverlay = document.getElementById("writeModal");
     const openModalBtn = document.querySelector(".open_modal_button");
@@ -332,9 +333,7 @@ async function loadPostsFromJson() {
     });
 
     modalOverlay.addEventListener("click", e => {
-        if (e.target === modalOverlay) {
-            modalOverlay.style.display = "none";
-        }
+        if (e.target === modalOverlay) modalOverlay.style.display = "none";
     });
 
     modalUploadBox.addEventListener("click", () => modalFileInput.click());
@@ -354,13 +353,13 @@ async function loadPostsFromJson() {
     });
 
     modalSubmit.addEventListener("click", () => {
-        
         const currentUser = localStorage.getItem('currentUser');
         if (!currentUser) {
             alert("로그인 후 이용 가능합니다.");
             if(confirm("로그인 하시겠습니까?")) window.location.href = "../login/7_베지어스_login.html";
             return;
         }
+
         const title = modalTitle.value.trim();
         const text = modalDesc.value.trim();
 
@@ -378,8 +377,8 @@ async function loadPostsFromJson() {
             title,
             text,
             authorName: currentUser,
-            authorImage: "../../assets/images/user-profile1.jpg",
-            badgeImage: "../../assets/images/badge_icon1.png",
+            authorImage: "../../assets/images/7_user-profile1.jpg",
+            badgeImage: "../../assets/images/7_badge_icon1.png",
             imageData: modalImageData || "",
             restaurantId: incomingRestaurantId || null,
             likes: 0,

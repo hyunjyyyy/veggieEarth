@@ -71,10 +71,10 @@ function renderPostDetail() {
         
         btnGroup.innerHTML = `
             <button class="post_action_btn" title="수정" onclick="alert('수정 기능 준비중')">
-                <img src="../../assets/images/modify.png" alt="수정">
+                <img src="../../assets/images/7_modify.png" alt="수정">
             </button>
             <button class="post_action_btn" title="삭제" onclick="deleteCurrentPost('${postId}')">
-                <img src="../../assets/images/delete.png" alt="삭제">
+                <img src="../../assets/images/7_delete.png" alt="삭제">
             </button>
         `;
         headerEl.appendChild(btnGroup);
@@ -94,8 +94,8 @@ function renderPostDetail() {
     const likeCount = document.querySelector(".post_like_count");
 
     likeIcon.src = post.liked
-        ? "../../assets/images/Heart.png"
-        : "../../assets/images/Heart_empty.png";
+        ? "../../assets/images/7_Heart.png"
+        : "../../assets/images/7_Heart_empty.png";
 
     likeCount.textContent = post.likes;
 
@@ -137,7 +137,7 @@ function renderHotTopics() {
         item.className = "hot_topic_item";
         item.dataset.id = p.postId || p.id;
 
-        const img = p.imageData || p.image || "../../assets/images/hot_topic.JPG";
+        const img = p.imageData || p.image || "../../assets/images/7_hot_topic.JPG";
 
         item.innerHTML = `
             <div class="hot_topic_image" 
@@ -216,7 +216,7 @@ function addComment(post, text) {
     post.comments.push({
         id: Date.now(),
         user: currentUser,
-        userImg: "../../assets/images/Profile3.png",
+        userImg: "../../assets/images/7_Profile3.png",
         text,
         time: new Date().toISOString()
     });
