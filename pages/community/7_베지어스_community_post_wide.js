@@ -79,6 +79,7 @@ function renderPostDetail() {
         `;
         headerEl.appendChild(btnGroup);
     }
+
     const imgArea = document.querySelector(".post_image_area");
     if (post.imageData || post.image) {
         imgArea.innerHTML = `
@@ -158,7 +159,7 @@ function renderHotTopics() {
         `;
 
         item.addEventListener("click", () => {
-            window.location.href = `community_post_wide.html?id=${p.postId || p.id}`;
+            window.location.href = `7_베지어스_community_post_wide.html?id=${p.postId || p.id}`;
         });
 
         hotList.appendChild(item);
@@ -246,13 +247,11 @@ function deleteComment(post, commentId) {
 document.addEventListener("DOMContentLoaded", () => {
     renderPostDetail();
 
-    // [수정] 바뀐 ID에 맞춰 이벤트 연결
-    const input = document.getElementById("commentInput"); // textarea
-    const btn = document.getElementById("btnCommentSubmit"); // button
+    const input = document.getElementById("commentInput");
+    const btn = document.getElementById("btnCommentSubmit");
 
     if(btn && input) {
         btn.addEventListener("click", () => {
-            // 로그인 체크
             const currentUser = localStorage.getItem('currentUser');
             if (!currentUser) {
                 alert("로그인 후 댓글을 작성할 수 있습니다.");
@@ -281,5 +280,5 @@ function deleteCurrentPost(postId) {
     saveAllPosts(posts);
 
     alert("게시글이 삭제되었습니다.");
-    window.location.href = "community.html";
+    window.location.href = "7_베지어스_community.html";
 }

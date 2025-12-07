@@ -4,19 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>커뮤니티 페이지 - 글 확인 페이지</title>
-    <link rel="stylesheet" href="../../assets/css/common.css">
-    <link rel="stylesheet" href="community_post_wide.css">
+
+    <!-- 공통 CSS -->
+    <link rel="stylesheet" href="../../assets/css/7_베지어스_common.css">
+
+    <!-- community 글 상세 전용 CSS (파일명 변경 반영) -->
+    <link rel="stylesheet" href="7_베지어스_community_post_wide.css">
+
     <link rel="icon" href="../../assets/images/logo.ico" type="image/x-icon">
 </head>
 <body>
 
-    <!-- 메인 -->
     <div class="post_wide_container">
 
         <!-- 왼쪽 -->
         <div class="post_left_section">
 
-            <!-- 글 박스 -->
             <section class="post_main_box">
 
                 <div class="post_user_header">
@@ -42,8 +45,10 @@
 
             </section>
 
-            <!-- 댓글 -->
+            <!-- 댓글 리스트 -->
             <section class="comment_section"></section>
+
+            <!-- 댓글 작성 -->
             <section class="comment_write_box">
                 <div class="comment_write_header">
                     <span>댓글 작성</span>
@@ -56,7 +61,7 @@
 
         </div>
 
-        <!-- Hot Topic -->
+        <!-- HOT TOPIC -->
         <aside class="post_right_section">
             <h3 class="hot_topic_title">HOT TOPIC!</h3>
             <div class="hot_topic_underline"></div>
@@ -64,7 +69,11 @@
         </aside>
 
     </div>
-    <script src="../../assets/js/layout.js"></script>
-    <script src="community_post_wide.js"></script>
+
+    <!-- 공통 레이아웃 JS -->
+    <script src="../../assets/js/7_베지어스_layout.js"></script>
+
+    <!-- community 글 상세 전용 JS (파일명 변경 반영) -->
+    <script src="7_베지어스_community_post_wide.js"></script>
 </body>
 </html>
