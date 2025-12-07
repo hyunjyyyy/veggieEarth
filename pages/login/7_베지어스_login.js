@@ -1,13 +1,13 @@
 const loginForm = document.querySelector('.login_form');
 const loginContainer = document.querySelector('.login_container');
 
-let returnUrl = '../../index.html';
+let returnUrl = '../../7_베지어스_index.html';
 
 const referrer = document.referrer; 
 
 if (referrer) {
-    if (referrer.includes('register.html') || referrer.includes('login.html')) {
-        returnUrl = '../../index.html';
+    if (referrer.includes('7_베지어스_register.html') || referrer.includes('7_베지어스_login.html')) {
+        returnUrl = '../../7_베지어스_index.html';
     } 
     else {
         returnUrl = referrer;

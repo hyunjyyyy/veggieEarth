@@ -25,7 +25,7 @@ function initBannerLogic() {
 /*레시피 데이터 바인딩*/
 async function loadFeaturedRecipes() {
     // 데이터 로딩
-    const jsonPath = 'pages/recipe/recipes.json';
+    const jsonPath = 'pages/recipe/7_베지어스_recipes.json';
 
     try {
         const response = await fetch(jsonPath);
@@ -62,7 +62,7 @@ function renderFeaturedRecipes(recipes) {
 
         const imagePath = recipe.image.replace('../../', '');
 
-        const detailLink = `pages/recipe/recipe_detail.html?id=${recipe.id}`;
+        const detailLink = `pages/recipe/7_베지어스_recipe_detail.html?id=${recipe.id}`;
 
         const cardHtml = `
             <a href="${detailLink}" class="recipe_card_link">
@@ -153,7 +153,7 @@ function initHeroSlider() {
 
 /*게시글 데이터 바인딩*/
 async function loadRecommendedPosts() {
-    const jsonPath = './pages/community/community_posts.json';
+    const jsonPath = './pages/community/7_베지어스_community_posts.json';
 
     try {
         const response = await fetch(jsonPath);
@@ -186,7 +186,7 @@ function renderRecommendedPosts(posts) {
         if (!postImg) postImg = './assets/images/logo.png';
 
         const heartIcon = "./assets/images/Heart.png";
-        const detailLink = `./pages/community/community_post_wide.html?id=${post.postId}`;
+        const detailLink = `./pages/community/7_베지어스_community_post_wide.html?id=${post.postId}`;
 
         const timeLabel = timeAgo(post.createdAt);
 

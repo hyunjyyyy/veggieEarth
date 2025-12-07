@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
         setTimeout(() => {
-            window.location.href = 'login.html';
+            window.location.href = '7_베지어스_login.html';
         }, 2000);
     });
 });
