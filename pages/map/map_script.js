@@ -113,10 +113,15 @@ function toggleGPS() {
                         image: userMarkerImage
                     });
 
-                    map.setCenter(lastUserLatLng);
-                    map.setLevel(defaultLevel);
+                    // 필터 적용 여부 상관 없이 항상 중심 이동 (부드럽게)
+                    map.setLevel(defaultLevel, { animate: true });
+                    map.panTo(lastUserLatLng);
 
-                    setTimeout(() => { justClickedGPS = false; }, 200);
+                    // justClickedGPS를 다음 렌더링 이후에 false로
+                    setTimeout(() => { justClickedGPS = false; }, 50);
+
+                    // 필터 적용 상태이면 마커 다시 렌더링
+                    filterAndRenderMarkers();
                 },
                 () => {
                     gpsActive = false;
@@ -364,7 +369,6 @@ function showSavedMarkers() {
         alert("저장한 식당이 없습니다.");
         favActive = false;
         favButton.src = "map_image/fav.png";
-        filterAndRenderMarkers();
         return;
     }
 
@@ -420,6 +424,15 @@ function filterAndRenderMarkers() {
 
     if (noFilter) {
         if (favActive) showSavedMarkers();
+        
+        // GPS 활성화 상태이면 내 위치로 부드럽게 이동
+        if (gpsActive && lastUserLatLng) {
+            setTimeout(() => {
+                try { map.relayout(); } catch (e) {}
+                map.setLevel(defaultLevel, { animate: true });
+                map.panTo(lastUserLatLng);
+            }, 50);
+        }
         return;
     }
 
@@ -444,10 +457,18 @@ function filterAndRenderMarkers() {
         if (!gpsActive || (gpsActive && !justClickedGPS)) {
             map.setBounds(bounds);
         }
+        if (gpsActive && justClickedGPS && lastUserLatLng) {
+            setTimeout(() => {
+                try { map.relayout(); } catch (e) {}
+                map.setLevel(defaultLevel, { animate: true });
+                map.panTo(lastUserLatLng);
+            }, 50);
+        }
     } else if (gpsActive && lastUserLatLng) {
         setTimeout(() => {
             try { map.relayout(); } catch (e) {}
-            map.setCenter(lastUserLatLng);
+            map.setLevel(defaultLevel, { animate: true });
+            map.panTo(lastUserLatLng);
         }, 50);
     }
 }
