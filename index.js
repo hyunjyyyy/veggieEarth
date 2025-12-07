@@ -2,6 +2,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     initBannerLogic();
     loadFeaturedRecipes();
+    loadRecommendedPosts();
     initHeroSlider();
 });
 
@@ -148,4 +149,93 @@ function initHeroSlider() {
         clearInterval(autoSlideInterval);
         autoSlideInterval = setInterval(nextSlide, 3000);
     }
+}
+
+/*게시글 데이터 바인딩*/
+async function loadRecommendedPosts() {
+    const jsonPath = './pages/community/community_posts.json';
+
+    try {
+        const response = await fetch(jsonPath);
+        if (!response.ok) throw new Error("데이터 로드 실패");
+
+        const data = await response.json();
+
+        // 추천 게시글 - 좋아요 높은 순으로 3개
+        const sortedPosts = data.posts.sort((a, b) => b.likes - a.likes);
+        const topPosts = sortedPosts.slice(0, 3);
+
+        renderRecommendedPosts(topPosts);
+
+    } catch (error) {
+        console.error("추천 포스트 로드 에러:", error);
+    }
+}
+
+function renderRecommendedPosts(posts) {
+    const container = document.getElementById("rmd_post_list");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    posts.forEach(post => {
+        const authorImg = post.authorImage ? post.authorImage.replace('../../', './') : './assets/images/Profile3.png';
+        const badgeImg = post.badgeImage ? post.badgeImage.replace('../../', './') : './assets/images/badge-icon.png';
+
+        let postImg = post.image ? post.image.replace('../../', './') : '';
+        if (!postImg) postImg = './assets/images/logo.png';
+
+        const heartIcon = "./assets/images/Heart.png";
+        const detailLink = `./pages/community/community_post_wide.html?id=${post.postId}`;
+
+        const timeLabel = timeAgo(post.createdAt);
+
+        const html = `
+            <a href="${detailLink}" style="text-decoration:none; color:inherit; display:block; margin-bottom:15px;">
+                <div class="community_post_item community_post_box">
+                    <div class="community_post_main_wrapper">
+
+                        <div class="community_post_text_wrap">
+                            <div class="community_post_header">
+                                <img src="${authorImg}" alt="프로필" class="community_user_profile_img">
+                                <span class="community_user_name">${post.authorName}</span>
+                                <img src="${badgeImg}" alt="뱃지" class="community_user_badge_img">
+                            </div>
+
+                            <div class="community_post_content">
+                                <p class="community_post_title">${post.title}</p>
+                                <p class="community_post_text">${post.text}</p>
+                            </div>
+
+                            <div class="community_post_meta">
+                                <span class="community_post_time">${timeLabel}</span>
+                                <span class="community_post_likes">
+                                    ${post.likes} <img src="${heartIcon}" alt="좋아요">
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="community_post_image_box">
+                            <img src="${postImg}" alt="게시글 이미지">
+                        </div>
+                    </div>
+                </div>
+            </a>
+        `;
+        container.insertAdjacentHTML("beforeend", html);
+    });
+}
+
+// 시간 차이 계산 함수
+function timeAgo(dateString) {
+    const now = new Date();
+    const postDate = new Date(dateString);
+    const seconds = Math.floor((now - postDate) / 1000);
+
+    if (seconds < 60) return '방금 전';
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}분 전`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}시간 전`;
+    if (seconds < 604800) return `${Math.floor(seconds / 86400)}일 전`;
+
+    return postDate.toLocaleDateString('ko-KR');
 }

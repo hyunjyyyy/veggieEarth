@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const isRoot = window.location.pathname.endsWith("index.html") || window.location.pathname.endsWith("/");
-    const pathPrefix = isRoot ? "." : "../.."; 
+    const pathPrefix = isRoot ? "." : "../..";
 
     const headerHTML = `
     <nav class="navbar">
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <a href="${pathPrefix}/pages/login/login.html" id="loginLink">
                     <img src="${pathPrefix}/assets/images/login_dark.png" alt="로그인">
                 </a>
-                <a href="#">
+                <a href="${pathPrefix}/pages/setting/setting.html" id="settingLink">
                     <img src="${pathPrefix}/assets/images/setting_dark.png" alt="설정">
                 </a>
             </div>
@@ -35,20 +35,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     navItems.forEach(item => {
         if (item.textContent.trim() === 'MYPAGE') {
-            item.addEventListener('click', function(e) {
+            item.addEventListener('click', function (e) {
                 const currentUser = localStorage.getItem('currentUser');
-                
+
                 if (!currentUser) {
                     e.preventDefault();
                     alert("로그인이 필요한 서비스입니다.");
-                    
-                    if(confirm("로그인 페이지로 이동하시겠습니까?")) {
-                        window.location.href = "../../pages/login/login.html"; 
+
+                    if (confirm("로그인 페이지로 이동하시겠습니까?")) {
+                        window.location.href = "../../pages/login/login.html";
                     }
                 }
             });
         }
     });
+
+    // 설정(SETTING) 로그인 확인
+    const settingLink = document.getElementById('settingLink');
+    if (settingLink) {
+        settingLink.addEventListener('click', function (e) {
+            const currentUser = localStorage.getItem('currentUser');
+
+            if (!currentUser) {
+                e.preventDefault();
+                alert("로그인이 필요한 서비스입니다.");
+
+                if (confirm("로그인 페이지로 이동하시겠습니까?")) {
+                    window.location.href = isRoot ? "./pages/login/login.html" : "../../pages/login/login.html";
+                }
+            }
+        });
+    }
 });
 
 function updateLoginState(pathPrefix) {
@@ -56,8 +73,8 @@ function updateLoginState(pathPrefix) {
     const loginLink = document.getElementById('loginLink');
 
     if (currentUser && loginLink) {
-        loginLink.href = "#"; 
-        
+        loginLink.href = "#";
+
         loginLink.innerHTML = `
             <span style="font-weight:bold; color:#688F4E; margin-right:5px;">${currentUser}님</span>
             <img id="btnLogout" src="${pathPrefix}/assets/images/logout.png" alt="로그아웃" style="cursor:pointer; vertical-align:middle;">
@@ -68,8 +85,8 @@ function updateLoginState(pathPrefix) {
             btnLogout.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                
-                if(confirm("로그아웃 하시겠습니까?")) {
+
+                if (confirm("로그아웃 하시겠습니까?")) {
                     localStorage.removeItem('currentUser');
                     location.reload();
                 }
