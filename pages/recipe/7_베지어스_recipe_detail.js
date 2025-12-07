@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!currentRecipeId) {
         alert("잘못된 접근입니다.");
-        location.href = "recipe_main.html";
+        location.href = "7_베지어스_recipe_main.html";
         return;
     }
 
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!currentUser) {
                 alert("로그인 후 별점을 남길 수 있습니다.");
                 if(confirm("로그인 하시겠습니까?")) {
-                     window.location.href = "../login/login.html";
+                     window.location.href = "../login/7_베지어스_login.html";
                 }
                 return;
             }
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 this.blur();
                 
                 if(confirm("로그인 하시겠습니까?")) {
-                     window.location.href = "../login/login.html";
+                     window.location.href = "../login/7_베지어스_login.html";
                 }
             }
         });
@@ -60,7 +60,7 @@ async function loadRecipeDetail(id) {
 
     if (!recipes) {
         try {
-            const response = await fetch("recipes.json"); 
+            const response = await fetch("7_베지어스_recipes.json"); 
             recipes = await response.json();
             localStorage.setItem("allRecipes", JSON.stringify(recipes));
         } catch (e) {
@@ -72,7 +72,7 @@ async function loadRecipeDetail(id) {
     const recipe = recipes.find(r => r.id === id);
     if (!recipe) {
         alert("레시피를 찾을 수 없습니다.");
-        location.href = "recipe_main.html";
+        location.href = "7_베지어스_recipe_main.html";
         return;
     }
 
@@ -189,7 +189,7 @@ function deleteRecipe(id) {
     
     localStorage.setItem("allRecipes", JSON.stringify(newRecipes));
     alert("삭제되었습니다.");
-    window.location.href = "recipe_main.html"; 
+    window.location.href = "7_베지어스_recipe_main.html"; 
 }
 
 function handleScrap(recipe) {
@@ -206,7 +206,7 @@ function handleScrap(recipe) {
             e.preventDefault(); 
             alert("로그인 후 이용 가능합니다.");
             if(confirm("로그인 하시겠습니까?")) {
-                 window.location.href = "../login/login.html";
+                 window.location.href = "../login/7_베지어스_login.html";
             }
             return;
         }

@@ -204,7 +204,7 @@ document.getElementById("recipeForm").addEventListener("submit", async function(
     const currentUser = localStorage.getItem('currentUser');
     if (!currentUser) {
         alert("로그인이 필요한 서비스입니다.");
-        window.location.href = "../login/login.html"; 
+        window.location.href = "../login/7_베지어스_login.html"; 
         return;
     }
     
@@ -281,5 +281,5 @@ document.getElementById("recipeForm").addEventListener("submit", async function(
     localStorage.setItem("allRecipes", JSON.stringify(allRecipes));
     
     alert("레시피가 등록되었습니다!");
-    window.location.href = "recipe_main.html";
+    window.location.href = "7_베지어스_recipe_main.html";
 });
