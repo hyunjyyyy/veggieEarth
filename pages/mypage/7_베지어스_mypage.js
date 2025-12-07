@@ -58,35 +58,47 @@ async function loadAllData() {
     }
 }
 
-// 실제 데이터 파일들을 읽어서 통계 숫자를 최신화하는 함수
 async function updateRealTimeStats() {
     if (!userData || !badgesData) return;
 
     try {
         let myPostCount = 0;
         try {
-            const communityRes = await fetch('../community/community_posts.json');
-            const communityData = await communityRes.json();
-            const posts = communityData.posts || [];
+            const storedPosts = localStorage.getItem("community_posts");
+            let posts = [];
+
+            if (storedPosts) {
+                posts = JSON.parse(storedPosts);
+            } else {
+                const communityRes = await fetch('../community/community_posts.json');
+                const communityData = await communityRes.json();
+                posts = communityData.posts || [];
+            }
             
             myPostCount = posts.filter(p => p.id === CURRENT_USER_ID || p.authorName === CURRENT_USER_ID).length;
+
         } catch (e) { 
             console.warn('커뮤니티 데이터 로드 실패', e); 
         }
 
-        // (2) 레시피 & 스크랩 수 계산
         let myRecipeCount = 0;
         let myScrapCount = 0;
         try {
-            const recipeRes = await fetch('../recipe/recipes.json');
-            const allRecipes = await recipeRes.json(); 
+            const storedRecipes = localStorage.getItem("allRecipes");
+            let allRecipes = [];
+
+            if (storedRecipes) {
+                allRecipes = JSON.parse(storedRecipes);
+            } else {
+                const recipeRes = await fetch('../recipe/recipes.json');
+                allRecipes = await recipeRes.json(); 
+            }
 
             if (Array.isArray(allRecipes)) {
                 myRecipeCount = allRecipes.filter(r => r.author === CURRENT_USER_ID).length;
                 
                 const scrapData = JSON.parse(localStorage.getItem('scrappedRecipes')) || {};
                 const myScraps = scrapData[CURRENT_USER_ID] || []; 
-                
                 myScrapCount = myScraps.length; 
                 
             } else {
@@ -110,10 +122,10 @@ async function updateRealTimeStats() {
             }
         }
 
-
         if (!newBadge) {
             newBadge = sortedBadges.find(b => b.level === 1);
         }
+        
         const nextBadgeCandidate = [...badgesData.badges]
             .sort((a, b) => a.level - b.level)
             .find(b => b.level === newBadge.level + 1);
@@ -126,7 +138,7 @@ async function updateRealTimeStats() {
 
         function calculateStat(current, target) {
             if (target === 0) return { successful: current, unsuccessful: 0, percentage: 100 };
-            const percent = Math.min(100, Math.floor((current / target) * 100)); // 최대 100%
+            const percent = Math.min(100, Math.floor((current / target) * 100));
             return {
                 successful: current,
                 unsuccessful: Math.max(0, target - current),
@@ -147,6 +159,11 @@ async function updateRealTimeStats() {
         console.log(`[통계 업데이트 완료]`);
         console.log(`   - 획득 뱃지: ${newBadge.name}`);
         console.log(`   - 내 활동: 레시피(${myRecipeCount}), 게시글(${myPostCount}), 스크랩(${myScrapCount})`);
+
+        if (typeof renderMyPageCharts === 'function') {
+            renderMyPageCharts(userData, badgesData);
+        }
+        initializeProfile();
 
     } catch (e) {
         console.error('통계 업데이트 중 오류:', e);

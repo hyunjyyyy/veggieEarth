@@ -19,16 +19,48 @@ document.addEventListener("DOMContentLoaded", () => {
     let allRecipesData = [];
     let currentTab = 'upload';
 
+    // [수정 전] 무조건 파일에서 fetch 하던 코드
+    /*
     fetch(JSON_PATH)
         .then(res => res.json())
         .then(data => {
             allRecipesData = Array.isArray(data) ? data : (data.recipes || []);
             filterAndRender();
         })
-        .catch(err => {
-            console.error(err);
-            recipeListContainer.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding:30px;">데이터를 불러올 수 없습니다.</p>';
-        });
+        .catch(err => { ... });
+    */
+
+    // [수정 후] localStorage에 저장된 최신 데이터가 있으면 그걸 먼저 사용
+    const storedRecipes = localStorage.getItem("allRecipes");
+
+    if (storedRecipes) {
+        // 1. 저장된 데이터가 있으면 바로 사용 (내가 쓴 글 포함됨)
+        try {
+            allRecipesData = JSON.parse(storedRecipes);
+            filterAndRender();
+        } catch (e) {
+            console.error("데이터 파싱 실패, JSON 파일 로드 시도", e);
+            loadFromJson();
+        }
+    } else {
+        // 2. 저장된 데이터가 없으면 파일에서 불러오기
+        loadFromJson();
+    }
+
+    function loadFromJson() {
+        fetch(JSON_PATH)
+            .then(res => res.json())
+            .then(data => {
+                allRecipesData = Array.isArray(data) ? data : (data.recipes || []);
+                // 불러온 데이터를 localStorage에 동기화해둠
+                localStorage.setItem("allRecipes", JSON.stringify(allRecipesData));
+                filterAndRender();
+            })
+            .catch(err => {
+                console.error(err);
+                recipeListContainer.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding:30px;">데이터를 불러올 수 없습니다.</p>';
+            });
+    }
 
     uploadBtn.addEventListener("click", () => setTab('upload'));
     scrapBtn.addEventListener("click", () => setTab('scrap'));
@@ -57,29 +89,21 @@ document.addEventListener("DOMContentLoaded", () => {
         filterAndRender();
     }
 
-    /* 7_베지어스_mypage_myrecipe.js 수정 */
 
     function filterAndRender() {
         const searchText = searchInput.value.toLowerCase().trim();
         
-        // ★ [수정 1] 내 스크랩 목록 가져오기 (새로운 방식)
-        // 저장 구조: { "user1": [1, 2], "user2": [3] }
         const scrapData = JSON.parse(localStorage.getItem('scrappedRecipes')) || {};
-        const myScraps = scrapData[CURRENT_USER_ID] || []; // 로그인한 유저의 스크랩 ID 배열 (예: [1, 5, 8])
+        const myScraps = scrapData[CURRENT_USER_ID] || [];
 
         const filtered = allRecipesData.filter(recipe => {
-            // 1. 탭 필터링
             let matchTab = false;
             if (currentTab === 'upload') {
-                // 업로드 탭: 내가 쓴 글인지 확인
                 matchTab = (recipe.author === CURRENT_USER_ID);
             } else {
-                // ★ [수정 2] 스크랩 탭: 'myScraps' 배열에 이 레시피 ID가 들어있는지 확인
-                // (기존 코드: recipe.scrap === 1  <-- 이거 삭제됨)
                 matchTab = myScraps.includes(recipe.id);
             }
 
-            // 2. 검색 필터링 (# 유무에 따른 분기 - 기존 동일)
             let matchSearch = true;
             if (searchText) {
                 if (searchText.startsWith('#')) {
