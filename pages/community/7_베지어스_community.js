@@ -79,7 +79,7 @@ async function loadPostsFromJson() {
     if (allPosts.length > 0) return;
 
     try {
-        const res = await fetch("community_posts.json");
+        const res = await fetch("7_베지어스_community_posts.json");
         const data = await res.json();
         allPosts = data.posts;
         savePosts();
@@ -93,7 +93,7 @@ async function loadPostsFromJson() {
 
     async function loadRestaurantData() {
         try {
-            const res = await fetch("../map/restaurant_data.json");
+            const res = await fetch("../map/7_베지어스_restaurant_data.json");
             restaurantData = await res.json();
         } catch (e) {
             restaurantData = [];
@@ -261,14 +261,14 @@ async function loadPostsFromJson() {
         const id = item.dataset.id;
         if (!id) return;
 
-        window.location.href = `community_post_wide.html?id=${id}`;
+        window.location.href = `7_베지어스_community_post_wide.html?id=${id}`;
     });
 
     createBtn.addEventListener("click", () => {
         const currentUser = localStorage.getItem('currentUser');
         if (!currentUser) {
             alert("로그인 후 이용 가능합니다.");
-            if(confirm("로그인 하시겠습니까?")) window.location.href = "../login/login.html";
+            if(confirm("로그인 하시겠습니까?")) window.location.href = "../login/7_베지어스_login.html";
             return;
         }
 
@@ -358,7 +358,7 @@ async function loadPostsFromJson() {
         const currentUser = localStorage.getItem('currentUser');
         if (!currentUser) {
             alert("로그인 후 이용 가능합니다.");
-            if(confirm("로그인 하시겠습니까?")) window.location.href = "../login/login.html";
+            if(confirm("로그인 하시겠습니까?")) window.location.href = "../login/7_베지어스_login.html";
             return;
         }
         const title = modalTitle.value.trim();
@@ -403,7 +403,7 @@ async function loadPostsFromJson() {
         if (!card) return;
 
         const id = card.dataset.id;
-        window.location.href = `community_post_wide.html?id=${id}`;
+        window.location.href = `7_베지어스_community_post_wide.html?id=${id}`;
     });
 
     function checkIncomingFromMap() {
