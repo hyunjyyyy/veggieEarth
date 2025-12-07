@@ -635,22 +635,30 @@
     background: #666;
 }
 
-.map_button {
+.map_menu_box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.map_button {
     width: 40px;
     height: 40px;
     cursor: pointer;
-    z-index: 20;
 }
 
-.gps_button {
-    top: 75px;
-    right: 20px;
+.map_button:hover {
+    transform: scale(1.1);
+    transition: 0.2s;
 }
-
-
 
 .map_review_write_btn {
     display: block;
