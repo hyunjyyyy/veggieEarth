@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="community_post_time">${formatTimeLabel(post.createdAt)}</span>
                             <span class="community_post_likes">
                                 ${post.likes}
-                                <img src="../../assets/images/Heart.png">
+                                <img src="../../assets/images/7_Heart.png">
                             </span>
                         </div>
                     </div>

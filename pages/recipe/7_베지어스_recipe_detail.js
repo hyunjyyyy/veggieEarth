@@ -106,7 +106,7 @@ function renderDetail(recipe) {
         const modBtn = document.createElement("button");
         modBtn.className = "recipe_admin_btn";
         modBtn.title = "수정";
-        modBtn.innerHTML = `<img src="../../assets/images/modify.png" alt="수정">`;
+        modBtn.innerHTML = `<img src="../../assets/images/7_modify.png" alt="수정">`;
         modBtn.onclick = function() {
             alert("레시피 수정 페이지로 이동합니다. (기능 준비중)");
         };
@@ -114,7 +114,7 @@ function renderDetail(recipe) {
         const delBtn = document.createElement("button");
         delBtn.className = "recipe_admin_btn";
         delBtn.title = "삭제";
-        delBtn.innerHTML = `<img src="../../assets/images/delete.png" alt="삭제">`;
+        delBtn.innerHTML = `<img src="../../assets/images/7_delete.png" alt="삭제">`;
         delBtn.onclick = function() {
             if(confirm("정말 이 레시피를 삭제하시겠습니까?")) {
                 deleteRecipe(recipe.id);
@@ -129,12 +129,12 @@ function renderDetail(recipe) {
 
     document.getElementById("recipeDescription").textContent = recipe.description;
     
-    const imgUrl = recipe.image ? recipe.image : '../../assets/images/default_food.png';
+    const imgUrl = recipe.image ? recipe.image : '../../assets/images/7_default_food.jpg';
     document.getElementById("recipeHeroImage").style.backgroundImage = `url('${imgUrl}')`;
 
-    document.getElementById("metaServings").innerHTML = `<img src="../../assets/images/served.png"> ${recipe.servings}`;
-    document.getElementById("metaTime").innerHTML = `<img src="../../assets/images/time.png"> ${recipe.time}`;
-    document.getElementById("metaDifficulty").innerHTML = `<img src="../../assets/images/difficulty.png"> ${recipe.difficulty}`;
+    document.getElementById("metaServings").innerHTML = `<img src="../../assets/images/7_served.png"> ${recipe.servings}`;
+    document.getElementById("metaTime").innerHTML = `<img src="../../assets/images/7_time.png"> ${recipe.time}`;
+    document.getElementById("metaDifficulty").innerHTML = `<img src="../../assets/images/7_difficulty.png"> ${recipe.difficulty}`;
 
     const tagContainer = document.getElementById("recipeHashtags");
     if (recipe.hashtags) {
@@ -160,7 +160,7 @@ function renderDetail(recipe) {
     if (recipe.steps && recipe.steps.length > 0) {
         stepList.innerHTML = recipe.steps.map(step => `
             <li>
-                <img src="${step.img ? step.img : '../../assets/images/logo.png'}" alt="조리과정">
+                <img src="${step.img ? step.img : '../../assets/images/7_logo.png'}" alt="조리과정">
                 <p>${step.desc}</p>
             </li>
         `).join('');
@@ -258,10 +258,10 @@ function renderReviews(recipe) {
         if (currentUser && item.user === currentUser) {
             actionBtns = `
                 <button class="btn_modify" onclick="alert('댓글 수정은 준비중입니다.')" title="수정">
-                    <img src="../../assets/images/modify.png" alt="수정">
+                    <img src="../../assets/images/7_modify.png" alt="수정">
                 </button>
                 <button class="btn_delete" onclick="deleteReview(${item.originalIndex})" title="삭제">
-                    <img src="../../assets/images/delete.png" alt="삭제">
+                    <img src="../../assets/images/7_delete.png" alt="삭제">
                 </button>
             `;
         }
