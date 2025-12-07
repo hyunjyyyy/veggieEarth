@@ -186,7 +186,7 @@ function applyFavoriteButtonLogic(restaurant) {
             alert("로그인이 필요한 기능입니다.");
             if (confirm("로그인 하시겠습니까?")) {
                 const returnUrl = encodeURIComponent(window.location.href);
-                window.location.href = `../login/login.html?returnUrl=${returnUrl}`;
+                window.location.href = `../login/7_베지어스_login.html?returnUrl=${returnUrl}`;
             }
             return;
         }
@@ -477,7 +477,7 @@ function filterAndRenderMarkers() {
 // ============================================
 // JSON 로드
 // ============================================
-fetch("restaurant_data.json")
+fetch("7_베지어스_restaurant_data.json")
     .then(res => res.json())
     .then(data => {
         restaurant_list = data;
@@ -496,7 +496,7 @@ fetch("restaurant_data.json")
         const closeBtn = document.querySelector(".map_card_close_btn");
         if (closeBtn) closeBtn.addEventListener("click", closeRestaurantCard);
     })
-    .catch(err => console.error("restaurant_data.json 불러오기 실패:", err));
+    .catch(err => console.error("7_베지어스_restaurant_data.json 불러오기 실패:", err));
 
 
 // ============================================
@@ -581,7 +581,7 @@ function renderCommunityReviews(restaurantId) {
             return;
         }
 
-        const url = new URL("../community/community.html", window.location.href);
+        const url = new URL("../community/7_베지어스_community.html", window.location.href);
         url.searchParams.set("mode", "write");
         url.searchParams.set("restaurantId", currentRestaurantForReview);
         url.searchParams.set("fromMap", "1");
@@ -622,7 +622,7 @@ function renderCommunityReviews(restaurantId) {
         `;
 
         div.addEventListener("click", () => {
-            window.location.href = `../community/community_post_wide.html?id=${r.postId}`;
+            window.location.href = `../community/7_베지어스_community_post_wide.html?id=${r.postId}`;
         });
 
         reviewArea.appendChild(div);
