@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const stars = "★".repeat(starCount) + "☆".repeat(5 - starCount);
             
             const iconsHtml = (recipe.icons || []).map(icon => `<span class="icon ${icon}"></span>`).join('');
-            const imagePath = recipe.image || "../../assets/images/7_default_food.png";
+            const imagePath = recipe.image || "../../assets/images/7_default_food.jpg";
 
             const cardHtml = `
                 <a href="../recipe/7_베지어스_recipe_detail.html?id=${recipe.id}" class="recipe_card_link">
