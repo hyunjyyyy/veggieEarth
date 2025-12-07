@@ -3,11 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
     
     if (!CURRENT_USER_ID) {
         alert("로그인이 필요합니다.");
-        window.location.href = "../../pages/login/login.html";
+        window.location.href = "../../pages/login/7_베지어스_login.html";
         return;
     }
     
-    const JSON_PATH = "../recipe/recipes.json"; 
+    const JSON_PATH = "../recipe/7_베지어스_recipes.json"; 
 
     const recipeListContainer = document.getElementById("recipe-list");
     const uploadBtn = document.getElementById("mypage_myrecipe_upload_btn");
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const imagePath = recipe.image || "../../assets/images/default_food.png";
 
             const cardHtml = `
-                <a href="../recipe/recipe_detail.html?id=${recipe.id}" class="recipe_card_link">
+                <a href="../recipe/7_베지어스_recipe_detail.html?id=${recipe.id}" class="recipe_card_link">
                     <div class="recipe_card">
                         <div class="recipe_card_image_box" style="background-image:url('${imagePath}')">
                             <div class="recipe_card_icons">

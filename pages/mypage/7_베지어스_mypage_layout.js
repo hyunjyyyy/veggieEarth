@@ -9,13 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const sidebarHTML = `
     <aside class="mypage_sidebar">
-        <a href="mypage.html" class="mypage_sidebar_item ${activePage === 'home' ? 'active' : ''}" title="홈">
+        <a href="7_베지어스_mypage.html" class="mypage_sidebar_item ${activePage === 'home' ? 'active' : ''}" title="홈">
             <img src="${pathPrefix}assets/images/home.png" alt="Home" />
         </a>
-        <a href="mypage_myrecipe.html" class="mypage_sidebar_item ${activePage === 'recipe' ? 'active' : ''}" title="나의 레시피">
+        <a href="7_베지어스_mypage_myrecipe.html" class="mypage_sidebar_item ${activePage === 'recipe' ? 'active' : ''}" title="나의 레시피">
             <img src="${pathPrefix}assets/images/myrecipe.png" alt="Myrecipe" />
         </a>
-        <a href="mypage_mycommunity.html" class="mypage_sidebar_item ${activePage === 'community' ? 'active' : ''}" title="커뮤니티 활동">
+        <a href="7_베지어스_mypage_mycommunity.html" class="mypage_sidebar_item ${activePage === 'community' ? 'active' : ''}" title="커뮤니티 활동">
             <img src="${pathPrefix}assets/images/community.png" alt="Mycommunity" />
         </a>
     </aside>

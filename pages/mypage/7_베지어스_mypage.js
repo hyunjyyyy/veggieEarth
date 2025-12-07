@@ -9,7 +9,7 @@ const CURRENT_USER_ID = localStorage.getItem('currentUser');
 
 if (!CURRENT_USER_ID) {
     alert("로그인이 필요합니다.");
-    window.location.href = "../../pages/login/login.html";
+    window.location.href = "../../pages/login/7_베지어스_login.html";
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -70,7 +70,7 @@ async function updateRealTimeStats() {
             if (storedPosts) {
                 posts = JSON.parse(storedPosts);
             } else {
-                const communityRes = await fetch('../community/community_posts.json');
+                const communityRes = await fetch('../community/7_베지어스_community_posts.json');
                 const communityData = await communityRes.json();
                 posts = communityData.posts || [];
             }
@@ -90,7 +90,7 @@ async function updateRealTimeStats() {
             if (storedRecipes) {
                 allRecipes = JSON.parse(storedRecipes);
             } else {
-                const recipeRes = await fetch('../recipe/recipes.json');
+                const recipeRes = await fetch('../recipe/7_베지어스_recipes.json');
                 allRecipes = await recipeRes.json(); 
             }
 

@@ -3,11 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!currentUserId) {
         alert("로그인이 필요합니다.");
-        window.location.href = "../../pages/login/login.html";
+        window.location.href = "../../pages/login/7_베지어스_login.html";
         return;
     }
     
-    const jsonPath = '../community/community_posts.json'; 
+    const jsonPath = '../community/7_베지어스_community_posts.json'; 
     const STORAGE_KEY = "community_posts";
 
     const postListContainer = document.querySelector('.community_post_list');
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (item) {
             const postId = item.dataset.id;
             if (postId) {
-                window.location.href = `../community/community_post_wide.html?id=${postId}`;
+                window.location.href = `../community/7_베지어스_community_post_wide.html?id=${postId}`;
             }
         }
     });
