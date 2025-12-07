@@ -10,13 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const sidebarHTML = `
     <aside class="mypage_sidebar">
         <a href="7_베지어스_mypage.html" class="mypage_sidebar_item ${activePage === 'home' ? 'active' : ''}" title="홈">
-            <img src="${pathPrefix}assets/images/home.png" alt="Home" />
+            <img src="${pathPrefix}assets/images/7_home.png" alt="Home" />
         </a>
         <a href="7_베지어스_mypage_myrecipe.html" class="mypage_sidebar_item ${activePage === 'recipe' ? 'active' : ''}" title="나의 레시피">
-            <img src="${pathPrefix}assets/images/myrecipe.png" alt="Myrecipe" />
+            <img src="${pathPrefix}assets/images/7_myrecipe.png" alt="Myrecipe" />
         </a>
         <a href="7_베지어스_mypage_mycommunity.html" class="mypage_sidebar_item ${activePage === 'community' ? 'active' : ''}" title="커뮤니티 활동">
-            <img src="${pathPrefix}assets/images/community.png" alt="Mycommunity" />
+            <img src="${pathPrefix}assets/images/7_community.png" alt="Mycommunity" />
         </a>
     </aside>
     `;
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const profileHTML = `
     <section class="mypage_profile_section">
         <div class="mypage_avatar_container">
-            <img src="${pathPrefix}assets/images/Profile3.png" alt="avatar image" id="profileAvatar" />
+            <img src="${pathPrefix}assets/images/7_Profile3.png" alt="avatar image" id="profileAvatar" />
             <input type="file" id="profileImageInput" accept="image/*" style="display: none;" />
         </div>
 
