@@ -328,6 +328,10 @@ function toggleFavoriteMode() {
     const currentUser = localStorage.getItem('currentUser');
     if (!currentUser) {
         alert("로그인이 필요한 기능입니다.");
+            if (confirm("로그인 하시겠습니까?")) {
+                const returnUrl = encodeURIComponent(window.location.href);
+                window.location.href = `../login/7_베지어스_login.html?returnUrl=${returnUrl}`;
+            }
         return;
     }
 
