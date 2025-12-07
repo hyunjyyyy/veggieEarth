@@ -437,3 +437,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     init();
 });
+
+// ============================================
+// 지도에서 넘어온 경우 모달 자동 오픈
+// ============================================
+window.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.get("openModal") !== "true") return;
+
+    const modal = document.getElementById("writeModal");
+    if (!modal) return;
+
+    // 모달 열기
+    modal.style.display = "flex";
+
+    // 카테고리 자동 선택
+    const category = params.get("category");
+    const categorySelect = modal.querySelector("#community_task_category");
+    if (category && categorySelect) {
+        categorySelect.value = category;
+    }
+
+    // 식당명 자동 표시
+    const restaurantName = params.get("restaurantName");
+    const titleInput = modal.querySelector("#modal_title");
+
+    if (restaurantName && titleInput) {
+        titleInput.value = `[${decodeURIComponent(restaurantName)}] `;
+    }
+
+    // restaurantId 저장
+    window.currentRestaurantId = params.get("restaurantId");
+});

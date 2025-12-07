@@ -566,7 +566,9 @@ function closeRestaurantCard() {
 // ============================================
 function renderCommunityReviews(restaurantId) {
     const reviewArea = document.getElementById("tab_review_link");
-    if (!reviewArea) return;
+    const imageTabRow = document.querySelector("#tab_image_link .tab_image_row");
+
+    if (!reviewArea || !imageTabRow) return;
 
     let writeBtn = document.getElementById("map_review_write_btn");
     if (!writeBtn) {
@@ -577,19 +579,33 @@ function renderCommunityReviews(restaurantId) {
     }
 
     reviewArea.innerHTML = "";
+    imageTabRow.innerHTML = "";
     reviewArea.appendChild(writeBtn);
 
-    writeBtn.onclick = () => {
-        if (!currentRestaurantForReview) {
-            alert("먼저 지도에서 식당을 선택해주세요.");
+    writeBtn.onclick = (e) => {
+        e.preventDefault();
+
+        const currentUser = localStorage.getItem("currentUser");
+        if (!currentUser) {
+            alert("로그인이 필요한 기능입니다.");
+            if (confirm("로그인 하시겠습니까?")) {
+                const returnUrl = encodeURIComponent(window.location.href);
+                window.location.href = `../login/7_베지어스_login.html?returnUrl=${returnUrl}`;
+            }
             return;
         }
 
-        const url = new URL("../community/7_베지어스_community.html", window.location.href);
-        url.searchParams.set("mode", "write");
-        url.searchParams.set("restaurantId", currentRestaurantForReview);
-        url.searchParams.set("fromMap", "1");
-        window.location.href = url.toString();
+        const restaurant = restaurant_list.find(r => r.id === restaurantId);
+        const restaurantName = restaurant?.name || "";
+
+        const url =
+            `../community/7_베지어스_community.html` +
+            `?openModal=true` +
+            `&category=review` +
+            `&restaurantId=${restaurantId}` +
+            `&restaurantName=${encodeURIComponent(restaurantName)}`;
+
+        window.location.href = url;
     };
 
     const posts = JSON.parse(localStorage.getItem("community_posts")) || [];
@@ -609,30 +625,75 @@ function renderCommunityReviews(restaurantId) {
 
     reviews.forEach(r => {
         const imageUrl = r.imageData || r.image || "";
+        const detailUrl = `../community/7_베지어스_community_post_wide.html?id=${r.postId}`;
+        const reviewDomId = `review_${r.postId}`;
 
+        // =============================
+        // 리뷰 탭 영역
+        // =============================
         const div = document.createElement("div");
         div.className = "map_review_item";
         div.style.cursor = "pointer";
 
         div.innerHTML = `
-            <div class="map_review">
+            <div class="map_review" id="${reviewDomId}">
                 <div class="map_review_user_info">
                     <img src="${r.authorImage}" class="map_user_image">
                     <h4>${r.authorName}</h4>
                 </div>
-                ${imageUrl ? `<div class="map_review_image_container"><img src="${imageUrl}" class="map_review_image"></div>` : ""}
+                ${
+                    imageUrl
+                        ? `<div class="map_review_image_container">
+                               <img src="${imageUrl}" class="map_review_image">
+                           </div>`
+                        : ""
+                }
                 <p>${r.text}</p>
             </div>
         `;
 
         div.addEventListener("click", () => {
-            window.location.href = `../community/7_베지어스_community_post_wide.html?id=${r.postId}`;
+            window.location.href = detailUrl;
         });
 
         reviewArea.appendChild(div);
+
+        // =============================
+        // 사진 탭 영역
+        // =============================
+        if (imageUrl) {
+            const img = document.createElement("img");
+            img.src = imageUrl;
+            img.className = "tab_image";
+
+            img.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const reviewRadio = document.getElementById("tab_review");
+                if (reviewRadio) reviewRadio.checked = true;
+
+                const reviewPanel = document.getElementById("tab_review_link");
+
+                const target = document.getElementById(reviewDomId);
+
+                if (!reviewPanel || !target) return;
+
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        const top = target.offsetTop - reviewPanel.offsetTop - 10;
+
+                        reviewPanel.scrollTo({
+                            top: top,
+                            behavior: "smooth"
+                        });
+                    });
+                });
+            });
+            imageTabRow.appendChild(img);
+        }
     });
 }
-
 
 // ============================================
 // 리뷰 버튼 클릭 시 항상 리뷰 탭 열기
