@@ -89,7 +89,7 @@ function toggleGPS() {
     gpsActive = !gpsActive;
 
     if (gpsActive) {
-        gpsButton.src = "map_image/gps_act.png";
+        gpsButton.src = "../../assets/images/7_gps_act.png";
         justClickedGPS = true;
 
         if (navigator.geolocation) {
@@ -102,7 +102,7 @@ function toggleGPS() {
                     if (userMarker) userMarker.setMap(null);
 
                     const userMarkerImage = new kakao.maps.MarkerImage(
-                        "../../assets/images/map_pin.png",
+                        "../../assets/images/7_map_pin.png",
                         new kakao.maps.Size(40, 40),
                         { offset: new kakao.maps.Point(20, 40) }
                     );
@@ -125,13 +125,13 @@ function toggleGPS() {
                 },
                 () => {
                     gpsActive = false;
-                    gpsButton.src = "map_image/gps.png";
+                    gpsButton.src = "../../assets/images/7_gps.png";
                     alert("위치 정보를 가져올 수 없습니다.");
                 }
             );
         }
     } else {
-        gpsButton.src = "map_image/gps.png";
+        gpsButton.src = "../../assets/images/7_gps.png";
         if (userMarker) userMarker.setMap(null);
     }
 }
@@ -172,9 +172,9 @@ function applyFavoriteButtonLogic(restaurant) {
     function updateIcon() {
         savedRestaurants = loadSavedRestaurants();
         if (savedRestaurants.includes(restaurant.id)) {
-            favBtn.src = "../../assets/images/map_favorite_act.png";
+            favBtn.src = "../../assets/images/7_map_favorite_act.png";
         } else {
-            favBtn.src = "../../assets/images/map_favorite.png";
+            favBtn.src = "../../assets/images/7_map_favorite.png";
         }
     }
 
@@ -204,7 +204,7 @@ function applyFavoriteButtonLogic(restaurant) {
 
         if (savedRestaurants.length === 0 && favActive) {
             favActive = false;
-            favButton.src = "map_image/fav.png";
+            favButton.src = "../../assets/images/7_fav.png";
             filterAndRenderMarkers();
         }
     };
@@ -334,10 +334,10 @@ function toggleFavoriteMode() {
     favActive = !favActive;
 
     if (favActive) {
-        favButton.src = "map_image/fav_act.png";
+        favButton.src = "../../assets/images/7_fav_act.png";
         showSavedMarkers();
     } else {
-        favButton.src = "map_image/fav.png";
+        favButton.src = "../../assets/images/7_fav.png";
         filterAndRenderMarkers();
     }
 }
@@ -368,7 +368,7 @@ function showSavedMarkers() {
     if (filteredSaved.length === 0) {
         alert("저장한 식당이 없습니다.");
         favActive = false;
-        favButton.src = "map_image/fav.png";
+        favButton.src = "../../assets/images/7_fav.png";
         return;
     }
 
