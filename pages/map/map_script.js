@@ -1,25 +1,25 @@
 // ============================================
 // 저장된 식당 리스트
 // ============================================
-
 function loadSavedRestaurants() {
     const currentUser = localStorage.getItem('currentUser');
     if (!currentUser) return [];
-
-    const allSaved = JSON.parse(localStorage.getItem("savedRestaurants_Map")) || {};
-    return allSaved[currentUser] || [];
+    
+    const allData = JSON.parse(localStorage.getItem("saved_restaurants") || "{}");
+    return allData[currentUser] || [];
 }
 
 function saveSavedRestaurants(list) {
     const currentUser = localStorage.getItem('currentUser');
     if (!currentUser) return;
 
-    const allSaved = JSON.parse(localStorage.getItem("savedRestaurants_Map")) || {};
-    allSaved[currentUser] = list;
-    localStorage.setItem("savedRestaurants_Map", JSON.stringify(allSaved));
+    const allData = JSON.parse(localStorage.getItem("saved_restaurants") || "{}");
+    allData[currentUser] = list;
+    localStorage.setItem("saved_restaurants", JSON.stringify(allData));
 }
 
 let savedRestaurants = loadSavedRestaurants();
+
 
 // ============================================
 // 지도 초기 설정
@@ -80,16 +80,17 @@ let favActive = false;
 // GPS 버튼
 // ============================================
 const gpsButton = document.getElementById("gps_button");
-
 let gpsActive = false;
 let userMarker = null;
 let lastUserLatLng = null;
+let justClickedGPS = false;
 
 function toggleGPS() {
     gpsActive = !gpsActive;
 
     if (gpsActive) {
         gpsButton.src = "map_image/gps_act.png";
+        justClickedGPS = true;
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -115,12 +116,7 @@ function toggleGPS() {
                     map.setCenter(lastUserLatLng);
                     map.setLevel(defaultLevel);
 
-                    setTimeout(() => {
-                        if (gpsActive && lastUserLatLng) {
-                            try { map.relayout(); } catch (e) { /* ignore */ }
-                            map.setCenter(lastUserLatLng);
-                        }
-                    }, 50);
+                    setTimeout(() => { justClickedGPS = false; }, 200);
                 },
                 () => {
                     gpsActive = false;
@@ -131,7 +127,6 @@ function toggleGPS() {
         }
     } else {
         gpsButton.src = "map_image/gps.png";
-
         if (userMarker) userMarker.setMap(null);
     }
 }
@@ -164,102 +159,48 @@ function openSharePopup(restaurant) {
 
 
 // ============================================
-// 식당 저장 버튼 상태
-// ============================================
-document.querySelector(".favorite_btn").onclick = () => {
-    // 1. 로그인 체크
-    const currentUser = localStorage.getItem('currentUser');
-    if (!currentUser) {
-        alert("로그인이 필요한 서비스입니다.");
-        if(confirm("로그인 하시겠습니까?")) window.location.href = "../login/login.html";
-        return;
-    }
-
-    // 2. 최신 데이터 불러오기 (중요: 다른 탭 등에서 변경되었을 수 있으므로)
-    savedRestaurants = loadSavedRestaurants();
-
-    if (savedRestaurants.includes(restaurant.id)) {
-        savedRestaurants = savedRestaurants.filter(id => id !== restaurant.id);
-        alert("저장이 취소되었습니다.");
-    } else {
-        savedRestaurants.push(restaurant.id);
-        alert("식당이 저장되었습니다.");
-    }
-
-    // 3. 저장 및 아이콘 업데이트
-    saveSavedRestaurants(savedRestaurants);
-    updateIcon();
-
-    if (savedRestaurants.length === 0 && favActive) {
-        favActive = false;
-        favButton.src = "map_image/fav.png";
-        filterAndRenderMarkers(); 
-    }
-};
-
-// ============================================
-// 식당 저장 버튼 로직
+// 즐겨찾기 버튼 상태 적용
 // ============================================
 function applyFavoriteButtonLogic(restaurant) {
-    const btnDiv = document.querySelector(".favorite_btn");
-    const btnImg = document.querySelector(".favorite_btn img");
-
-    if (!btnDiv || !btnImg) {
-        console.error("저장 버튼 요소를 찾을 수 없습니다.");
-        return;
-    }
-
-    const currentId = Number(restaurant.id);
+    const favBtn = document.querySelector(".favorite_btn img");
 
     function updateIcon() {
-        const latestList = loadSavedRestaurants().map(id => Number(id)); // 저장된 것도 숫자로 변환
-        
-        if (latestList.includes(currentId)) {
-            btnImg.src = "../../assets/images/map_favorite_act.png";
+        savedRestaurants = loadSavedRestaurants();
+        if (savedRestaurants.includes(restaurant.id)) {
+            favBtn.src = "../../assets/images/map_favorite_act.png";
         } else {
-            btnImg.src = "../../assets/images/map_favorite.png";
+            favBtn.src = "../../assets/images/map_favorite.png";
         }
     }
 
     updateIcon();
 
-    btnDiv.onclick = function(e) {
-        e.preventDefault();
-        console.log("저장 버튼 클릭됨!");
-
+    document.querySelector(".favorite_btn").onclick = () => {
         const currentUser = localStorage.getItem('currentUser');
         if (!currentUser) {
-            alert("로그인이 필요한 서비스입니다.");
-            if(confirm("로그인 하시겠습니까?")) {
-                 window.location.href = "../login/login.html";
+            alert("로그인이 필요한 기능입니다.");
+            if (confirm("로그인 하시겠습니까?")) {
+                const returnUrl = encodeURIComponent(window.location.href);
+                window.location.href = `../login/login.html?returnUrl=${returnUrl}`;
             }
             return;
         }
 
-        let mySavedList = loadSavedRestaurants().map(id => Number(id));
+        savedRestaurants = loadSavedRestaurants();
 
-        if (mySavedList.includes(currentId)) {
-            mySavedList = mySavedList.filter(id => id !== currentId);
-            alert("저장이 취소되었습니다.");
+        if (savedRestaurants.includes(restaurant.id)) {
+            savedRestaurants = savedRestaurants.filter(id => id !== restaurant.id);
         } else {
-            mySavedList.push(currentId);
-            alert("식당이 저장되었습니다.");
+            savedRestaurants.push(restaurant.id);
         }
 
-        saveSavedRestaurants(mySavedList);
+        saveSavedRestaurants(savedRestaurants);
         updateIcon();
 
-        if (typeof favActive !== 'undefined' && favActive) {
-            if (mySavedList.length === 0) {
-                favActive = false;
-                const fb = document.getElementById("fav_button");
-                if(fb) fb.src = "map_image/fav.png";
-            }
-            if (typeof filterAndRenderMarkers === 'function') {
-                filterAndRenderMarkers();
-            } else if (typeof showSavedMarkers === 'function') {
-                showSavedMarkers();
-            }
+        if (savedRestaurants.length === 0 && favActive) {
+            favActive = false;
+            favButton.src = "map_image/fav.png";
+            filterAndRenderMarkers();
         }
     };
 }
@@ -275,11 +216,9 @@ function focusMarker(restaurant) {
     cardContainer.style.display = "block";
 
     update_restaurant_card(restaurant);
-
     currentRestaurantForReview = restaurant.id;
 
     renderCommunityReviews(restaurant.id);
-
     applyFavoriteButtonLogic(restaurant);
 
     cardContainer.scrollTop = 0;
@@ -291,10 +230,10 @@ function focusMarker(restaurant) {
 
     if (!gpsActive) {
         map.setLevel(2, { animate: true });
-        try { map.relayout(); } catch (e) { /* ignore */ }
+        try { map.relayout(); } catch (e) {}
         map.setCenter(position);
     } else {
-        try { map.relayout(); } catch (e) { /* ignore */ }
+        try { map.relayout(); } catch (e) {}
         if (lastUserLatLng) {
             setTimeout(() => {
                 if (gpsActive && lastUserLatLng) {
@@ -353,17 +292,12 @@ function update_restaurant_card(restaurant) {
             item.className = "map_menu_item";
 
             let html = `<div class="map_menu_info"><h4>${menu.name}</h4>`;
-
             if (menu.description) html += `<p>${menu.description}</p>`;
-
             if (menu.price !== undefined && menu.price !== null) {
                 let p = "";
-                p = isNaN(Number(menu.price))
-                    ? menu.price
-                    : `${Number(menu.price).toLocaleString()}원`;
+                p = isNaN(Number(menu.price)) ? menu.price : `${Number(menu.price).toLocaleString()}원`;
                 html += `<div class="map_menu_price">${p}</div>`;
             }
-
             html += `</div>`;
 
             if (menu.image) {
@@ -377,18 +311,21 @@ function update_restaurant_card(restaurant) {
 
     const infoTab = document.querySelector("#tab_info_link .tab_info p");
     if (infoTab) {
-        infoTab.innerHTML = restaurant.info_text
-            ? restaurant.info_text.replace(/\n/g, "<br>")
-            : "";
+        infoTab.innerHTML = restaurant.info_text ? restaurant.info_text.replace(/\n/g, "<br>") : "";
     }
 }
-
 
 
 // ============================================
 // 즐겨찾기 모드 토글
 // ============================================
 function toggleFavoriteMode() {
+    const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) {
+        alert("로그인이 필요한 기능입니다.");
+        return;
+    }
+
     favActive = !favActive;
 
     if (favActive) {
@@ -396,9 +333,9 @@ function toggleFavoriteMode() {
         showSavedMarkers();
     } else {
         favButton.src = "map_image/fav.png";
+        filterAndRenderMarkers();
     }
 }
-
 favButton.addEventListener("click", toggleFavoriteMode);
 
 
@@ -411,70 +348,61 @@ function showSavedMarkers() {
     markers = [];
     overlays = [];
 
-    const savedData = restaurant_list.filter(r => savedRestaurants.includes(r.id));
+    // 저장된 식당 + 현재 필터 적용
+    const selectedTags = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.nextElementSibling.textContent);
+    const searchText = searchInput.value.trim();
+    const selectedRegion = regionSelect.value;
 
-    if (savedData.length === 0) {
+    const filteredSaved = restaurant_list.filter(r => 
+        savedRestaurants.includes(r.id) &&
+        (selectedTags.length === 0 || (r.tags && selectedTags.every(tag => r.tags.includes(tag)))) &&
+        (searchText === "" || (r.name && r.name.includes(searchText)) || (r.address && r.address.includes(searchText))) &&
+        (selectedRegion === "지역 선택" || r.region === selectedRegion)
+    );
+
+    if (filteredSaved.length === 0) {
         alert("저장한 식당이 없습니다.");
         favActive = false;
         favButton.src = "map_image/fav.png";
+        filterAndRenderMarkers();
         return;
     }
 
     const bounds = new kakao.maps.LatLngBounds();
 
-    savedData.forEach(r => {
+    filteredSaved.forEach(r => {
+        if (!r.marker_position) return;
+
         const pos = new kakao.maps.LatLng(r.marker_position.lat, r.marker_position.lng);
-
-        const marker = new kakao.maps.Marker({
-            map: map,
-            position: pos
-        });
-
-        const overlay = new kakao.maps.CustomOverlay({
-            map: map,
-            position: pos,
-            content: '<div class="map_pin"></div>',
-            yAnchor: 1
-        });
+        const marker = new kakao.maps.Marker({ map, position: pos });
+        const overlay = new kakao.maps.CustomOverlay({ map, position: pos, content: '<div class="map_pin"></div>', yAnchor: 1 });
 
         kakao.maps.event.addListener(marker, "click", () => focusMarker(r));
         kakao.maps.event.addListener(overlay, () => focusMarker(r));
 
         markers.push(marker);
         overlays.push(overlay);
-
         bounds.extend(pos);
     });
 
-    if (!gpsActive && !bounds.isEmpty()) {
-        map.setBounds(bounds);
-    } else {
-        if (gpsActive && lastUserLatLng) {
-            setTimeout(() => {
-                if (gpsActive && lastUserLatLng) {
-                    try { map.relayout(); } catch (e) { /* ignore */ }
-                    map.setCenter(lastUserLatLng);
-                }
-            }, 50);
+    if (!bounds.isEmpty()) {
+        if (!gpsActive || (gpsActive && !window.justClickedGPS)) {
+            map.setBounds(bounds);
         }
     }
 }
+
 
 
 // ============================================
 // 필터 + 마커 렌더링
 // ============================================
 function filterAndRenderMarkers() {
-    const selectedTags = Array.from(checkboxes)
-        .filter(cb => cb.checked)
-        .map(cb => cb.nextElementSibling.textContent);
-
+    const selectedTags = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.nextElementSibling.textContent);
     const searchText = searchInput.value.trim();
     const selectedRegion = regionSelect.value;
 
-    let targetList = favActive
-        ? restaurant_list.filter(r => savedRestaurants.includes(r.id))
-        : restaurant_list;
+    let targetList = favActive ? restaurant_list.filter(r => savedRestaurants.includes(r.id)) : restaurant_list;
 
     markers.forEach(m => m.setMap(null));
     overlays.forEach(o => o.setMap(null));
@@ -482,30 +410,16 @@ function filterAndRenderMarkers() {
     overlays = [];
 
     const filtered = targetList.filter(r => {
-        const matchTag =
-            selectedTags.length === 0 ||
-            (r.tags && selectedTags.every(tag => r.tags.includes(tag)));
-
-        const matchSearch =
-            searchText === "" ||
-            (r.name && r.name.includes(searchText)) ||
-            (r.address && r.address.includes(searchText));
-
-        const matchRegion =
-            selectedRegion === "지역 선택" || r.region === selectedRegion;
-
+        const matchTag = selectedTags.length === 0 || (r.tags && selectedTags.every(tag => r.tags.includes(tag)));
+        const matchSearch = searchText === "" || (r.name && r.name.includes(searchText)) || (r.address && r.address.includes(searchText));
+        const matchRegion = selectedRegion === "지역 선택" || r.region === selectedRegion;
         return matchTag && matchSearch && matchRegion;
     });
 
-    const noFilter =
-        selectedTags.length === 0 &&
-        searchText === "" &&
-        (selectedRegion === "지역 선택" || !selectedRegion);
+    const noFilter = selectedTags.length === 0 && searchText === "" && (selectedRegion === "지역 선택" || !selectedRegion);
 
     if (noFilter) {
-        if (favActive) {
-            showSavedMarkers();
-        }
+        if (favActive) showSavedMarkers();
         return;
     }
 
@@ -515,33 +429,25 @@ function filterAndRenderMarkers() {
         if (!r.marker_position) return;
 
         const pos = new kakao.maps.LatLng(r.marker_position.lat, r.marker_position.lng);
-
         const marker = new kakao.maps.Marker({ map, position: pos });
-
-        const overlay = new kakao.maps.CustomOverlay({
-            map,
-            position: pos,
-            content: '<div class="map_pin"></div>',
-            yAnchor: 1
-        });
+        const overlay = new kakao.maps.CustomOverlay({ map, position: pos, content: '<div class="map_pin"></div>', yAnchor: 1 });
 
         kakao.maps.event.addListener(marker, "click", () => focusMarker(r));
         kakao.maps.event.addListener(overlay, () => focusMarker(r));
 
         markers.push(marker);
         overlays.push(overlay);
-
         bounds.extend(pos);
     });
 
-    if (!gpsActive && !bounds.isEmpty()) {
-        map.setBounds(bounds);
+    if (!bounds.isEmpty()) {
+        if (!gpsActive || (gpsActive && !justClickedGPS)) {
+            map.setBounds(bounds);
+        }
     } else if (gpsActive && lastUserLatLng) {
         setTimeout(() => {
-            if (gpsActive && lastUserLatLng) {
-                try { map.relayout(); } catch (e) { /* ignore */ }
-                map.setCenter(lastUserLatLng);
-            }
+            try { map.relayout(); } catch (e) {}
+            map.setCenter(lastUserLatLng);
         }, 50);
     }
 }
@@ -567,9 +473,7 @@ fetch("restaurant_data.json")
         });
 
         const closeBtn = document.querySelector(".map_card_close_btn");
-        if (closeBtn) {
-            closeBtn.addEventListener("click", closeRestaurantCard);
-        }
+        if (closeBtn) closeBtn.addEventListener("click", closeRestaurantCard);
     })
     .catch(err => console.error("restaurant_data.json 불러오기 실패:", err));
 
@@ -585,12 +489,10 @@ if (navigator.geolocation) {
             if (!initialPositionSet) {
                 const lat = pos.coords.latitude;
                 const lng = pos.coords.longitude;
-
                 const userPos = new kakao.maps.LatLng(lat, lng);
 
                 map.setCenter(userPos);
                 map.setLevel(defaultLevel);
-
                 lastUserLatLng = userPos;
                 initialPositionSet = true;
             }
@@ -615,42 +517,33 @@ if (navigator.geolocation) {
 // ============================================
 function closeRestaurantCard() {
     const cardContainer = document.querySelector(".map_card_outer_container");
-
     cardContainer.style.display = "none";
-
     map_container.classList.remove("with_card");
     map_container.classList.add("fullscreen");
 
     if (!gpsActive) {
         const currentCenter = map.getCenter();
-
         setTimeout(() => {
             map.relayout();
             map.setCenter(currentCenter);
         }, 50);
-    } else {
-        if (lastUserLatLng) {
-            setTimeout(() => {
-                try { map.relayout(); } catch (e) { /* ignore */ }
-                if (gpsActive && lastUserLatLng) {
-                    map.setCenter(lastUserLatLng);
-                }
-            }, 50);
-        }
+    } else if (lastUserLatLng) {
+        setTimeout(() => {
+            try { map.relayout(); } catch (e) {}
+            map.setCenter(lastUserLatLng);
+        }, 50);
     }
 }
 
 
 // ============================================
-//  community 후기 렌더링
+// community 후기 렌더링
 // ============================================
 function renderCommunityReviews(restaurantId) {
     const reviewArea = document.getElementById("tab_review_link");
     if (!reviewArea) return;
 
     let writeBtn = document.getElementById("map_review_write_btn");
-    const hadExistingButton = !!writeBtn;
-
     if (!writeBtn) {
         writeBtn = document.createElement("button");
         writeBtn.id = "map_review_write_btn";
@@ -662,14 +555,6 @@ function renderCommunityReviews(restaurantId) {
     reviewArea.appendChild(writeBtn);
 
     writeBtn.onclick = () => {
-        // 1. 로그인 체크 추가
-        const currentUser = localStorage.getItem('currentUser');
-        if (!currentUser) {
-            alert("로그인이 필요한 서비스입니다.");
-            if(confirm("로그인 하시겠습니까?")) window.location.href = "../login/login.html";
-            return;
-        }
-
         if (!currentRestaurantForReview) {
             alert("먼저 지도에서 식당을 선택해주세요.");
             return;
@@ -683,15 +568,10 @@ function renderCommunityReviews(restaurantId) {
     };
 
     const posts = JSON.parse(localStorage.getItem("community_posts")) || [];
-
-    const reviews = posts.filter(
-        p => p.category === "review" && p.restaurantId === restaurantId
-    );
+    const reviews = posts.filter(p => p.category === "review" && p.restaurantId === restaurantId);
 
     const reviewLink = document.querySelector(".review_link");
-    if (reviewLink) {
-        reviewLink.textContent = `리뷰 ${reviews.length}`;
-    }
+    if (reviewLink) reviewLink.textContent = `리뷰 ${reviews.length}`;
 
     if (reviews.length === 0) {
         const emptyMsg = document.createElement("p");
@@ -715,13 +595,7 @@ function renderCommunityReviews(restaurantId) {
                     <img src="${r.authorImage}" class="map_user_image">
                     <h4>${r.authorName}</h4>
                 </div>
-
-                ${imageUrl ? `
-                    <div class="map_review_image_container">
-                        <img src="${imageUrl}" class="map_review_image">
-                    </div>
-                ` : ""}
-
+                ${imageUrl ? `<div class="map_review_image_container"><img src="${imageUrl}" class="map_review_image"></div>` : ""}
                 <p>${r.text}</p>
             </div>
         `;
@@ -733,6 +607,7 @@ function renderCommunityReviews(restaurantId) {
         reviewArea.appendChild(div);
     });
 }
+
 
 // ============================================
 // 리뷰 버튼 클릭 시 항상 리뷰 탭 열기
@@ -749,20 +624,15 @@ document.addEventListener("click", (e) => {
 
     const cardOuter = document.querySelector(".map_card_outer_container");
     const reviewPanel = document.getElementById("tab_review_link");
-
     if (cardOuter && reviewPanel) {
-        const offsetTop = reviewPanel.offsetTop;
-        cardOuter.scrollTo({
-            top: offsetTop,
-            behavior: "smooth"
-        });
+        cardOuter.scrollTo({ top: reviewPanel.offsetTop, behavior: "smooth" });
     }
 });
+
 
 // ============================================
 // 탭 클릭 → 해당 패널로 스크롤
 // ============================================
-
 const tabMap = {
     "label[for='tab_home']":   { radio: "tab_home",   panel: "tab_home_link" },
     "label[for='tab_menu']":   { radio: "tab_menu",   panel: "tab_menu_link" },
@@ -772,25 +642,17 @@ const tabMap = {
 };
 
 document.addEventListener("click", (e) => {
-    const entry = Object.entries(tabMap).find(([selector]) =>
-        e.target.closest(selector)
-    );
+    const entry = Object.entries(tabMap).find(([selector]) => e.target.closest(selector));
     if (!entry) return;
 
     e.preventDefault();
-
     const [, { radio, panel }] = entry;
-
     const radioInput = document.getElementById(radio);
     if (radioInput) radioInput.checked = true;
 
     const cardOuter = document.querySelector(".map_card_outer_container");
     const panelElem = document.getElementById(panel);
-
     if (cardOuter && panelElem) {
-        cardOuter.scrollTo({
-            top: panelElem.offsetTop,
-            behavior: "smooth"
-        });
+        cardOuter.scrollTo({ top: panelElem.offsetTop, behavior: "smooth" });
     }
 });
